@@ -21,8 +21,10 @@ import PreencherVenda from '../components/PreencherVenda'
 function Home() {
   return (
     <div>
-      
-    
+      <Header></Header>
+      <Options></Options>
+      <CiclistaMeio></CiclistaMeio>
+      <End></End>
     </div>
   )
 }

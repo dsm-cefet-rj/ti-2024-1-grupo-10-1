@@ -1,10 +1,12 @@
 import Home from "./pages/Home"
+import Bike from "./pages/Bike"
 
 function App() {
 
 
   return (
-    <div><Home></Home></div>
+    <div><Bike></Bike></div>
+    //<div><Home></Home></div>
   )
 }
 
