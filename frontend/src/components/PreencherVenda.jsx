@@ -28,14 +28,14 @@ const PreencherVenda = () => {
         {/* Espaços para inserir fotos */}
         <div className="grid grid-cols-1 gap-4">
 
-          {/* Quadrado maior */}
+          
           Fotos:
           <label htmlFor="main-photo" className="relative col-span-3 md:col-span-1 w-full border-dashed border-2 border-gray-300 rounded-lg overflow-hidden cursor-pointer flex justify-center items-center">
             <img src={images[0] || camera} alt="Foto Principal" className="w-30 h-30 object-cover" />
             <input type="file" id="main-photo" accept="image/*" className="absolute inset-0 opacity-0" onChange={(e) => handleImageChange(0, e)} />
           </label>
 
-          {/* Quadrados menores */}
+          
           {[...Array(4)].map((_, index) => (
             <label key={index + 1} htmlFor={`additional-photo-${index + 1}`} className="relative w-full border-dashed border-2 border-gray-300 rounded-lg overflow-hidden cursor-pointer flex justify-center items-center">
               <img src={images[index + 1] || camera} alt={`Foto ${index + 1}`} className="w-30 h-30  object-cover" />

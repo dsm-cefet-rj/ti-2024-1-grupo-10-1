@@ -7,11 +7,12 @@ import HeaderVenda from '../components/HeaderVenda'
 import MeioVendas from '../components/MeioVendas'
 import PreencherVenda from '../components/PreencherVenda'
 import HeaderLogin from '../components/HeaderLogin'
+
 /*
 1     <HeaderHome></HeaderHome>
       <Options></Options>
       <CiclistaHome></CiclistaHome>
-      <End></End>
+      <Recomendados></Recomendados>
 
 2     <HeaderVenda></HeaderVenda>
       <MeioVendas></MeioVendas>
@@ -21,7 +22,9 @@ import HeaderLogin from '../components/HeaderLogin'
 function Home() {
   return (
     <div>
-
+      <HeaderVenda></HeaderVenda>
+      <MeioVendas></MeioVendas>
+      <PreencherVenda></PreencherVenda>
     </div>
   )
 }
