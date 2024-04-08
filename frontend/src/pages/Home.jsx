@@ -10,23 +10,23 @@ import HeaderLogin from '../components/HeaderLogin'
 
 /*
 1     <HeaderHome></HeaderHome>
-      <Options></Options>
-      <CiclistaHome></CiclistaHome>
-      <Recomendados></Recomendados>
+	  <Options></Options>
+	  <CiclistaHome></CiclistaHome>
+	  <Recomendados></Recomendados>
 
 2     <HeaderVenda></HeaderVenda>
-      <MeioVendas></MeioVendas>
-      <PreencherVenda></PreencherVenda>
+	  <MeioVendas></MeioVendas>
+	  <PreencherVenda></PreencherVenda>
 */
 
 function Home() {
-  return (
-    <div>
-      <HeaderVenda></HeaderVenda>
-      <MeioVendas></MeioVendas>
-      <PreencherVenda></PreencherVenda>
-    </div>
-  )
+	return (
+		<div>
+			<HeaderVenda></HeaderVenda>
+			<MeioVendas></MeioVendas>
+			<PreencherVenda></PreencherVenda>
+		</div>
+	)
 }
 
 export default Home

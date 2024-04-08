@@ -11,14 +11,14 @@ import Options from '../components/Options'
 */
 
 function Bike() {
-    return (
-        <div>
-            <HeaderHome></HeaderHome>
-            <Options></Options>
-            <ListaBikes></ListaBikes>
+	return (
+		<div>
+			<HeaderHome></HeaderHome>
+			<Options></Options>
+			<ListaBikes></ListaBikes>
 
-        </div>
-    )
+		</div>
+	)
 }
 
 export default Bike
