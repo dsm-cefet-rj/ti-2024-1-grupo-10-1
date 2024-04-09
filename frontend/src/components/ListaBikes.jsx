@@ -23,7 +23,7 @@ const products = [
 		color: 'Blue',
 	},
 	{
-		id: 2,
+		id: 3,
 		name: 'Bicicleta Rav2r Speed Carbono Aro 700 Kit.',
 		href: '#',
 		imageSrc: MTB,
@@ -32,7 +32,7 @@ const products = [
 		color: 'Blue',
 	},
 	{
-		id: 2,
+		id: 4,
 		name: 'Bicicleta Rav2r Speed Carbono Aro 700 Kit.',
 		href: '#',
 		imageSrc: MTB,

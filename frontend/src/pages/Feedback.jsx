@@ -3,7 +3,6 @@ function FeedBack() {
 	return (
 		<div>
 			<MenuFeedBack></MenuFeedBack>
-
 		</div>
 	)
 }
