@@ -11,6 +11,12 @@
 	],
   }
   ```
+
+  Além disso:
+
+  .../PSW/ti-2024-1-grupo-10-1/frontend$ npm install @tailwindcss/forms
+  .../PSW/ti-2024-1-grupo-10-1/frontend$ npm i @heroicons/react
+
 */
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
