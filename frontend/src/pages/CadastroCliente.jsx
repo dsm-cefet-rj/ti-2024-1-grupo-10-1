@@ -1,11 +1,11 @@
-import CadastroCliente from "../components/CadastroCliente";
+import FormCliente from "../components/FomCadastroCliente";
 
-function CadCli() {
+function CadastroCliente() {
 	return (
 		<div>
-			<CadastroCliente></CadastroCliente>
+			<FormCliente></FormCliente>
 		</div>
 	)
 }
 
-export default CadCli
+export default CadastroCliente
