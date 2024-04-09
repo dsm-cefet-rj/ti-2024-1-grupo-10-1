@@ -36,6 +36,11 @@ export default function FormCliente() {
 					- Informações de Localidade (CEP/Endereço)
 
 				*/
+
+				// Pendencias:
+					// Centralizar formulario	
+					// Melhorar tamanho dos inputs
+					// Avaliar definição de endereço dinãmico via CEP (API)
 			}
 			{/* Conteudo do Formulário */}
 			<div className="space-y-12">
