@@ -33,14 +33,14 @@ export default function FormCliente() {
 					/* Ideia:
 					Criar um Form que Extraia info do cliente como:
 						- Nome Completo
+						- CPF
 						- Email Válido para verificação
 						- Informações de Localidade (CEP/Endereço)
 	
 					*/
 
 					// Pendencias:
-					// Centralizar formulario	
-					// Melhorar tamanho dos inputs
+					// Melhorar largura dos inputs
 					// Avaliar definição de endereço dinãmico via CEP (API)
 				}
 
