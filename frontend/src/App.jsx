@@ -8,9 +8,9 @@ function App() {
 
 	return (
 		// <Home></Home>
-		// <CadastroCliente></CadastroCliente>
+		<CadastroCliente></CadastroCliente>
 		//<div><Login></Login></div>
-		<Bike></Bike>
+		// <Bike></Bike>
 	)
 }
 
