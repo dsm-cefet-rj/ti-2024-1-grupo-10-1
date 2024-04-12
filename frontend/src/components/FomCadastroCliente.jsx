@@ -1,45 +1,71 @@
 /*
   This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-	// ...
-	plugins: [
-	  // ...
-	  require('@tailwindcss/forms'),
-	],
-  }
-  ```
+  - tailwind.config.js
+	module.exports = {
+		plugins: [ require('@tailwindcss/forms'),],
+	}
 
-  Além disso:
-
-  .../PSW/ti-2024-1-grupo-10-1/frontend$ npm install @tailwindcss/forms
-  .../PSW/ti-2024-1-grupo-10-1/frontend$ npm i @heroicons/react
+	Além disso:
+	frontend$ npm install @tailwindcss/forms
+	frontend$ npm i @heroicons/react
 
 	Fonte: https://tailwindui.com/components/application-ui/forms/form-layouts
-
 	Componente de Interesse: https://tailwindui.com/components/application-ui/navigation/pagination
 */
 
-// import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-
+import React, { useState } from 'react';
 import logo from "../assets/bike2.jpg"
+import { create } from 'zustand';
+
 
 export default function FormCliente() {
+
+	const useClienteStore = create((set) => ({
+		clientes: [],
+		addCliente: (cliente) => set((state) => ({
+			clientes: [...state.clientes, cliente]
+		}))
+	}));
+
+	const [nome, setNome] = useState('');
+	const [email, setEmail] = useState('');
+	const [cep, setCep] = useState('');
+
+	const addCliente = useClienteStore((state) => state.addCliente);
+
+	const handleSubmit = (e) => {
+
+		e.preventDefault();
+
+		// Crie um objeto com os dados do cliente
+		const novoCliente = {
+			nome,
+			email,
+			cep
+		};
+
+		// Chame a função para adicionar o cliente à lista
+		addCliente(novoCliente);
+
+		// // Limpe os campos após o envio
+		setNome('');
+		setEmail('');
+		setCep('');
+	};
+
 	return (
 
-		<div>
-			<header className='bg-purple-500 p-4 flex justify-between items-center'>
+		<div className='min-w-96'>
+			<header className='bg-purple-500 p-2 flex justify-between items-center'>
 				{/* Título */}
 				<h1 className="text-white text-2xl">Meu Site</h1>
 
-				<img src={logo} alt="Logo" className="w-10 h-10 rounded-full"/>
+				<img src={logo} alt="Logo" className="w-14 h-10 rounded-full" />
 			</header>
-			<br/>
+			<br />
 
 			<div id="clientForm" className="grid place-content-center">
-				<form>
+				<form onSubmit={handleSubmit}>
 
 					{
 						/* Ideia:
