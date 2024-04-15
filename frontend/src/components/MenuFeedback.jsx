@@ -5,7 +5,7 @@ const MenuFeedBack = () => {
 			
 			<div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md bg-white border border-gray-300 rounded-lg">
 
-				<h1 className="text-center text-2xl mb-5">Deixe seu comentário sobre o produto</h1>
+				<h1 className="text-center text-2xl mb-5">Deixe seu comentário sobre sua experiência</h1>
 
 				<form className="bg-white shadow w-full rounded-lg divide-y divide-gray-300 border boder-gray-300">
 					<div className="px-9 py-12">

@@ -11,9 +11,6 @@ function CadastroCliente() {
 	return (
 		<FormCliente></FormCliente>
 	)
-
-
-
 	
 }
 

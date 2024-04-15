@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/bike2.jpg';
 import lupa from '../assets/lupan.png';
-import loja from '../assets/loja.png';
+import fav from '../assets/fav.png';
 import batePapo from '../assets/batePapo.png';
 import ciclista from '../assets/ciclista.png';
 
@@ -11,21 +12,23 @@ const HeaderHome = () => {
 	return (
 		<div>
 			<header className='flex flex-col md:flex-row items-center justify-between md:px-0'>
-				{/* Logo */}
-				<img src={logo} className='w-40 h-auto md:w-48 md:h-auto' alt="Logo" />
+				{/* Logo clicável */}
+				<Link to="/home">
+					<img src={logo} className='w-40 h-auto md:w-48 md:h-auto' alt="Logo" />
+				</Link>
 
 				{/* Barra de Pesquisa */}
 				<div className='w-full md:w-1/3 flex justify-between items-center bg-white border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 md:mr-0'>
-					<input className='w-full focus:outline-none' placeholder="Buscar por modelo, marca..." type="text" />
+					<input className='w-full border-white focus:outline-none' placeholder="Buscar por modelo, marca..." type="text" />
 					<img src={lupa} className='w-6 h-6' alt="Lupa" />
 				</div>
 
 				{/* Menu de Navegação para Dispositivos Maiores */}
 				<nav className="hidden md:flex items-center gap-7">
-					<div className='cursor-pointer flex items-center gap-2'> <img src={loja} alt="Loja" /> <span>Meus Anúncios</span></div>
-					<div className='cursor-pointer flex items-center gap-2'><img src={batePapo} alt="Bate Papo" /> <span>Feedback</span></div>
-					<div className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></div>
-					<button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5">Quero Vender</button>
+					<Link to="/favoritos" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>
+					<Link to="/feedback" className='cursor-pointer flex items-center gap-2'><img src={batePapo} alt="Bate Papo" /> <span>Feedback</span></Link>
+					<Link to="/conta" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>
+					<Link to="/anuncios" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5">Quero Vender</Link>
 				</nav>
 
 				{/* Botão de Hambúrguer */}
@@ -52,21 +55,10 @@ const HeaderHome = () => {
 						</button>
 
 						{/* Itens do Menu de Hambúrguer */}
-						<div className='ml-7 cursor-pointer flex items-center gap-2 mb-4'>
-							<img src={loja} alt="Loja" />
-							<span className="md:block hidden">Meus Anúncios</span>
-						</div>
-						<div className='cursor-pointer flex items-center gap-2 mb-4'>
-							<img src={batePapo} alt="Bate Papo" />
-							<span className="md:block hidden">Chat</span>
-						</div>
-						<div className='cursor-pointer flex items-center gap-2 mb-4'>
-							<img src={ciclista} alt="Ciclista" />
-							<span className="md:block hidden">Conta</span>
-						</div>
-						<button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
-							Quero Vender
-						</button>
+						<Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>
+						<Link to="/feedback" className='cursor-pointer flex items-center gap-2 mb-4'><b>Chat</b></Link>
+						<Link to="/conta" className='cursor-pointer flex items-center gap-2 mb-4'><b>Minha conta</b></Link>
+						<Link to="/quero-vender" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Quero Vender</Link>
 					</div>
 				)}
 			</header>
