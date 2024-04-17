@@ -1,50 +1,93 @@
-import React from 'react'
-//import speed from '../assets/bike2.jpg'
-import speed2 from '../assets/speed3.jpg'
-import passeio from '../assets/passeio.jpg'
-import MTB from '../assets/MTB.jpg'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import speed2 from '../assets/speed3.jpg';
+import passeio from '../assets/passeio.jpg';
+import MTB from '../assets/MTB.jpg';
+import Eletrica from '../assets/BikeEletrica.jpg'
+import Speed from '../assets/speed3.jpg';
+
+
+const products = [
+	{
+		id: 1,
+		name: 'Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana',
+		href: '#',
+		imageSrc: MTB,
+		imageAlt: 'Bike MTB.',
+		price: '$4.000',
+		color: 'Red',
+		type: "MTB"
+	},
+	{
+		id: 2,
+		name: 'Bicicleta de Passeio Comfort Plus',
+		href: '#',
+		imageSrc: passeio,
+		imageAlt: 'Bike Passeio',
+		price: '$1.800',
+		color: 'White',
+		type: "Passeio"
+	},
+	{
+		id: 3,
+		name: 'Bicicleta Elétrica Lev - Novas e Usadas com garantia.',
+		href: '#',
+		imageSrc: Eletrica,
+		imageAlt: 'Eletric Bike',
+		price: '$4.000',
+		color: 'Black',
+		type: "Eletrica"
+	},
+	{
+		id: 4,
+		name: 'Bicicleta Rav2r Speed Carbono Aro 700 Kit.',
+		href: '#',
+		imageSrc: Speed,
+		imageAlt: 'Bike Speed',
+		price: '$20.00',
+		color: 'Orange',
+		type: "Speed"
+	}
+	// Mais produtos...
+];
 
 
 const Recomendados = () => {
 	return (
 		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 mt-14">
-			
-			<div className="relative bg-black">
+			<Link to="/bike/4" className="relative bg-black">
 				<img src={speed2} className="object-cover w-full h-72" />
 				<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
 					<p className="text-lg">Preço: $10000</p>
 					<p className="text-sm">Bicicleta Rav2r Speed Carbono Aro 700 Kit.</p>
 				</div>
-			</div>
+			</Link>
 
-			<div className="relative bg-black">
+			<Link to="/bike/2" className="relative bg-black">
 				<img src={passeio} className="object-cover w-full h-72" />
 				<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
-					<p className="text-lg">Preço: $800</p>
-					<p className="text-sm">Bicicleta Rav2r Speed Carbono Aro 700 Kit.</p>
+					<p className="text-lg">Preço: $1800</p>
+					<p className="text-sm">Bicicleta de Passeio Comfort Plus</p>
 				</div>
+			</Link>
 
-			</div>
-			<div className="relative bg-black">
+			<Link to="/bike/1" className="relative bg-black">
 				<img src={MTB} className="object-cover w-full h-72" />
 				<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
-					<p className="text-lg">Preço: $1900</p>
-					<p className="text-sm">Bicicleta Rav2r Speed Carbono Aro 700 Kit.</p>
+					<p className="text-lg">Preço: $4.000</p>
+					<p className="text-sm">Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana.</p>
 				</div>
-			</div>
+			</Link>
 
-			<div className="relative bg-black">
-				<img src={speed2} className="object-cover w-full h-72" />
+			<Link to="/bike/3" className="relative bg-black">
+				<img src={Eletrica} className="object-cover w-full h-72" />
 				<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
-					<p className="text-lg">Preço: $1000</p>
-					<p className="text-sm">Bicicleta Rav2r Speed Carbono Aro 700 Kit.</p>
+					<p className="text-lg">Preço: $4.000</p>
+					<p className="text-sm">Bicicleta Elétrica Lev - Novas e Usadas com garantia.</p>
 				</div>
-			</div>
-
+			</Link>
 		</div>
+	);
+};
 
-	)
-}
-
-
-export default Recomendados
+export default Recomendados;

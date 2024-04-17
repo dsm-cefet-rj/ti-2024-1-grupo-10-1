@@ -11,6 +11,7 @@ const Navigation = () => {
         <li><Link to="/Feedback">Feedback</Link></li>
         <li><Link to="/Anuncios">Anunciar</Link></li>
         <li><Link to="/Conta">Minha Conta</Link></li>
+        <li><Link to="/BikeView">Bike clicada</Link></li>
       </ul>
     </nav>
   );

@@ -9,7 +9,7 @@ import CadastroCliente from './pages/CadastroCliente';
 import Favoritos from './pages/Favoritos';
 import Anuncios from './pages/Anuncios';
 import Conta from './pages/Conta'
-
+import BikeView from './pages/BikeView';
 
 const App = () => {
   return (
@@ -25,6 +25,7 @@ const App = () => {
         <Route path="/anuncios" element={<Anuncios/>} />
         <Route path="/conta" element={<Conta />} />
         <Route path="/favoritos" element={<Favoritos />} />
+        <Route path="/bike/:id" element={<BikeView />} /> 
       </Routes>
     </Router>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import camera from '../assets/cameraIcon.png'; //
 
+
 const PreencherVenda = () => {
 	const [images, setImages] = useState(Array(5).fill(null)); // Array para armazenar as imagens selecionadas
 
@@ -19,7 +20,7 @@ const PreencherVenda = () => {
 					<input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
 
 					<label className="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição*</label>
-					<input className="h-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex: 'Bicicleta Rav2r Speed Carbono Aro 700 Kit.'" required />
+					<input className="h-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex: 'Bicicleta Rav2r Speed Carbono Aro 700 Kit, 2 anos de uso.'" required />
 
 					<label className="mt-7 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço (R$)*</label>
 					<input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
