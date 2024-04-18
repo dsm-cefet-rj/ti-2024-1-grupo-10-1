@@ -1,12 +1,11 @@
-import MenuFeedBack from "../components/MenuFeedback"
 import HeaderHome from "../components/HeaderHome"
-
+import FeedbacksView from "../components/FeedbacksView"
 
 function FeedBack() {
 	return (
 		<div>
 			<HeaderHome></HeaderHome>
-			<MenuFeedBack></MenuFeedBack>
+			<FeedbacksView></FeedbacksView>
 		</div>
 	)
 }

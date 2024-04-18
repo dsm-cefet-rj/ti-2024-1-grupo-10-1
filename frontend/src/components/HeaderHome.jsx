@@ -26,7 +26,7 @@ const HeaderHome = () => {
 				{/* Menu de Navegação para Dispositivos Maiores */}
 				<nav className="hidden md:flex items-center gap-7">
 					<Link to="/favoritos" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>
-					<Link to="/feedback" className='cursor-pointer flex items-center gap-2'><img src={batePapo} alt="Bate Papo" /> <span>Feedback</span></Link>
+					<Link to="/feedback" className='cursor-pointer flex items-center gap-2'><img src={batePapo} alt="Bate Papo" /> <span>Feedbacks</span></Link>
 					<Link to="/conta" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>
 					<Link to="/anuncios" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5">Quero Vender</Link>
 				</nav>
@@ -56,7 +56,7 @@ const HeaderHome = () => {
 
 						{/* Itens do Menu de Hambúrguer */}
 						<Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>
-						<Link to="/feedback" className='cursor-pointer flex items-center gap-2 mb-4'><b>Chat</b></Link>
+						<Link to="/feedback" className='cursor-pointer flex items-center gap-2 mb-4'><b>Feedbacks</b></Link>
 						<Link to="/conta" className='cursor-pointer flex items-center gap-2 mb-4'><b>Minha conta</b></Link>
 						<Link to="/quero-vender" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Quero Vender</Link>
 					</div>

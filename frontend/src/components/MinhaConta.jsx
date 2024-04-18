@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const Minhaconta = () => {
   return (
@@ -17,28 +18,28 @@ const Minhaconta = () => {
                     </div>
                 </div>
                 <div className="border-b">
-                    
-                  <a className="px-4 py-2 hover:bg-gray-100 flex">
-                            <div class="text-green-600">
+
+                      <Link to="/favoritos" className="px-4 py-2 hover:bg-gray-100 flex">
+                            <div className="text-purple-600">
                                 <svg
-                                    fill="none"
                                     stroke="currentColor"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                     strokeWidth="1"
                                     viewBox="0 0 24 24"
-                                    class="w-5 h-5"
+                                    className="w-5 h-5"
                                 >
                                     <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                                 </svg>
                             </div>
+                      
                       <div className="pl-3">
                           <p className="text-sm font-medium text-gray-800 leading-none">
                                     Favoritos
                                 </p>
                           <p className="text-xs text-gray-500">Veja seus favoritos</p>
                             </div>
-                        </a>
+                        </Link>
                    
                   <a className="px-4 py-2 hover:bg-gray-100 flex">
                       <div className="text-gray-800">
