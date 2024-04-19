@@ -53,8 +53,9 @@ const products = [
 
 
 const Recomendados = () => {
+	// TODO Trocar a div por uma ul e ir adicionando os elementos, atentar para as margens laterais...
 	return (
-		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 mt-14">
+		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 mt-10 mx-5">
 			<Link to="/bike/4" className="relative bg-black">
 				<img src={speed2} className="object-cover w-full h-72" />
 				<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
