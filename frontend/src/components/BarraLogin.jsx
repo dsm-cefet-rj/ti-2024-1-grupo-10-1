@@ -1,25 +1,61 @@
 import React from 'react'
+import useUserStore from './UserUtils';
 
 
 const usuarios = [
 	{
-		"Nome": "Rodrigo Teixeira Parracho",
-		"CEP":"21211250",
-		"email": "parracho@gmail.com",
-		"senha": "admin1234",
-	}, 
+		Nome: "Rodrigo Teixeira Parracho",
+		cep: "21211250",
+		email: "parracho@gmail.com",
+		senha: "admin1234",
+	},
 	{
-		"Nome": "Joao Jendiroba",
-		"CEP":"21210123",
-		"email": "jendiroba@gmail.com",
-		"senha": "1234",
-	}, 
+		Nome: "Joao Jendiroba",
+		CEP: "21210123",
+		email: "jendiroba@gmail.com",
+		senha: "1234",
+	},
 ];
+
 
 
 
 const BarraLogin = () => {
 
+
+
+
+
+	const { updateNome, updateEmail, updateCep, setLoggedAccount } = useUserStore((state) => ({
+		updateNome: state.updateNome,
+		updateEmail: state.updateEmail,
+		updateCep: state.updateCep,
+		setLoggedAccount: state.setLoggedAccount
+	}));
+
+
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		let email = document.getElementById("email").value;
+		let senha = document.getElementById("pass").value;
+
+		// Verificar se os dados coincidem com algum usuário
+		const get_user = usuarios.find((user) => user.email === email && user.senha === senha);
+
+		console.log(get_user);
+		if (get_user) {
+
+			updateNome(get_user.Nome);
+			updateCep(get_user.CEP);
+			updateEmail(get_user.email);
+			setLoggedAccount(true);
+
+			
+		}
+
+	};
 
 
 	return (
@@ -28,14 +64,22 @@ const BarraLogin = () => {
 				<h1 className="text-center text-2xl mb-5">Acesse sua conta</h1>
 				<div className="bg-white shadow w-full rounded-lg divide-y divide-gray-300 border boder-gray-300">
 					<div className="px-7 pb-7 pt-5">
-						<label className="font-semibold text-sm text-gray-600 pb-1 block">E-mail</label> <input type="text" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
-						<label className="font-semibold text-sm text-gray-600 pb-1 block">Password</label> <input type="text" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
-						<button type="button" className="transition duration-200 bg-purple-500 hover:bg-purple-700 focus:bg-purple-700 focus:shadow-sm focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
-							<span className="inline-block mr-2">Login</span>
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-							</svg>
-						</button>
+						<form>
+
+							<label className="font-semibold text-sm text-gray-600 pb-1 block">E-mail</label>
+							<input id="email" type="email" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+
+							<label className="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
+							<input id="pass" type="password" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+
+							<button onClick={handleSubmit} type="button" className="transition duration-200 bg-purple-500 hover:bg-purple-700 focus:bg-purple-700 focus:shadow-sm focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
+								<span className="inline-block mr-2">Login</span>
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+								</svg>
+							</button>
+						</form>
+
 					</div>
 
 					<div className="text-center">

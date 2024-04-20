@@ -12,7 +12,10 @@ import useUserStore from './UserUtils';
 const HeaderHome = () => {
 	const [menuOpen, setMenuOpen] = useState(false);
 
-	const { user, has_logged } = useUserStore((state) => ({ user: state.user, has_logged: state.user.logged}))
+	const { user, has_logged } = useUserStore((state) => ({
+		user: state.user,
+		has_logged: state.user.logged
+	}));
 
 
 	return (
