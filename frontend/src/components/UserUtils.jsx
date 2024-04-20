@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-
+import { produce } from immer;
 
 const useUserStore = create((set) => ({
 
@@ -20,7 +20,7 @@ const useUserStore = create((set) => ({
 	user: {
 		id: 1,
 		profile: {
-			name: "Desconhecido",
+			nome: "Desconhecido",
 			email: "naoteinteressa@gmail.com",
 			cep: "12345678"
 		},
@@ -28,42 +28,51 @@ const useUserStore = create((set) => ({
 	},
 
 	// Funçoes de alteração de estado --> Podem ser simplificadas com immer
-	updateNome: (newNome) => set((state) => ({
-		user: {
-			...state.user,
-			profile: {
-				...state.user.profile,
-				name: newNome,
-			}
-		}
-	})),
+	// updateNome: (newNome) => set((state) => ({
+	// 	user: {
+	// 		...state.user,
+	// 		profile: {
+	// 			...state.user.profile,
+	// 			name: newNome,
+	// 		}
+	// 	}
+	// })),
 
-	updateEmail: (newEmail) => set((state) => ({
-		user: {
-			...state.user,
-			profile: {
-				...state.user.profile,
-				email: newEmail,
-			}
-		}
-	})),
+	// updateEmail: (newEmail) => set((state) => ({
+	// 	user: {
+	// 		...state.user,
+	// 		profile: {
+	// 			...state.user.profile,
+	// 			email: newEmail,
+	// 		}
+	// 	}
+	// })),
 
-	updateCep: (newCep) => set((state) => ({
-		user: {
-			...state.user,
-			profile: {
-				...state.user.profile,
-				cep: newCep,
-			}
-		}
-	})),
+	// updateCep: (newCep) => set((state) => ({
+	// 	user: {
+	// 		...state.user,
+	// 		profile: {
+	// 			...state.user.profile,
+	// 			cep: newCep,
+	// 		}
+	// 	}
+	// })),
 
-	updatePass: (newpass) => set((state) => ({
-		user: {
-			...state.user,
-			passwd: newpass
-		}
-	})),
+	// updatePass: (newpass) => set((state) => ({
+	// 	user: {
+	// 		...state.user,
+	// 		passwd: newpass
+	// 	}
+	// })),
+
+	// Funçoes de alteração de estado com immer
+	updateNome: (newNome) => set(produce((state) => { state.user.profile.nome = newNome; })),
+
+	updateEmail: (newEmail) => set(produce((state) => { state.user.profile.email = newEmail; })),
+
+	updateCep: (newCep) => set(produce((state) => { state.user.profile.cep = newCep; })),
+
+	updatePass: (newPass) => set(produce((state) => { state.user.passwd = newPass; })),
 
 }));
 
