@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navigation from './Navigation';
 import Home from './pages/Home';
 import Bike from './pages/Bike';
@@ -17,7 +17,7 @@ import defaultUserStore from './components/UserUtils';
 
 const App = () => {
 
-	const { user, setName, setCep, setEmail, setPass} = defaultUserStore();
+	const { user, setName, setCep, setEmail, setPass } = defaultUserStore();
 
 	return (
 		<Router>
@@ -33,6 +33,7 @@ const App = () => {
 				<Route path="/favoritos" element={<Favoritos />} />
 				<Route path="/bike/:id" element={<BikeView />} />
 				<Route path="/feedbackpost" element={<FeedbackPost />} />
+				<Route path='*' element={<Navigate to={"/"} />}></Route>
 			</Routes>
 		</Router>
 	);
