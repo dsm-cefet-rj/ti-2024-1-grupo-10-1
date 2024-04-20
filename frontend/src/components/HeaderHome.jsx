@@ -28,7 +28,7 @@ const HeaderHome = () => {
 					<Link to="/favoritos" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>
 					<Link to="/feedback" className='cursor-pointer flex items-center gap-2'><img src={batePapo} alt="Bate Papo" /> <span>Feedbacks</span></Link>
 					<Link to="/conta" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>
-					<Link to="/anuncios" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-2">Quero</Link>
+					<Link to="/anuncios" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-2">Quero Anunciar</Link>
 				</nav>
 
 				{/* Botão de Hambúrguer */}
@@ -58,7 +58,7 @@ const HeaderHome = () => {
 						<Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>
 						<Link to="/feedback" className='cursor-pointer flex items-center gap-2 mb-4'><b>Feedbacks</b></Link>
 						<Link to="/conta" className='cursor-pointer flex items-center gap-2 mb-4'><b>Minha conta</b></Link>
-						<Link to="/quero-vender" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Quero</Link>
+						<Link to="/quero-vender" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">Quero Anunciar</Link>
 					</div>
 				)}
 			</header>

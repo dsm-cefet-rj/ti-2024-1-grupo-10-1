@@ -1,6 +1,27 @@
 import React from 'react'
 
+
+const usuarios = [
+	{
+		"Nome": "Rodrigo Teixeira Parracho",
+		"CEP":"21211250",
+		"email": "parracho@gmail.com",
+		"senha": "admin1234",
+	}, 
+	{
+		"Nome": "Joao Jendiroba",
+		"CEP":"21210123",
+		"email": "jendiroba@gmail.com",
+		"senha": "1234",
+	}, 
+];
+
+
+
 const BarraLogin = () => {
+
+
+
 	return (
 		<div className="min-h-screen min-w-fit bg-gray-100 flex flex-col justify-center sm:py-12 border border-gray-300">
 			<div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md bg-white border border-gray-300 rounded-lg">
