@@ -16,8 +16,7 @@ function Home() {
 
 	// setNomeCompleto("Rodrigo");
 	return (
-		<div>
-			{/* <h1>{user.nomeCompleto}</h1> */}
+		<div> 
 			<HeaderHome></HeaderHome>
 			<Options></Options>
 			<CiclistaHome></CiclistaHome>

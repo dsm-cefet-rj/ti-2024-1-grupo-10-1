@@ -37,7 +37,6 @@ const useUserStore = create((set) => ({
 	// 		}
 	// 	}
 	// })),
-
 	// updateEmail: (newEmail) => set((state) => ({
 	// 	user: {
 	// 		...state.user,
@@ -47,7 +46,6 @@ const useUserStore = create((set) => ({
 	// 		}
 	// 	}
 	// })),
-
 	// updateCep: (newCep) => set((state) => ({
 	// 	user: {
 	// 		...state.user,
@@ -57,7 +55,6 @@ const useUserStore = create((set) => ({
 	// 		}
 	// 	}
 	// })),
-
 	// updatePass: (newpass) => set((state) => ({
 	// 	user: {
 	// 		...state.user,
@@ -65,6 +62,7 @@ const useUserStore = create((set) => ({
 	// 	}
 	// })),
 
+	// 
 	// Funçoes de alteração de estado com immer
 	updateNome: (newNome) => set(produce((state) => { state.user.profile.nome = newNome; })),
 
