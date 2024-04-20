@@ -8,18 +8,20 @@ import MeioVendas from '../components/MeioVendas'
 import PreencherVenda from '../components/PreencherVenda'
 import HeaderLogin from '../components/HeaderLogin'
 
-
+import useUserStore from '../components/UserUtils';
 
 function Home() {
 
+	const { user } = useUserStore();
 
-	
+	// setNomeCompleto("Rodrigo");
 	return (
 		<div>
-            <HeaderHome></HeaderHome>
-	        <Options></Options>
-	        <CiclistaHome></CiclistaHome>
-	        <Recomendados></Recomendados>
+			{/* <h1>{user.nomeCompleto}</h1> */}
+			<HeaderHome></HeaderHome>
+			<Options></Options>
+			<CiclistaHome></CiclistaHome>
+			<Recomendados></Recomendados>
 		</div>
 	)
 }
