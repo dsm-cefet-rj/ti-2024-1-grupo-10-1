@@ -15,6 +15,7 @@ Verifique se todas essas dependencias estão instaladas através da pasta 'front
 	* npm install react-router-dom
 	* npm install react
 	* npm install zustand
+	* npm install immer
 
 
 Caso encontre algum outro tipo de problema não solucionado, entre em contato com a equipe
