@@ -2,68 +2,69 @@ import { create } from 'zustand';
 
 
 const useUserStore = create((set) => ({
-	// Estado inicial do usuário
 
 	// Estrut. Basica
+	/*
+		nome: 'Desconhecido',
+		email: 'naoteinteressa@gmail.com',
+		cep: '00000000',
+		senha: '123456789',
 
-	/**
-	 * 
-	
-	user: {
-		id: 0,
-		profile: {
-			name: "",
-			email: "",
-			passwd: ""
-		}
-	}
-	
+		updateNome: (newNome) => set((state) => ({ nome: newNome })),
+		updateCep: (newCep) => set((state) => ({ cep: newCep })),
+		updateEmail: (newEmail) => set((state) => ({ email: newEmail })),
+		updatePasswd: (newPass) => set((state) => ({ senha: newPass })),
 	*/
 
+	// Estado inicial do usuário
+	user: {
+		id: 1,
+		profile: {
+			name: "Desconhecido",
+			email: "naoteinteressa@gmail.com",
+			cep: "12345678"
+		},
+		passwd: "1234"
+	},
 
+	// Funçoes de alteração de estado --> Podem ser simplificadas com immer
+	updateNome: (newNome) => set((state) => ({
+		user: {
+			...state.user,
+			profile: {
+				...state.user.profile,
+				name: newNome,
+			}
+		}
+	})),
 
-	nome: 'Desconhecido',
-	cep: '00000000',
-	email: 'naoteinteressa@gmail.com',
-	senha: '123456789',
+	updateEmail: (newEmail) => set((state) => ({
+		user: {
+			...state.user,
+			profile: {
+				...state.user.profile,
+				email: newEmail,
+			}
+		}
+	})),
 
-	updateNome: (newNome) => set((state) => ({ nome: newNome })),
-	updateNome: (newCep) => set((state) => ({ cep: newCep })),
-	updateNome: (newEmail) => set((state) => ({ email: newEmail })),
-	updateNome: (newPass) => set((state) => ({ senha: newPass })),
+	updateCep: (newCep) => set((state) => ({
+		user: {
+			...state.user,
+			profile: {
+				...state.user.profile,
+				cep: newCep,
+			}
+		}
+	})),
 
-	// Função para atualizar o nome completo do usuário
-	// setNomeCompleto: (newnomeCompleto) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		nomeCompleto
-	// 	}
-	// 	// user: { nomeCompleto: state.newnomeCompleto }
-	// })),
+	updatePass: (newpass) => set((state) => ({
+		user: {
+			...state.user,
+			passwd: newpass
+		}
+	})),
 
-	// // Função para atualizar o CEP do usuário
-	// setCep: (cep) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		cep
-	// 	}
-	// })),
-
-	// // Função para atualizar o email do usuário
-	// setEmail: (email) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		email
-	// 	}
-	// })),
-
-	// // Função para atualizar a senha do usuário
-	// setSenha: (senha) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		senha
-	// 	}
-	// }))
 }));
 
 export default useUserStore;
