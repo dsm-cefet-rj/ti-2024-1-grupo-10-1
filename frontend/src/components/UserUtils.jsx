@@ -3,8 +3,8 @@ import { produce } from 'immer';
 
 const useUserStore = create((set) => ({
 
-	// Estrut. Basica
-	/*
+	/* Estrut. Basica
+	
 		nome: 'Desconhecido',
 		email: 'naoteinteressa@gmail.com',
 		cep: '00000000',
@@ -17,52 +17,18 @@ const useUserStore = create((set) => ({
 	*/
 
 	// Estado inicial do usuário
+	
 	user: {
-		id: 1,
+		id: -1,
 		profile: {
 			nome: "Desconhecido",
 			email: "naoteinteressa@gmail.com",
 			cep: "12345678"
 		},
-		passwd: "1234"
+		passwd: "1234", 
+		logged: false
 	},
 
-	// Funçoes de alteração de estado --> Podem ser simplificadas com immer
-	// updateNome: (newNome) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		profile: {
-	// 			...state.user.profile,
-	// 			name: newNome,
-	// 		}
-	// 	}
-	// })),
-	// updateEmail: (newEmail) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		profile: {
-	// 			...state.user.profile,
-	// 			email: newEmail,
-	// 		}
-	// 	}
-	// })),
-	// updateCep: (newCep) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		profile: {
-	// 			...state.user.profile,
-	// 			cep: newCep,
-	// 		}
-	// 	}
-	// })),
-	// updatePass: (newpass) => set((state) => ({
-	// 	user: {
-	// 		...state.user,
-	// 		passwd: newpass
-	// 	}
-	// })),
-
-	// 
 	// Funçoes de alteração de estado com immer
 	updateNome: (newNome) => set(produce((state) => { state.user.profile.nome = newNome; })),
 
@@ -72,6 +38,45 @@ const useUserStore = create((set) => ({
 
 	updatePass: (newPass) => set(produce((state) => { state.user.passwd = newPass; })),
 
+	setLoggedAccount: (newStateLogged) => set(produce((state) => { state.user.logged = newStateLogged; })),
+
 }));
 
 export default useUserStore;
+
+
+
+// Funçoes de alteração de estado --> Podem ser simplificadas com immer
+// updateNome: (newNome) => set((state) => ({
+// 	user: {
+// 		...state.user,
+// 		profile: {
+// 			...state.user.profile,
+// 			name: newNome,
+// 		}
+// 	}
+// })),
+// updateEmail: (newEmail) => set((state) => ({
+// 	user: {
+// 		...state.user,
+// 		profile: {
+// 			...state.user.profile,
+// 			email: newEmail,
+// 		}
+// 	}
+// })),
+// updateCep: (newCep) => set((state) => ({
+// 	user: {
+// 		...state.user,
+// 		profile: {
+// 			...state.user.profile,
+// 			cep: newCep,
+// 		}
+// 	}
+// })),
+// updatePass: (newpass) => set((state) => ({
+// 	user: {
+// 		...state.user,
+// 		passwd: newpass
+// 	}
+// })),

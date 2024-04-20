@@ -6,8 +6,14 @@ import fav from '../assets/fav.png';
 import batePapo from '../assets/batePapo.png';
 import ciclista from '../assets/ciclista.png';
 
+import useUserStore from './UserUtils';
+
+
 const HeaderHome = () => {
 	const [menuOpen, setMenuOpen] = useState(false);
+
+	const { user, has_logged } = useUserStore((state) => ({ user: state.user, has_logged: state.user.logged}))
+
 
 	return (
 		<div>
@@ -27,7 +33,11 @@ const HeaderHome = () => {
 				<nav className="hidden md:flex items-center gap-7">
 					<Link to="/favoritos" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>
 					<Link to="/feedback" className='cursor-pointer flex items-center gap-2'><img src={batePapo} alt="Bate Papo" /> <span>Feedbacks</span></Link>
-					<Link to="/conta" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>
+					{/* <Link to="/conta" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link> */}
+
+					{has_logged && <Link to="/conta" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>}
+					{!has_logged && <Link to="/login" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>} {/*Adiciona o componente B */}
+
 					<Link to="/anuncios" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-2">Quero Anunciar</Link>
 				</nav>
 

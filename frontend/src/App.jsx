@@ -12,12 +12,7 @@ import Conta from './pages/Conta'
 import BikeView from './pages/BikeView';
 import FeedbackPost from './pages/FeedbackPost';
 
-import useUserStore from './components/UserUtils';
-
-
 const App = () => {
-
-	// const { user, setName, setCep, setEmail, setPass } = defaultUserStore();
 
 	return (
 		<Router>
