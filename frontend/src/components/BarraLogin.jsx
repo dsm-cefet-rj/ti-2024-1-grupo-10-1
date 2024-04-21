@@ -88,7 +88,9 @@ const BarraLogin = () => {
 
 					<div className="text-center">
 						<button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
-							<span className="inline-block ml-1">Não tem uma conta? Cadastre-se</span>
+						<Link to="/Cadastro-Cliente">	
+								<span className="inline-block ml-1">Não tem uma conta? Cadastre-se</span>
+								</Link>
 						</button>
 					</div>
 				</div>
