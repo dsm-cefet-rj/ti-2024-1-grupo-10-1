@@ -25,9 +25,13 @@ const Header = () => {
 			<header className='flex items-center justify-center h-16 md:h-20 lg:h-24'>
 				<div className="flex items-center justify-center flex-1">
 					{/* Botão de voltar (desativado) */}
-					<button className="absolute top-0 left-0 ml-4 mt-4 cursor-not-allowed" disabled>
-						<img src={seta} alt="Seta para Esquerda" />
+
+					<button className="absolute top-0 left-0 ml-4 mt-4">
+					<Link to="/" className="cursor-pointer">
+							<img src={seta} alt="Seta para Esquerda" />
+					</Link>
 					</button>
+
 					{/* Logo clicável */}
 					{showLogo && (
 						<Link to="/" className="cursor-pointer">
