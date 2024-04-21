@@ -6,7 +6,8 @@ import HeaderLogin from "../components/HeaderLogin";
 const CadastroCliente = () => {
 	return (
 	  <div>
-		  <HeaderLogin></HeaderLogin>
+			<HeaderLogin></HeaderLogin>
+			
 		  <FormCliente></FormCliente>
 	  </div>
 	)
