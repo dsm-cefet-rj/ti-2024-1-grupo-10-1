@@ -15,8 +15,8 @@ const Options = () => {
 	};
 
 	return (
-		<nav className="w-full flex-grow">
-			<ul className="flex flex-wrap mx-2 mt-7">
+		<nav className="w-full flex-grow mx-1">
+			<ul className="flex flex-wrap mt-3">
 				<li className="w-full sm:w-1/2 md:w-1/4 px-2 mb-4">
 					<Link
 						to="/bike"

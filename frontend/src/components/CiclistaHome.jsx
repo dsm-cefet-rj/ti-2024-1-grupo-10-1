@@ -5,7 +5,7 @@ import imagem from '../assets/imagemCentral.png'
 const CiclistaHome = () => {
 	return (
 		<div>
-			<div className="relative w-full h-full sm:h-35 md:h-72 lg:h-80 xl:h-96 mt-14 overflow-hidden">
+			<div className="relative sm:h-35 md:h-72 lg:h-80 xl:h-96 mt-5 overflow-hidden">
 				<img src={imagem} className="object-cover w-full h-auto" alt="Imagem" />
 			</div>
 
