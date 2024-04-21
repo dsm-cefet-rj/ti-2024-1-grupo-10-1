@@ -11,7 +11,7 @@ const FeedbacksView = () => {
               <div className="py-8 w-full">
                   <div className="lg:flex items-center justify-center w-full">
 
-                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-white p-6 shadow rounded">
+                  <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded border border-black-500">
                           <div className="flex items-center border-b border-gray-200 pb-6">
                               <img src={conor} alt className="w-22 h-12 rounded-full" />
                               <div className="flex items-start justify-between w-full">
@@ -27,7 +27,7 @@ const FeedbacksView = () => {
 
 
 
-                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-white p-6 shadow rounded">
+                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded">
                           <div className="flex items-center border-b border-gray-200 pb-6">
                               <div className="flex items-start justify-between w-full">
                                   <img src={biker} alt className="w-22 h-12 rounded-full" />
@@ -46,7 +46,7 @@ const FeedbacksView = () => {
                  
                   <div className="lg:flex items-center justify-center w-full mt-7">
 
-                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-white p-6 shadow rounded">
+                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded">
                           <div className="flex items-center border-b border-gray-200 pb-6">
                               <img src={ironman} alt className="w-12 h-12 rounded-full" />
                               <div className="flex items-start justify-between w-full">
@@ -61,7 +61,7 @@ const FeedbacksView = () => {
                       </div>
 
 
-                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-white p-6 shadow rounded">
+                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded">
                           <div className="flex items-center border-b border-gray-200 pb-6">
                               <img src={chimaev} alt className="w-22 h-12 rounded-full" />
                               <div className="flex items-start justify-between w-full">
