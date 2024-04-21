@@ -5,13 +5,12 @@ import HeaderLogin from "../components/HeaderLogin";
 
 const CadastroCliente = () => {
 	return (
-	  <div>
+		<div>
 			<HeaderLogin></HeaderLogin>
-			
-		  <FormCliente></FormCliente>
-	  </div>
+			<FormCliente></FormCliente>
+		</div>
 	)
-  }
+}
 
 
 export default CadastroCliente

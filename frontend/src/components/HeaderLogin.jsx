@@ -10,11 +10,11 @@ const HeaderLogin = () => {
 	return (
 		<div>
 			<header>
-				<div >
-				{/* Logo clicável */}
-				<Link to="/home">
-					<img src={logo} className='w-40 h-auto md:w-48 md:h-auto' alt="Logo" />
-				</Link>
+				<div>
+					{/* Logo clicável */}
+					<Link to="/home">
+						<img src={logo} className='w-40 h-auto md:w-48 md:h-auto' alt="Logo" />
+					</Link>
 				</div>
 			</header>
 
