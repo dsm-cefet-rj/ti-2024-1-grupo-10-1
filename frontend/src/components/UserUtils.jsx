@@ -22,20 +22,24 @@ const useUserStore = create((set) => ({
 		profile: {
 			nome: "Desconhecido",
 			email: "naoteinteressa@gmail.com",
-			cep: "12345678"
+			cep: "12345678",
+			favs: [],
 		},
-		passwd: "1234",
-		logged: false
+		logged: false,
 	},
 
 	// Funçoes de alteração de estado com immer
+	updateId: (newId) => set(produce((state) => { state.user.id = newId; })),
+
 	updateNome: (newNome) => set(produce((state) => { state.user.profile.nome = newNome; })),
 
 	updateEmail: (newEmail) => set(produce((state) => { state.user.profile.email = newEmail; })),
 
 	updateCep: (newCep) => set(produce((state) => { state.user.profile.cep = newCep; })),
 
-	updatePass: (newPass) => set(produce((state) => { state.user.passwd = newPass; })),
+	updateFavs: (newFavs) => set(produce((state) => { state.user.profile.favs = newFavs; })),
+
+	// updatePass: (newPass) => set(produce((state) => { state.user.passwd = newPass; })),
 
 	setLoggedAccount: (newStateLogged) => set(produce((state) => { state.user.logged = newStateLogged; })),
 

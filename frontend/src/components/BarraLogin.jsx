@@ -1,31 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useUserStore from './UserUtils';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 // Banco de Dados de Usuários
-const usuarios = [
-	{
-		Nome: "Rodrigo Teixeira Parracho",
-		cep: "21211250",
-		email: "parracho@gmail.com",
-		senha: "admin1234",
-	},
-	{
-		Nome: "Joao Jendiroba",
-		CEP: "21210123",
-		email: "jendiroba@gmail.com",
-		senha: "1234",
-	},
-];
+// const usuarios = [
+// 	{
+// 		Nome: "Rodrigo Teixeira Parracho",
+// 		cep: "21211250",
+// 		email: "parracho@gmail.com",
+// 		senha: "admin1234",
+// 	},
+// 	{
+// 		Nome: "Joao Jendiroba",
+// 		CEP: "21210123",
+// 		email: "jendiroba@gmail.com",
+// 		senha: "1234",
+// 	},
+// ];
+
+
 
 const BarraLogin = () => {
 
-	const { updateNome, updateEmail, updateCep, setLoggedAccount } = useUserStore((state) => ({
+
+	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs } = useUserStore((state) => ({
 		updateNome: state.updateNome,
 		updateEmail: state.updateEmail,
 		updateCep: state.updateCep,
-		setLoggedAccount: state.setLoggedAccount
+		setLoggedAccount: state.setLoggedAccount,
+		setUserId: state.updateId,
+		setUserFavs: state.updateFavs
 	}));
+
+	const [users, setUsers] = useState([]);
+	const fetchUsers = async () => {
+		try {
+			const response = await axios.get('http://localhost:12345/users');
+			setUsers(response.data);
+		} catch (error) {
+			console.error('Erro ao buscar lista de usuarios:', error);
+		}
+	};
+
+	fetchUsers();
+
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -34,16 +53,26 @@ const BarraLogin = () => {
 		let senha = document.getElementById("pass").value;
 
 		// Verificar se os dados coincidem com algum usuário
-		const get_user = usuarios.find((user) => user.email === email && user.senha === senha);
+		let user_found = users.filter(usuario => { return usuario.email === email && usuario.senha === senha });
 
-		if (get_user) {
-			console.log(get_user);
-			updateNome(get_user.Nome);
-			updateCep(get_user.CEP);
-			updateEmail(get_user.email);
-			setLoggedAccount(true);
-		} else {
+		if (user_found.length != 1) {
+			// Deu merda, mais de um usuario com mesmas credenciais
 			console.log("Algo deu errado");
+		} else {
+			user_found = user_found[0];
+
+			console.log(user_found);
+			setUserId(user_found.id);
+
+			updateNome(user_found.Nome);
+			updateEmail(user_found.email);
+			updateCep(user_found.CEP);
+			setUserFavs(user_found.FavCollection);
+
+			setLoggedAccount(true);
+			// console.log(user);
+
+
 		}
 	};
 
