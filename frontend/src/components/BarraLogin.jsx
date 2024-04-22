@@ -37,7 +37,7 @@ const BarraLogin = () => {
 	const fetchUsers = async () => {
 		try {
 			const response = await axios.get('http://localhost:12345/users');
-			setUsers(response.data);
+			if (response.status == 200) setUsers(response.data);
 		} catch (error) {
 			console.error('Erro ao buscar lista de usuarios:', error);
 		}
