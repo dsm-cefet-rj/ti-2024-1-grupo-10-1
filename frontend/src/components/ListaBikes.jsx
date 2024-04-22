@@ -4,7 +4,7 @@ import passeio from '../assets/passeio.jpg';
 import MTB from '../assets/MTB.jpg';
 import Eletrica from '../assets/BikeEletrica.jpg'
 import { Link } from 'react-router-dom';
-
+import useUserStore from './UserUtils';
 
 const products = [
   {
@@ -53,6 +53,8 @@ const products = [
 const ListaBikes = ({ selectedBikeType }) => {
 	const filteredProducts = products.filter(product => product.type === selectedBikeType);
 
+	const {has_logged} = useUserStore((state)=>({has_logged: state.user.logged}))
+
 	return (
 		<div className="bg-white">
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -60,7 +62,7 @@ const ListaBikes = ({ selectedBikeType }) => {
 
 				<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
 					{filteredProducts.map((product) => (
-						<Link to={`/bike/${product.id}`} key={product.id} className="group relative">
+						<Link to={(has_logged) ? `/bike/${product.id}` : "/login"} key={product.id} className="group relative">
 							<div className="group relative">
 								<div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
 									<img
