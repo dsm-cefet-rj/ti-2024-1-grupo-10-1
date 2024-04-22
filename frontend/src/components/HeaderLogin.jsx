@@ -13,7 +13,7 @@ const HeaderLogin = () => {
 				<div>
 					{/* Logo clicável */}
 					<Link to="/home">
-						<img src={logo} className='w-40 h-auto md:w-48 md:h-auto' alt="Logo" />
+						<img src={logo} className='sm:w-25 sm:h-20 md:w-25 md:h-20' alt="Logo" />
 					</Link>
 				</div>
 			</header>

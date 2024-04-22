@@ -1,0 +1,79 @@
+{
+	"user": [
+		{
+			"id": 1,
+			"Nome": "Rodrigo Teixeira Parracho",
+			"CEP": "12341234",
+			"email": "parracho@gmail.com",
+			"senha": "1234",
+			"FavCollection": []
+		},
+		{
+			"id": 2,
+			"Nome": "Joao Jendiroba",
+			"CEP": "12345678",
+			"email": "jendiroba@gmail.com",
+			"senha": "1234",
+			"FavCollection": []
+		},
+		{
+			"id": 3,
+			"Nome": "",
+			"CEP": "11111111",
+			"email": "gabriel@gmail.com",
+			"senha": "1234",
+			"FavCollection": []
+		},
+		{
+			"id": 4,
+			"Nome": "",
+			"CEP": "00000000",
+			"email": "digomendonca@gmail.com",
+			"senha": "1234",
+			"FavCollection": []
+		}
+	],
+	"product": [
+		{
+			"id_prod": 1,
+			"userId": 1,
+			"valor": 10,
+			"Descricao": "",
+			"titulo": "",
+			"favCounter": 12
+		},
+		{
+			"id_prod": 2,
+			"userId": 1,
+			"valor": 10,
+			"Descricao": "",
+			"titulo": "",
+			"favCounter": 12
+		},
+		{
+			"id_prod": 3,
+			"userId": 1,
+			"valor": 10,
+			"Descricao": "",
+			"titulo": "",
+			"favCounter": 12
+		}
+	],
+	"comments": [
+		{
+			"userId": 1,
+			"commment": "",
+			"date": "2024-01-01"
+		},
+		{
+			"userId": 2,
+			"commment": "",
+			"date": "2024-01-01"
+		},
+		{
+			"userId": 3,
+			"commment": "",
+			"date": "2024-01-01"
+		}
+	]
+}
