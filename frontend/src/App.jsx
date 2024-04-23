@@ -11,6 +11,7 @@ import Anuncios from './pages/Anuncios';
 import Conta from './pages/Conta'
 import BikeView from './pages/BikeView';
 import FeedbackPost from './pages/FeedbackPost';
+import EditarCadastro from './components/EditarCadastro';
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
 				<Route path="/favoritos" element={<Favoritos />} />
 				<Route path="/bike/:id" element={<BikeView />} />
 				<Route path="/feedbackpost" element={<FeedbackPost />} />
+				<Route path= "/editarcadastro" element= {<EditarCadastro/>} />
 				<Route path='*' element={<Navigate to={"/"} />}></Route>
 			</Routes>
 		</Router>

@@ -32,7 +32,7 @@ const ListaBikes = () => {
 						<Link to={has_logged ? `/bike/${bike.id_bike}` : '/login'} key={bike.id_bike} className="group relative">
 							<div className="group relative">
 								<div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-									<img src={bike.imagem} alt={bike.Titulo} className="h-full w-full object-cover object-center lg:h-full lg:w-full" />
+									<img src={bike.imagem} alt={bike.titulo} className="h-full w-full object-cover object-center lg:h-full lg:w-full" />
 								</div>
 								<div className="mt-4 flex justify-between">
 									<div>
@@ -41,7 +41,7 @@ const ListaBikes = () => {
 												<span aria-hidden="true" className="absolute inset-0" /> {bike.titulo}
 											</a>
 										</h3>
-										<p className="mt-1 text-sm text-gray-500">{bike.Descricao}</p>
+										<p className="mt-1 text-sm text-gray-500">{bike.descricao}</p>
 									</div>
 									<p className="text-sm font-medium text-gray-900">{`R$ ${bike.valor.toFixed(2)}`}</p>
 								</div>
