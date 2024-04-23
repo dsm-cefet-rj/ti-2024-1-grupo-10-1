@@ -6,7 +6,7 @@
 			"CEP": "12341234",
 			"email": "parracho@gmail.com",
 			"senha": "1234",
-			"FavCollection": []
+			"FavCollection": [1,2,3]
 		},
 		{
 			"id": 2,
@@ -37,9 +37,9 @@
 		{
 			"id_prod": 1,
 			"userId": 1,
-			"valor": 10,
+			"Valor": 10,
 			"Descricao": "",
-			"titulo": "",
+			"Titulo": "",
 			"favCounter": 12
 		},
 		{
