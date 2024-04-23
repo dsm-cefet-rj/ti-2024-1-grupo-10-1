@@ -6,7 +6,7 @@
 			"CEP": "12341234",
 			"email": "parracho@gmail.com",
 			"senha": "1234",
-			"FavCollection": [1,2,3]
+			"FavCollection": [1,3, 2]
 		},
 		{
 			"id": 2,
@@ -37,17 +37,16 @@
 		{
 			"id_bike": 1,
 			"userId": 1,
-			"Valor": 4000,
+			"valor": 4000,
 			"Descricao": "Bike bem conservada tamanho 52 acompanha capacete",
-			"Titulo": "Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana",
+			"titulo": "Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana",
 			"favCounter": 12,
 			"tipo": "MTB",
-            "imagem": "../assets/MTB.jpg"
-
+			"imagem": "../assets/MTB.jpg"
 		},
 		{
 			"id_bike": 2,
-			"userId": 1,
+			"userId": 4,
 			"valor": 1800,
 			"Descricao": "Nova, usada poucas vezes banco regulável",
 			"titulo": "Bicicleta de Passeio Comfort Plus",
@@ -66,8 +65,8 @@
 			"imagem": "../assets/BikeEletrica.jpg"
 		},
 		{
-			"id_bike": 3,
-			"userId": 1,
+			"id_bike": 4,
+			"userId": 2,
 			"valor": 10000,
 			"Descricao": "Bicicleta speed gtsm1 RAV2R carbono 22v shimano 105 R7000",
 			"titulo": "Bicicleta Rav2r Speed Carbono Aro 700 Kit.",
