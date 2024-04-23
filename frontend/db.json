@@ -42,7 +42,7 @@
 			"titulo": "Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana",
 			"favCounter": 12,
 			"tipo": "MTB",
-			"imagem": "../assets/MTB.jpg"
+			"imagem": "../src/assets/MTB.jpg"
 		},
 		{
 			"id_bike": 2,
@@ -52,7 +52,7 @@
 			"titulo": "Bicicleta de Passeio Comfort Plus",
 			"favCounter": 12,
 			"tipo": "Passeio",
-			"imagem": "../assets/MTB.jpg"
+			"imagem": "../src/assets/passeio.jpg"
 		},
 		{
 			"id_bike": 3,
@@ -62,7 +62,7 @@
 			"titulo": "Bicicleta Elétrica Lev",
 			"favCounter": 12,
 			"tipo": "Eletric",
-			"imagem": "../assets/BikeEletrica.jpg"
+			"imagem": "../src/assets/BikeEletrica.jpg"
 		},
 		{
 			"id_bike": 4,
@@ -72,7 +72,7 @@
 			"titulo": "Bicicleta Rav2r Speed Carbono Aro 700 Kit.",
 			"favCounter": 12,
 			"tipo": "Speed",
-			"imagem": "../assets/speed3.jpg"
+			"imagem": "../src/assets/speed3.jpg"
 		}
 	],
 	"feedbacks": [
