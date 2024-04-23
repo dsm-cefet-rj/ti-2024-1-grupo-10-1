@@ -21,7 +21,7 @@ const BarraLogin = () => {
 	useEffect(() => {
 		const fetchUsers = async () => {
 			try {
-				const response = await axios.get('http://localhost:12345/users');
+				const response = await axios.get('http://localhost:3000/users');
 				if (response.status == 200) setUsers(response.data);
 			} catch (error) {
 				console.error('Erro ao buscar lista de usuarios:', error);
