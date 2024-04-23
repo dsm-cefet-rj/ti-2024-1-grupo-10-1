@@ -41,7 +41,7 @@
 		{
 			"id_bike": 1,
 			"userId": 1,
-			"valor": 4000,
+			"valor": 4000.5,
 			"descricao": "Bike bem conservada tamanho 52 acompanha capacete",
 			"titulo": "Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana",
 			"favCounter": 12,
@@ -51,7 +51,7 @@
 		{
 			"id_bike": 2,
 			"userId": 4,
-			"valor": 1800,
+			"valor": 1800.6,
 			"descricao": "Nova, usada poucas vezes banco regulável",
 			"titulo": "Bicicleta de Passeio Comfort Plus",
 			"favCounter": 12,

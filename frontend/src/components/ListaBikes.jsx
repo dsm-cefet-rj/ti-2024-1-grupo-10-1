@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useUserStore from './UserUtils';
-import {fetchProducts} from './BackendUtils';
+import {fetchAllProducts} from './BackendUtils';
 import useBikeStore from '../store.js'
 
 const ListaBikes = () => {
 	const [bikes, setBikes] = useState([]);
+
 	const selectedBikeType = useBikeStore((state) => state.selectedBikeType);
-	console.log(selectedBikeType);
+
 	const { has_logged } = useUserStore((state) => ({ has_logged: state.user.logged }));
 	
-
 	useEffect(() => {
-	
-
-		fetchProducts(setBikes);
+		fetchAllProducts(setBikes);
 	}, []);
 
 	const filteredBikes = bikes.filter(

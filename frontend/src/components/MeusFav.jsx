@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUserStore from './UserUtils';
-import { fetchProducts } from './BackendUtils';
+import { fetchAllProducts } from './BackendUtils';
 
 // TODO: Prioridade 1: As imagens das bikes não aparecem por algum motivo 
 // TODO: Prioridade 2: Exibir um elemento diferente para quando não houver bikes favoritadas ("Você não possui bikes favoritas por enquanto")
@@ -14,7 +14,7 @@ const MeusFav = () => {
 
 	// Utiliza o useEffect para executar uma única vez, no carregamento da pagina
 	// Fetch ao carregar a pagina para obter todos os produtos, como parametro passamos a função que vai atualizar nosso useState (setProducts)
-	useEffect(() => { fetchProducts(setProducts); }, []);
+	useEffect(() => { fetchAllProducts(setProducts); }, []);
 
 	/* NÃO APAGAR ESSE COMENTARIO 
 	useEffect(() => {
