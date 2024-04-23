@@ -55,7 +55,7 @@ const BarraLogin = () => {
 			console.log(user_found);
 			setUserId(user_found.id);
 
-			updateNome(user_found.Nome);
+			updateNome(user_found.nome);
 			updateEmail(user_found.email);
 			updateCep(user_found.CEP);
 			setUserFavs(user_found.FavCollection);
