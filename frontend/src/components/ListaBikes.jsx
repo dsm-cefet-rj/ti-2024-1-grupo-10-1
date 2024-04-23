@@ -2,26 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useUserStore from './UserUtils';
+import {fetchProducts} from './BackendUtils';
+import useBikeStore from '../store.js'
 
 const ListaBikes = () => {
 	const [bikes, setBikes] = useState([]);
-	const selectedBikeType = useUserStore((state) => state.selectedBikeType);
+	const selectedBikeType = useBikeStore((state) => state.selectedBikeType);
+	console.log(selectedBikeType);
 	const { has_logged } = useUserStore((state) => ({ has_logged: state.user.logged }));
+	
 
 	useEffect(() => {
-		const fetchBikes = async () => {
-			try {
-				const response = await axios.get('http://localhost:12345/bike'); // Altere a URL conforme necessário
-				setBikes(response.data);
-			} catch (error) {
-				console.error('Ocorreu um erro ao buscar as bicicletas:', error);
-			}
-		};
+	
 
-		fetchBikes();
+		fetchProducts(setBikes);
 	}, []);
 
-	const filteredBikes = bikes.filter((bike) => bike.tipo === selectedBikeType);
+	const filteredBikes = bikes.filter(
+		(bike) => bike.tipo === selectedBikeType
+	);
 
 	return (
 		<div className="bg-white">
@@ -39,12 +38,12 @@ const ListaBikes = () => {
 									<div>
 										<h3 className="text-sm text-gray-700">
 											<a href={bike.href}>
-												<span aria-hidden="true" className="absolute inset-0" /> {bike.Titulo}
+												<span aria-hidden="true" className="absolute inset-0" /> {bike.titulo}
 											</a>
 										</h3>
 										<p className="mt-1 text-sm text-gray-500">{bike.Descricao}</p>
 									</div>
-									<p className="text-sm font-medium text-gray-900">{`R$ ${bike.Valor.toFixed(2)}`}</p>
+									<p className="text-sm font-medium text-gray-900">{`R$ ${bike.valor.toFixed(2)}`}</p>
 								</div>
 							</div>
 						</Link>
