@@ -33,46 +33,63 @@
 			"FavCollection": []
 		}
 	],
-	"product": [
+	"bike": [
 		{
-			"id_prod": 1,
+			"id_bike": 1,
 			"userId": 1,
-			"Valor": 10,
-			"Descricao": "",
-			"Titulo": "",
-			"favCounter": 12
+			"Valor": 4000,
+			"Descricao": "Bike bem conservada tamanho 52 acompanha capacete",
+			"Titulo": "Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana",
+			"favCounter": 12,
+			"tipo": "MTB",
+            "imagem": "../assets/MTB.jpg"
+
 		},
 		{
-			"id_prod": 2,
+			"id_bike": 2,
 			"userId": 1,
-			"valor": 10,
-			"Descricao": "",
-			"titulo": "",
-			"favCounter": 12
+			"valor": 1800,
+			"Descricao": "Nova, usada poucas vezes banco regulável",
+			"titulo": "Bicicleta de Passeio Comfort Plus",
+			"favCounter": 12,
+			"tipo": "Passeio",
+			"imagem": "../assets/MTB.jpg"
 		},
 		{
-			"id_prod": 3,
+			"id_bike": 3,
 			"userId": 1,
-			"valor": 10,
-			"Descricao": "",
-			"titulo": "",
-			"favCounter": 12
+			"valor": 4000,
+			"Descricao": "Bateria nova carregandor bicicleta boa pro dia dia",
+			"titulo": "Bicicleta Elétrica Lev",
+			"favCounter": 12,
+			"tipo": "Eletric",
+			"imagem": "../assets/BikeEletrica.jpg"
+		},
+		{
+			"id_bike": 3,
+			"userId": 1,
+			"valor": 10000,
+			"Descricao": "Bicicleta speed gtsm1 RAV2R carbono 22v shimano 105 R7000",
+			"titulo": "Bicicleta Rav2r Speed Carbono Aro 700 Kit.",
+			"favCounter": 12,
+			"tipo": "Speed",
+			"imagem": "../assets/speed3.jpg"
 		}
 	],
-	"comments": [
+	"feedbacks": [
 		{
 			"userId": 1,
-			"commment": "",
+			"feedback": "Estou adorando a experiência no BikeSellers! É incrível poder encontrar uma variedade tão grande de bicicletas para todos os gostos e necessidades. Além disso, a possibilidade de marcar encontros diretamente com os vendedores facilita muito o processo de compra. Recomendo totalmente!.",
 			"date": "2024-01-01"
 		},
 		{
 			"userId": 2,
-			"commment": "",
+			"feedback": "O BikeSellers é simplesmente fantástico! Encontrei a bicicleta em poucos minutos. Estou muito satisfeito com minha experiência aqui!.",
 			"date": "2024-01-01"
 		},
 		{
 			"userId": 3,
-			"commment": "",
+			"feedback": "Foi uma excelente decisão anunciar minha bicicleta no BikeSellers! Consegui encontrar um comprador em pouco tempo e o processo todo foi muito tranquilo. Estou muito feliz com a venda e definitivamente recomendo esta plataforma a outros vendedores!.",
 			"date": "2024-01-01"
 		}
 	]
