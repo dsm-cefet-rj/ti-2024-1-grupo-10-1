@@ -11,7 +11,7 @@ import Anuncios from './pages/Anuncios';
 import Conta from './pages/Conta'
 import BikeView from './pages/BikeView';
 import FeedbackPost from './pages/FeedbackPost';
-import EditarCadastro from './components/EditarCadastro';
+import EditarCadastro from './pages/EditarCadastro';
 
 const App = () => {
 
