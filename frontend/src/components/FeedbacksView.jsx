@@ -1,33 +1,34 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
-import conor from '../assets/conor.png'
-import biker from '../assets/biker.jpg'
-import ironman from '../assets/ironman.png'
-import chimaev from '../assets/chimaev.jpg'
-
+import useUserStore from './UserUtils'; // Importe o hook para verificar o estado de login do usuário
+import conor from '../assets/conor.png';
+import biker from '../assets/biker.jpg';
+import ironman from '../assets/ironman.png';
+import chimaev from '../assets/chimaev.jpg';
 
 const FeedbacksView = () => {
-          return (
-              <div className="py-8 w-full">
-                  <div className="lg:flex items-center justify-center w-full">
+    const { has_logged } = useUserStore((state) => ({ has_logged: state.user.logged })); // Obtém o estado de login do usuário
 
-                  <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded border border-black-500">
-                          <div className="flex items-center border-b border-gray-200 pb-6">
-                              <img src={conor} alt className="w-22 h-12 rounded-full" />
-                              <div className="flex items-start justify-between w-full">
-                                  <div className="pl-3 w-full">
-                                      <p className="text-xl font-medium leading-5 text-gray-800">Conor beats Aldo</p>
-                                  </div>
-                              </div>
-                          </div>
-                          <div className="px-2">
-                              <p className="text-sm leading-5 py-4 text-gray-600">Estou adorando a experiência no BikeSellers! É incrível poder encontrar uma variedade tão grande de bicicletas para todos os gostos e necessidades. Além disso, a possibilidade de marcar encontros diretamente com os vendedores facilita muito o processo de compra. Recomendo totalmente!.</p>
-                          </div>
-                      </div>
+    return (
+        <div className="py-8 w-full">
+            <div className="lg:flex items-center justify-center w-full">
 
+                <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded border border-black-500">
+                    <div className="flex items-center border-b border-gray-200 pb-6">
+                        <img src={conor} alt="" className="w-22 h-12 rounded-full" />
+                        <div className="flex items-start justify-between w-full">
+                            <div className="pl-3 w-full">
+                                <p className="text-xl font-medium leading-5 text-gray-800">Conor beats Aldo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="px-2">
+                        <p className="text-sm leading-5 py-4 text-gray-600">Estou adorando a experiência no BikeSellers! É incrível poder encontrar uma variedade tão grande de bicicletas para todos os gostos e necessidades. Além disso, a possibilidade de marcar encontros diretamente com os vendedores facilita muito o processo de compra. Recomendo totalmente!.</p>
+                    </div>
+                </div>
 
-
-                      <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded">
+                {/* Outros feedbacks */}
+                <div className="lg:w-4/12 lg:mr-7 lg:mb-0 mb-7 bg-purple-400 p-6 shadow rounded">
                           <div className="flex items-center border-b border-gray-200 pb-6">
                               <div className="flex items-start justify-between w-full">
                                   <img src={biker} alt className="w-22 h-12 rounded-full" />
@@ -75,15 +76,15 @@ const FeedbacksView = () => {
                       </div>
                   </div>
               </div>
-                  {/* Adicione um botão para "Postar um Feedback" */}
-                  <div className="flex justify-center mt-4">
-                      <Link to="/feedbackpost" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                          Postar um Feedback
-                      </Link>
-                  </div>
+                {/* Botão para postar um feedback */}
+                <div className="flex justify-center mt-4">
+                    <Link to={(has_logged) ? "/feedbackpost" : "/login"} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Postar um Feedback
+                    </Link>
+                </div>
             </div>
-          );
-      };
+        
+    );
+};
 
-
-export default FeedbacksView
+export default FeedbacksView;
