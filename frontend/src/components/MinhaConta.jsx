@@ -16,12 +16,12 @@ const Minhaconta = () => {
 
 	const checkoutLogin = () => {
 
-		console.log(user)
+		console.log(user);
 		updateCheckIn(false);
 		updateNome("");
 		updateEmail("");
 		updateCep("");
-		console.log(user)
+		console.log(user);
 	}
 
 

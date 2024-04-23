@@ -22,7 +22,7 @@ const HeaderHome = () => {
 			<header className='flex flex-col md:flex-row items-center justify-between pl-0 pr-2'>
 				{/* Logo clicável */}
 				<Link to="/home">
-					<img src={logo} className='w-40 h-40 md:w-48 md:h-auto' alt="Logo" />
+					<img src={logo} className='w-56 h-40 md:w-40 md:h-auto' alt="Logo" />
 				</Link>
 
 				{/* Barra de Pesquisa */}
