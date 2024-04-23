@@ -71,12 +71,12 @@
 		{
 			"id_bike": 6,
 			"userId": 1,
-			"valor": 4000,
-			"descricao": "Bateria nova carregandor bicicleta boa pro dia dia",
-			"titulo": "Bicicleta Elétrica Lev",
+			"valor": 4900,
+			"descricao": "Bicicleta Scooter Elétrica Usada Com Garantia Vega Motos",
+			"titulo": "Bicicleta Scooter Elétrica Usada",
 			"favCounter": 12,
 			"tipo": "Eletrica",
-			"imagem": "../src/assets/BikeEletrica.jpg"
+			"imagem": "../src/assets/BikeEletrica2.jpg"
 		},
 		{
 			"id_bike": 4,
