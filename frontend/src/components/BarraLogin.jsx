@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import useUserStore from './UserUtils';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
+import { fetchUsers } from './BackendUtils';
 
 
 const BarraLogin = () => {
 
+	const [users, setUsers] = useState([]);
 
 	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs } = useUserStore((state) => ({
 		updateNome: state.updateNome,
@@ -16,8 +17,8 @@ const BarraLogin = () => {
 		setUserFavs: state.updateFavs
 	}));
 
-	const [users, setUsers] = useState([]);
-
+	
+	/* NÃO APAGAR ESSE CÓDIGO
 	useEffect(() => {
 		const fetchUsers = async () => {
 			try {
@@ -27,13 +28,14 @@ const BarraLogin = () => {
 				console.error('Erro ao buscar lista de usuarios:', error);
 			}
 		};
-
+		
 		fetchUsers();
 	}, []);
-
-
-
-
+	*/
+	
+	useEffect(() => {
+		fetchUsers(setUsers);
+	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
