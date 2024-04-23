@@ -11,6 +11,8 @@ const MeusFav = () => {
 
 	const favoriteBikes = useBikeStore((state) => state.favoriteBikes); // Obtenha as bicicletas favoritadas do store
 
+	const userFavsIds = useUserStore((state) => state.user.profile.favs);
+
 	useEffect(() => {
 
 		const fetchProducts = async () => {
@@ -26,20 +28,20 @@ const MeusFav = () => {
 		}
 
 		fetchProducts();
+
 	}, []);
 
-	const userFavsIds = useUserStore((state) => state.user.profile.favs);
 
+	console.log("Todos os produtos:", products);
+	console.log("Ids Favoritados:", userFavsIds);
+
+	let a = products.filter((product) => { return userFavsIds.includes(product.id_prod) });
+	console.log("Produtos Favoritados:", a);
 	// Com os ids das bikes favoritadas, extrair do server a relação de bikes e gerar os links/componentes de acordo
 	// TODO: Parametrizar os endpoints em um unico arquivo e importá-los quando necessário
 
 
-	console.log(products);
-	
 
-
-	products.forEach(() => { });
-	// console.log(userState);
 	// console.log(objs_favoritados);
 
 	return (

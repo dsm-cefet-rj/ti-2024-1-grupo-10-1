@@ -60,8 +60,6 @@ const BarraLogin = () => {
 
 			setLoggedAccount(true);
 			// console.log(user);
-
-
 		}
 	};
 
