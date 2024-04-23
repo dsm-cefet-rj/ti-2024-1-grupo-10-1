@@ -80,7 +80,7 @@ const BikeSelecionada = () => {
             <div className="flex justify-center items-center lg:flex-row flex-col gap-8">
                 {/* <!-- Description Div --> */}
                 <div className="  w-full sm:w-96 md:w-8/12 lg:w-6/12 items-center">
-                    <p className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">Home / Bike / Usar zustand para saber de onde vim</p>
+                    <p className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">Home / Bike / </p>
                     <h2 className="font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 mt-4">{bike.name}</h2>
                     <div className=" flex flex-row justify-between  mt-5">
                         <p className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-700 hover:underline hover:text-gray-800 duration-100 cursor-pointer">{favoriteBikes.length} favoritaram</p>
