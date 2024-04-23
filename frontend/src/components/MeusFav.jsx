@@ -1,41 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Importe o Link do react-router-dom
 import useBikeStore from '../store';
 import useUserStore from './UserUtils';
 import axios, { AxiosError } from 'axios';
 
 
-
-
-
 const MeusFav = () => {
-
 
 	const [products, setProducts] = useState([]);
 
-	const fetchProducts = async () => {
-		try {
-			const response = await axios.get('http://localhost:12345/product');
-
-			if (response.status == 200) setProducts(response.data);
-
-			else throw AxiosError.ERR_BAD_RESPONSE;
-		} catch (error) {
-			console.error('Ocorreu um erro ao buscar os dados:', error);
-		}
-	}
-
 	const favoriteBikes = useBikeStore((state) => state.favoriteBikes); // Obtenha as bicicletas favoritadas do store
 
-	// const userFavsIds = useUserStore((state) => state.user.profile.favs);
+	useEffect(() => {
+
+		const fetchProducts = async () => {
+			try {
+				const response = await axios.get('http://localhost:12345/product');
+
+				if (response.status == 200) setProducts(response.data);
+
+				else throw AxiosError.ERR_BAD_RESPONSE;
+			} catch (error) {
+				console.error('Ocorreu um erro ao buscar os dados:', error);
+			}
+		}
+
+		fetchProducts();
+	}, []);
+
+	const userFavsIds = useUserStore((state) => state.user.profile.favs);
 
 	// Com os ids das bikes favoritadas, extrair do server a relação de bikes e gerar os links/componentes de acordo
-	// TODO: Parametrizar os endpoints em um unico arquivo e importá-los quando necessário 
+	// TODO: Parametrizar os endpoints em um unico arquivo e importá-los quando necessário
 
 
-	fetchProducts();
 	console.log(products);
+	
 
+
+	products.forEach(() => { });
 	// console.log(userState);
 	// console.log(objs_favoritados);
 

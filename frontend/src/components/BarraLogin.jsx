@@ -1,24 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import useUserStore from './UserUtils';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-
-// Banco de Dados de Usuários
-// const usuarios = [
-// 	{
-// 		Nome: "Rodrigo Teixeira Parracho",
-// 		cep: "21211250",
-// 		email: "parracho@gmail.com",
-// 		senha: "admin1234",
-// 	},
-// 	{
-// 		Nome: "Joao Jendiroba",
-// 		CEP: "21210123",
-// 		email: "jendiroba@gmail.com",
-// 		senha: "1234",
-// 	},
-// ];
-
 
 
 const BarraLogin = () => {
@@ -34,16 +17,22 @@ const BarraLogin = () => {
 	}));
 
 	const [users, setUsers] = useState([]);
-	const fetchUsers = async () => {
-		try {
-			const response = await axios.get('http://localhost:12345/users');
-			if (response.status == 200) setUsers(response.data);
-		} catch (error) {
-			console.error('Erro ao buscar lista de usuarios:', error);
-		}
-	};
 
-	fetchUsers();
+	useEffect(() => {
+		const fetchUsers = async () => {
+			try {
+				const response = await axios.get('http://localhost:12345/users');
+				if (response.status == 200) setUsers(response.data);
+			} catch (error) {
+				console.error('Erro ao buscar lista de usuarios:', error);
+			}
+		};
+
+		fetchUsers();
+	}, []);
+
+
+
 
 
 	const handleSubmit = (e) => {
