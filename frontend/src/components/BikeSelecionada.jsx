@@ -55,13 +55,13 @@ const BikeSelecionada = () => {
 					<p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">R$ {bike.valor}</p>
 					<div className="lg:mt-11 mt-10">
 						<div className="flex flex-row justify-between">
-							<p className=" font-medium text-base leading-4 text-gray-600"><b>Localização/Contato:</b></p>
+							<p className=" font-medium text-base leading-4 text-gray-600"><b>Localização/Contato:</b> Pendente</p>
 						</div>
 						<hr className=" bg-gray-200 w-full my-2" />
-						<div className=" flex flex-row justify-between items-center mt-6">
+						{/* <div className=" flex flex-row justify-between items-center mt-6">
 							<p className="font-medium text-base leading-4 text-gray-600"><b>Descrição:</b></p>
 							{bike.descricao}
-						</div>
+						</div> */}
 						<hr className=" bg-gray-200 w-full mt-4" />
 					</div>
 					<button className="focus:outline-none focus:ring-2 hover:bg-purple-500 focus:ring-offset-2 focus:ring-purple-700 font-medium text-base leading-4 text-white bg-purple-600 w-full py-5 lg:mt-12 mt-6 flex items-center justify-center" >

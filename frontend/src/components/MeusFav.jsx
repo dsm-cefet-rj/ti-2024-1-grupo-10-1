@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import useUserStore from './UserUtils';
 import { fetchAllProducts } from './BackendUtils';
 
-// TODO: Prioridade 1: As imagens das bikes não aparecem por algum motivo 
-// TODO: Prioridade 2: Exibir um elemento diferente para quando não houver bikes favoritadas ("Você não possui bikes favoritas por enquanto")
+// TODO: Prioridade 1: Exibir um elemento diferente para quando não houver bikes favoritadas ("Você não possui bikes favoritas por enquanto")
 
 const MeusFav = () => {
 
@@ -16,30 +15,12 @@ const MeusFav = () => {
 	// Fetch ao carregar a pagina para obter todos os produtos, como parametro passamos a função que vai atualizar nosso useState (setProducts)
 	useEffect(() => { fetchAllProducts(setProducts); }, []);
 
-	/* NÃO APAGAR ESSE COMENTARIO 
-	useEffect(() => {
-
-		const fetchProducts = async () => {
-			try {
-				const response = await axios.get('http://localhost:12345/product');
-
-				if (response.status == 200) setProducts(response.data);
-
-				else throw AxiosError.ERR_BAD_RESPONSE;
-			} catch (error) {
-				console.error('Ocorreu um erro ao buscar os dados:', error);
-			}
-		}
-
-		fetchProducts(setProducts);
-	}, []);
-	*/
-
 	// console.log("Fetch de produtos:", products);
 	// console.log("Ids Favoritados:", userFavIds);
 
 	// Com os ids das bikes favoritadas e a relação de bikes gerar os links/componentes de acordo com os objetos favoritos do usuário
 	const userFavoriteBikes = products.filter((product) => { return userFavIds.includes(product.id_bike) });
+
 	console.log("Produtos Favoritados:", userFavoriteBikes);
 
 	return (
