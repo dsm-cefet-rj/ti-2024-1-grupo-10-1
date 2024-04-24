@@ -26,11 +26,11 @@ export const fetchProduct = async (setTarget, id) => {
 	}
 }
 
-export const fetchUser = async (setTarget, id) => {
+export const fetchUser = async (setTarget, userid) => {
 	try {
-		const response = await axios.get(URL + "/users", { params: {id: id } });
-		if (response.status == 200) await setTarget(response.data[0]);
-		else throw AxiosError.ERR_BAD_RESPONSE;
+		const response = await axios.get(`http://localhost:3000/users/${userid}`);
+		setTarget(response.data);
+		
 	} catch (error) {
 		console.error('Ocorreu um erro ao buscar os dados:', error);
 
