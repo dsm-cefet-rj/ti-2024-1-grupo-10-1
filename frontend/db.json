@@ -1,109 +1,130 @@
 {
-	"users": [
-		{
-			"id": 1,
-			"nome": "Rodrigo Teixeira Parracho",
-			"CEP": "12341234",
-			"email": "parracho@gmail.com",
-			"senha": "1234",
-			"FavCollection": [1,3, 2],
-			"telefone": "21973641659"
-		},
-		{
-			"id": 2,
-			"nome": "Joao Jendiroba",
-			"CEP": "12345678",
-			"email": "jendiroba@gmail.com",
-			"senha": "1234",
-			"FavCollection": [],
-			"telefone": "21973641659"
-		},
-		{
-			"id": 3,
-			"nome": "Gabriel Alves Giuliano",
-			"CEP": "11111111",
-			"email": "gabriel@gmail.com",
-			"senha": "1234",
-			"FavCollection": [],
-			"telefone": "21973641659"
-		},
-		{
-			"id": 4,
-			"nome": "Diogo Mendonca",
-			"CEP": "00000000",
-			"email": "digomendonca@gmail.com",
-			"senha": "1234",
-			"FavCollection": [],
-			"telefone": "21973641659"
-		}
-	],
-	"bike": [
-		{
-			"id_bike": 1,
-			"userId": 1,
-			"valor": 4000.5,
-			"descricao": "Bike bem conservada tamanho 52 acompanha capacete",
-			"titulo": "Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana",
-			"favCounter": 12,
-			"tipo": "MTB",
-			"imagem": "../src/assets/MTB.jpg"
-		},
-		{
-			"id_bike": 2,
-			"userId": 4,
-			"valor": 1800.6,
-			"descricao": "Nova, usada poucas vezes banco regulável",
-			"titulo": "Bicicleta de Passeio Comfort Plus",
-			"favCounter": 12,
-			"tipo": "Passeio",
-			"imagem": "../src/assets/passeio.jpg"
-		},
-		{
-			"id_bike": 3,
-			"userId": 1,
-			"valor": 4000,
-			"descricao": "Bateria nova carregandor bicicleta boa pro dia dia",
-			"titulo": "Bicicleta Elétrica Lev",
-			"favCounter": 12,
-			"tipo": "Eletrica",
-			"imagem": "../src/assets/BikeEletrica.jpg"
-		},
-		{
-			"id_bike": 6,
-			"userId": 1,
-			"valor": 4900,
-			"descricao": "Bicicleta Scooter Elétrica Usada Com Garantia Vega Motos",
-			"titulo": "Bicicleta Scooter Elétrica Usada",
-			"favCounter": 12,
-			"tipo": "Eletrica",
-			"imagem": "../src/assets/BikeEletrica2.jpg"
-		},
-		{
-			"id_bike": 4,
-			"userId": 2,
-			"valor": 10000,
-			"descricao": "Bicicleta speed gtsm1 RAV2R carbono 22v shimano 105 R7000",
-			"titulo": "Bicicleta Rav2r Speed Carbono Aro 700 Kit.",
-			"favCounter": 12,
-			"tipo": "Speed",
-			"imagem": "../src/assets/speed3.jpg"
-		}
-	],
-	"feedbacks": [
-		{
-			"userId": 1,
-			"feedback": "Estou adorando a experiência no BikeSellers! É incrível poder encontrar uma variedade tão grande de bicicletas para todos os gostos e necessidades. Além disso, a possibilidade de marcar encontros diretamente com os vendedores facilita muito o processo de compra. Recomendo totalmente!.",
-			"date": "2024-01-01"
-		},
-		{
-			"userId": 2,
-			"feedback": "O BikeSellers é simplesmente fantástico! Encontrei a bicicleta em poucos minutos. Estou muito satisfeito com minha experiência aqui!.",
-			"date": "2024-01-01"
-		},
-		{
-			"userId": 3,
-			"feedback": "Foi uma excelente decisão anunciar minha bicicleta no BikeSellers! Consegui encontrar um comprador em pouco tempo e o processo todo foi muito tranquilo. Estou muito feliz com a venda e definitivamente recomendo esta plataforma a outros vendedores!.",
-			"date": "2024-01-01"
-		}
-	]
+  "users": [
+    {
+      "id": "1",
+      "nome": "Rodrigo Teixeira Parracho",
+      "CEP": "12341234",
+      "email": "parracho@gmail.com",
+      "senha": "1234",
+      "FavCollection": [
+        1,
+        3,
+        2
+      ],
+      "telefone": "21973641659"
+    },
+    {
+      "id": "2",
+      "nome": "Joao Jendiroba",
+      "CEP": "12345678",
+      "email": "jendiroba@gmail.com",
+      "senha": "1234",
+      "FavCollection": [],
+      "telefone": "21973641659"
+    },
+    {
+      "id": "3",
+      "nome": "Gabriel Alves Giuliano",
+      "CEP": "11111111",
+      "email": "gabriel@gmail.com",
+      "senha": "1234",
+      "FavCollection": [],
+      "telefone": "21973641659"
+    },
+    {
+      "id": "4",
+      "nome": "Diogo Mendonca",
+      "CEP": "00000000",
+      "email": "digomendonca@gmail.com",
+      "senha": "1234",
+      "FavCollection": [],
+      "telefone": "21973641659"
+    },
+    {
+      "id": "27bd",
+      "nome": "Gabriela",
+      "email": "alves@gmail.com",
+      "telefone": "1111111111",
+      "CEP": "12341234",
+      "senha": "12345",
+      "FavCollection": []
+    }
+  ],
+  "bike": [
+    {
+      "id_bike": 1,
+      "userId": 1,
+      "valor": 4000.5,
+      "descricao": "Bike bem conservada tamanho 52 acompanha capacete",
+      "titulo": "Bike Mtb Shimano Deore 29 1x 12v 11x52 S.Trava Tucana",
+      "favCounter": 12,
+      "tipo": "MTB",
+      "imagem": "../src/assets/MTB.jpg",
+      "id": "3a13"
+    },
+    {
+      "id_bike": 2,
+      "userId": 4,
+      "valor": 1800.6,
+      "descricao": "Nova, usada poucas vezes banco regulável",
+      "titulo": "Bicicleta de Passeio Comfort Plus",
+      "favCounter": 12,
+      "tipo": "Passeio",
+      "imagem": "../src/assets/passeio.jpg",
+      "id": "84ca"
+    },
+    {
+      "id_bike": 3,
+      "userId": 1,
+      "valor": 4000,
+      "descricao": "Bateria nova carregandor bicicleta boa pro dia dia",
+      "titulo": "Bicicleta Elétrica Lev",
+      "favCounter": 12,
+      "tipo": "Eletrica",
+      "imagem": "../src/assets/BikeEletrica.jpg",
+      "id": "9165"
+    },
+    {
+      "id_bike": 6,
+      "userId": 1,
+      "valor": 4900,
+      "descricao": "Bicicleta Scooter Elétrica Usada Com Garantia Vega Motos",
+      "titulo": "Bicicleta Scooter Elétrica Usada",
+      "favCounter": 12,
+      "tipo": "Eletrica",
+      "imagem": "../src/assets/BikeEletrica2.jpg",
+      "id": "5d5a"
+    },
+    {
+      "id_bike": 4,
+      "userId": 2,
+      "valor": 10000,
+      "descricao": "Bicicleta speed gtsm1 RAV2R carbono 22v shimano 105 R7000",
+      "titulo": "Bicicleta Rav2r Speed Carbono Aro 700 Kit.",
+      "favCounter": 12,
+      "tipo": "Speed",
+      "imagem": "../src/assets/speed3.jpg",
+      "id": "b25e"
+    }
+  ],
+  "feedbacks": [
+    {
+      "userId": 1,
+      "feedback": "Estou adorando a experiência no BikeSellers! É incrível poder encontrar uma variedade tão grande de bicicletas para todos os gostos e necessidades. Além disso, a possibilidade de marcar encontros diretamente com os vendedores facilita muito o processo de compra. Recomendo totalmente!.",
+      "date": "2024-01-01",
+      "id": "a184"
+    },
+    {
+      "userId": 2,
+      "feedback": "O BikeSellers é simplesmente fantástico! Encontrei a bicicleta em poucos minutos. Estou muito satisfeito com minha experiência aqui!.",
+      "date": "2024-01-01",
+      "id": "cd22"
+    },
+    {
+      "userId": 3,
+      "feedback": "Foi uma excelente decisão anunciar minha bicicleta no BikeSellers! Consegui encontrar um comprador em pouco tempo e o processo todo foi muito tranquilo. Estou muito feliz com a venda e definitivamente recomendo esta plataforma a outros vendedores!.",
+      "date": "2024-01-01",
+      "id": "3283"
+    }
+  ]
 }

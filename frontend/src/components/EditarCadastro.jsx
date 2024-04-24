@@ -1,81 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { fetchUser } from './BackendUtils';
+import useUserStore from './UserUtils';
 import { Link } from 'react-router-dom';
 
 export default function EditarCadastro() {
-    const [formData, setFormData] = useState({
-        nome: '',
-        email: ' ',
-        CEP: ' ',
-        telefone: '',
-        senha: ''
+    const { user, updateId } = useUserStore();
+    const [userData, setUserData] = useState({
+        id: user.id,
+        nome: user.profile.nome,
+        email: user.profile.email,
+        telefone: user.profile.telefone,
+        CEP: user.profile.CEP,
+        senha: user.profile.senha
     });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Adicione aqui a lógica para enviar os dados atualizados para o servidor
-        console.log(formData);
+    useEffect(() => {
+        fetchUser(setUserData, user.id);
+    }, [user.id]);
+
+    const handleUpdate = async () => {
+        try {
+            await axios.put(`http://localhost:3000/users/${userData.id}`, userData);
+            alert('Cadastro atualizado com sucesso!');
+        } catch (error) {
+            console.error('Erro ao atualizar cadastro:', error);
+            alert('Erro ao atualizar cadastro. Verifique o console para mais detalhes.');
+        }
     };
 
     const handleChange = (e) => {
-        const { nome, value } = e.target;
-        setFormData({ ...formData, [nome]: value });
+        const { name, value } = e.target;
+        setUserData({ ...userData, [name]: value });
     };
 
     return (
         <div className='min-w-96'>
-            <div className="border border-gray-300 rounded-lg p-4"> {/* Adiciona uma borda ao redor do formulário */}
-                <br />
-
+            <div className="border border-gray-300 rounded-lg p-4">
                 <div id="clientForm" className="grid place-content-center">
-                    <form onSubmit={handleSubmit}>
-
-                        {/* Conteudo do Formulário */}
+                    <form>
                         <div className="border-b border-gray-900/10 pb-7">
                             <h1 className="text-base font-semibold leading-7 text-gray-900">Editar Cadastro</h1>
                             <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-5 ">
-
-                                {/* Div de Nome Completo */}
                                 <div className="sm:col-span-2 mt-2">
-                                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">Nome Completo</label>
-                                    <span className="text-gray-600 text-xs font-light">Nome por extenso, não abrevie sobrenomes.</span>
-                                    <input type="text" name="name" id="name" autoComplete="given-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={formData.name} onChange={handleChange} />
+                                    <label htmlFor="nome" className="block text-sm font-medium leading-6 text-gray-900">Nome Completo</label>
+                                    <input type="text" name="nome" id="nome" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={userData.nome} onChange={handleChange} />
                                 </div>
-
-                                {/* Div de input Email */}
                                 <div className="mt-2 sm:col-start-1">
                                     <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Endereço de Email</label>
-                                    <span className="text-gray-600 text-xs font-light">Este email será utilizado para login no sistema</span>
-                                    <input id="email" name="email" type="email" autoComplete="email" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={formData.email} onChange={handleChange} />
+                                    <input id="email" name="email" type="email" autoComplete="email" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={userData.email} onChange={handleChange} />
                                 </div>
-
-                                 {/* Div de input Telefone */}
-                                 <div className="mt-2">
+                                <div className="mt-2">
                                     <label htmlFor="telefone" className="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
-                                    <input type="tel" name="telefone" id="telefone" autoComplete="tel" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={formData.phone} onChange={handleChange} />
+                                    <input type="tel" name="telefone" id="telefone" autoComplete="tel" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={userData.telefone} onChange={handleChange} />
                                 </div>
-
-                                {/* Div de input CEP */}
                                 <div className="mt-2">
-                                    <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">CEP</label>
-                                    <input type="text" pattern='[0-9]{8}' name="postalCode" id="postal-code" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={formData.postalCode} onChange={handleChange} />
+                                    <label htmlFor="CEP" className="block text-sm font-medium leading-6 text-gray-900">CEP</label>
+                                    <input type="text" pattern='[0-9]{8}' name="CEP" id="CEP" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={userData.CEP} onChange={handleChange} />
                                 </div>
-
-                                {/* Div de input Senha */}
                                 <div className="mt-2">
-                                    <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Senha de Login</label>
-                                    <input type="text" name="password" id="password" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={formData.password} onChange={handleChange} />
+                                    <label htmlFor="senha" className="block text-sm font-medium leading-6 text-gray-900">Senha de Login</label>
+                                    <input type="password" name="senha" id="senha" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required value={userData.senha} onChange={handleChange} />
                                 </div>
                             </div>
                         </div>
-
-                        {/* Rodapé para envio */}
                         <div className="mt-2 flex items-center justify-end gap-x-6">
-                            <button type="button" className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"> <Link to="/home"><span className="inline-block mr-2">Cancel</span></Link></button>
-                            <button type="submit" className="rounded-md bg-purple-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><Link to="/home"><span className="inline-block mr-2">Save</span></Link></button>
+                            <button type="button" onClick={handleUpdate} className="rounded-md bg-purple-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><span className="inline-block mr-2">Salvar</span></button>
+                            <button type="button" className="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"> <Link to="/home"><span className="inline-block mr-2">Cancelar</span></Link></button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    )
+    );
 }
