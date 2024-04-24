@@ -17,7 +17,7 @@ const BarraLogin = () => {
 		setUserFavs: state.updateFavs
 	}));
 
-	
+
 	/* NÃO APAGAR ESSE CÓDIGO
 	useEffect(() => {
 		const fetchUsers = async () => {
@@ -32,7 +32,7 @@ const BarraLogin = () => {
 		fetchUsers();
 	}, []);
 	*/
-	
+
 	useEffect(() => {
 		fetchUsers(setUsers);
 	}, []);
@@ -79,16 +79,18 @@ const BarraLogin = () => {
 
 							<label className="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
 							<input id="pass" type="password" className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" required />
+							<div onClick={handleSubmit}>
+								<Link to="/home" className='className="transition duration-200 bg-purple-500 hover:bg-purple-700 focus:bg-purple-700 focus:shadow-sm focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block'>
 
-							{/* O Link precisa ficar dentro da tag button!! */}
-							<button onClick={handleSubmit} type="button" className="transition duration-200 bg-purple-500 hover:bg-purple-700 focus:bg-purple-700 focus:shadow-sm focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
-								<Link to="/home">
-									<span className="inline-block mr-2">Login</span>
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block">
-										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-									</svg>
+									<p className="inline-block mr-2">
+										Login
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+										</svg>
+									</p>
+
 								</Link>
-							</button>
+							</div>
 						</form>
 
 
