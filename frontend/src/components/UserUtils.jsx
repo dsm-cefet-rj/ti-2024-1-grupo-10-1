@@ -20,11 +20,13 @@ const useUserStore = create((set) => ({
 	user: {
 		id: -1,
 		profile: {
-			nome: "Desconhecido",
-			email: "naoteinteressa@gmail.com",
-			cep: "12345678",
+			nome: "",
+			email: "",
+			tel: "",
+			cep: "",
 			favs: [],
 		},
+		pass: "",
 		logged: false,
 	},
 
@@ -37,9 +39,11 @@ const useUserStore = create((set) => ({
 
 	updateCep: (newCep) => set(produce((state) => { state.user.profile.cep = newCep; })),
 
+	updateTel: (newTel) => set(produce((state) => { state.user.profile.tel = newTel; })),
+
 	updateFavs: (newFavs) => set(produce((state) => { state.user.profile.favs = newFavs; })),
 
-	// updatePass: (newPass) => set(produce((state) => { state.user.passwd = newPass; })),
+	updatePass: (newPass) => set(produce((state) => { state.user.pass = newPass; })),
 
 	setLoggedAccount: (newStateLogged) => set(produce((state) => { state.user.logged = newStateLogged; })),
 
