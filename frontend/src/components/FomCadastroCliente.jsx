@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { PostUser } from './BackendUtils';
 
 export default function FormCliente() {
     const [formData, setFormData] = useState({
@@ -12,10 +12,14 @@ export default function FormCliente() {
         FavCollection: [],
     });
 
-    const handleSubmit = async (e) => {
+	const handleSubmit = async (e) => {
+		
+		// Verificar se não há outros usuários com o mesmo email - Dá merda depois
+
         e.preventDefault();
-        try {
-			await axios.post('http://localhost:3000/users', formData);
+		try {
+			
+			PostUser(formData);
 			
             setFormData({
                 nome: '',
@@ -26,7 +30,8 @@ export default function FormCliente() {
                 FavCollection: [],
 			});
 			
-            // Inserir algo como um modal de aviso
+			// Inserir algo como um modal de aviso
+			console.log("Usuário cadastrado com sucesso. Faça login para entrar na conta.")
         } catch (error) {
 			console.error('Erro ao criar usuário:', error);
             // Inserir algo como um modal de erro

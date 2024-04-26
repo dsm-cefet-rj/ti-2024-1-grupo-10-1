@@ -1,3 +1,6 @@
+// TODO: Implementar objeto do axios - configurações
+
+
 import axios from "axios";
 
 const PORT = 3000;
@@ -13,7 +16,7 @@ export const fetchAllProducts = async (setTarget) => {
 		console.error('Ocorreu um erro ao buscar os dados:', error);
 
 	}
-}
+};
 
 export const fetchProduct = async (setTarget, id) => {
 	try {
@@ -24,7 +27,7 @@ export const fetchProduct = async (setTarget, id) => {
 		console.error('Ocorreu um erro ao buscar os dados:', error);
 
 	}
-}
+};
 
 export const fetchUser = async (setTarget, userid) => {
 	try {
@@ -35,7 +38,7 @@ export const fetchUser = async (setTarget, userid) => {
 		console.error('Ocorreu um erro ao buscar os dados:', error);
 
 	}
-}
+};
 
 export const fetchUsers = async (setTarget) => {
 	try {
@@ -44,4 +47,17 @@ export const fetchUsers = async (setTarget) => {
 	} catch (error) {
 		console.error('Erro ao buscar lista de usuarios:', error);
 	}
+};
+
+
+
+export const PostUser = async (newUser) => {
+
+	try {
+		const response = await axios.post(URL + "/users", newUser);
+		// Fazer algo com o response
+	} catch (error) {
+		console.error('Erro ao inserir novo usuario a lista de usuarios:', error);
+	}
+	
 };
