@@ -15,7 +15,8 @@ export default function FormCliente() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3000/users', formData);
+			await axios.post('http://localhost:3000/users', formData);
+			
             setFormData({
                 nome: '',
                 email: '',
@@ -23,10 +24,12 @@ export default function FormCliente() {
                 CEP: '',
                 senha: '',
                 FavCollection: [],
-            });
-            alert('Usuário criado com sucesso!');
+			});
+			
+            // Inserir algo como um modal de aviso
         } catch (error) {
-            console.error('Erro ao criar usuário:', error);
+			console.error('Erro ao criar usuário:', error);
+            // Inserir algo como um modal de erro
             alert('Erro ao criar usuário. Verifique o console para mais detalhes.');
         }
     };
