@@ -6,6 +6,9 @@ import axios from "axios";
 const PORT = 3000;
 const URL = "http://localhost:" + PORT;
 
+const user_endpoint = URL + "/users";
+const bike_endpoint = URL + "/bike";
+
 
 export const fetchAllProducts = async (setTarget) => {
 	try {
@@ -49,8 +52,6 @@ export const fetchUsers = async (setTarget) => {
 	}
 };
 
-
-
 export const PostUser = async (newUser) => {
 
 	try {
@@ -58,6 +59,17 @@ export const PostUser = async (newUser) => {
 		// Fazer algo com o response
 	} catch (error) {
 		console.error('Erro ao inserir novo usuario a lista de usuarios:', error);
+	}
+};
+
+export const PutUser = async (user_data) => {
+	
+	try {
+		const response = await axios.put(user_endpoint + "/" + user_data.id, user_data);
+
+	} catch (error) {
+		console.error('Erro aoatualizar os dados do usuario:', error);
+		
 	}
 	
 };
