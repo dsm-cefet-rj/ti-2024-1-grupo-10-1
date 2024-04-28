@@ -47,6 +47,17 @@ const useUserStore = create((set) => ({
 
 	setLoggedAccount: (newStateLogged) => set(produce((state) => { state.user.logged = newStateLogged; })),
 
+	// clearUserInfo: () => set(produce((state) => {
+	// 	// updateId(-1);	
+	// 	updateNome("");
+	// 	updateEmail("");
+	// 	updateCep("");
+	// 	updateTel("");
+	// 	updateFavs([]);
+	// 	updatePass("");
+	// 	setLoggedAccount(false);
+	// }))
+
 }));
 
 export default useUserStore;
