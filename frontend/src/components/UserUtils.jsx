@@ -47,6 +47,7 @@ const useUserStore = create((set) => ({
 
 	setLoggedAccount: (newStateLogged) => set(produce((state) => { state.user.logged = newStateLogged; })),
 
+	// Teste de função que apaga os dados da sessão de forma 'atomica'
 	// clearUserInfo: () => set(produce((state) => {
 	// 	// updateId(-1);	
 	// 	updateNome("");
