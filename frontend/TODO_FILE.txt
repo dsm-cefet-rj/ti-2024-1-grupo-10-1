@@ -1,0 +1,4 @@
+- Transferir para a seção de login apenas quando o usuário clicar em visualizar a oferta de uma bike
+- Ver banco de dados 
+- Tratar a visualização do produto
+- Tratae favoritos do cliente...
