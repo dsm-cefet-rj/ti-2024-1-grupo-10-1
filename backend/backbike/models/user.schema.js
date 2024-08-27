@@ -30,5 +30,5 @@ var usersSchema = new mongoose.Schema({
         required: true
     },
 });
-// indicador de 
-module.exports = mongoose.model('Usuarios', usersSchema);
+
+module.exports = mongoose.model('User', usersSchema);
