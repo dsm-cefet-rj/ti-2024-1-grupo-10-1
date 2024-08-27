@@ -48,7 +48,17 @@
       "CEP": "12341234",
       "senha": "12345",
       "FavCollection": []
-    }
+    },
+	{
+		"id": "27bd",
+		"nome": "Connor Beats Aldo",
+		"email": "aldo@gmail.com",
+		"telefone": "1111111111",
+		"CEP": "12341234",
+		"senha": "12345",
+		"FavCollection": []
+	}
+	
   ],
   "bike": [
     {
@@ -109,22 +119,22 @@
   ],
   "feedbacks": [
     {
-      "userId": 1,
-      "feedback": "Estou adorando a experiência no BikeSellers! É incrível poder encontrar uma variedade tão grande de bicicletas para todos os gostos e necessidades. Além disso, a possibilidade de marcar encontros diretamente com os vendedores facilita muito o processo de compra. Recomendo totalmente!.",
-      "date": "2024-01-01",
-      "id": "a184"
+      "userId": "1",
+      "content": "Estou adorando a experiência no BikeSellers! É incrível poder encontrar uma variedade tão grande de bicicletas para todos os gostos e necessidades. Além disso, a possibilidade de marcar encontros diretamente com os vendedores facilita muito o processo de compra. Recomendo totalmente!.",
+      "publication_date": "2024-01-01",
+      "id_bike": "a184"
     },
     {
-      "userId": 2,
-      "feedback": "O BikeSellers é simplesmente fantástico! Encontrei a bicicleta em poucos minutos. Estou muito satisfeito com minha experiência aqui!.",
-      "date": "2024-01-01",
-      "id": "cd22"
+      "userId": "2",
+      "content": "O BikeSellers é simplesmente fantástico! Encontrei a bicicleta em poucos minutos. Estou muito satisfeito com minha experiência aqui!.",
+      "publication_date": "2024-01-01",
+      "id_bike": "cd22"
     },
     {
-      "userId": 3,
-      "feedback": "Foi uma excelente decisão anunciar minha bicicleta no BikeSellers! Consegui encontrar um comprador em pouco tempo e o processo todo foi muito tranquilo. Estou muito feliz com a venda e definitivamente recomendo esta plataforma a outros vendedores!.",
-      "date": "2024-01-01",
-      "id": "3283"
+      "userId": "3",
+      "content": "Foi uma excelente decisão anunciar minha bicicleta no BikeSellers! Consegui encontrar um comprador em pouco tempo e o processo todo foi muito tranquilo. Estou muito feliz com a venda e definitivamente recomendo esta plataforma a outros vendedores!.",
+      "publication_date": "2024-01-01",
+      "id_bike": "3283"
     }
   ]
 }

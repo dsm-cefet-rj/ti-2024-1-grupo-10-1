@@ -7,9 +7,18 @@ import ironman from '../assets/ironman.png';
 import chimaev from '../assets/chimaev.jpg';
 
 const FeedbacksView = () => {
-    const { has_logged } = useUserStore((state) => ({ has_logged: state.user.logged })); // Obtém o estado de login do usuário
+	const { has_logged } = useUserStore((state) => ({ has_logged: state.user.logged })); // Obtém o estado de login do usuário
+	
 
-    return (
+	
+
+
+
+
+
+
+	return (
+		
         <div className="py-8 w-full">
             <div className="lg:flex items-center justify-center w-full">
 

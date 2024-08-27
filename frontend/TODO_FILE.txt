@@ -1,4 +1,8 @@
 - Transferir para a seção de login apenas quando o usuário clicar em visualizar a oferta de uma bike
+	- João, não consegui achar a parte do código que avalia e redireciona os elementos do FILTRO DE CATEGORIAS, caso o usuário esteja logado ou não. Availa isso pra mim, por favor. 
+
 - Ver banco de dados 
+
+- A seção de Feedback está totalmente HARDCODED, temos que verificar isso urgente !
 - Tratar a visualização do produto
-- Tratae favoritos do cliente...
+- Tratar favoritos do cliente...

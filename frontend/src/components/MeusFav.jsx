@@ -16,13 +16,8 @@ const MeusFav = () => {
 	// Fetch ao carregar a pagina para obter todos os produtos, como parametro passamos a função que vai atualizar nosso useState (setProducts)
 	useEffect(() => { fetchAllProducts(setProducts); }, []);
 
-	// console.log("Fetch de produtos:", products);
-	// console.log("Ids Favoritados:", userFavIds);
-
 	// Com os ids das bikes favoritadas e a relação de bikes gerar os links/componentes de acordo com os objetos favoritos do usuário
 	const userFavoriteBikes = products.filter((product) => { return userFavIds.includes(product.id_bike) });
-
-	console.log("Produtos Favoritados:", userFavoriteBikes);
 
 	return (
 		// Se n estiver logado, não mostre nada

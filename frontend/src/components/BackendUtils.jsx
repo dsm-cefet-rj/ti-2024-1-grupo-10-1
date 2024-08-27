@@ -73,3 +73,15 @@ export const PutUser = async (user_data) => {
 	}
 	
 };
+
+
+
+export const fetchFeedbacks = async () => {
+	try {
+		const resp = await axios.get(URL);
+		// if (response.status == 200) await setTarget(response.data);
+	} catch (error) {
+		console.error('Erro ao carregar os feedbacks dos usuários:', error);
+		
+	}
+};
