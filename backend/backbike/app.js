@@ -12,11 +12,12 @@ require('dotenv').config();
 var indexRouter = require('./routes/index.route');
 var usersRouter = require('./routes/users.route');
 var feedbackRouter = require('./routes/feedback.route');
+var bikeRouter = require('./routes/bikes.route');
 
 
-const connect = mongoose.connect(process.env.MONGODB_URL + process.env.DATABASE_NAME);
+const connect = mongoose.connect(process.env.MONGODB_URL + ":" + process.env.MONGODB_PORT + "/" + process.env.DATABASE_NAME);
 connect.then((db) => {
-	console.log("Banco de Dados conectado !!")
+	console.log("Banco de Dados (" + process.env.DATABASE_NAME + ") conectado a porta " + process.env.MONGODB_PORT);
 }, (err) => { console.log(err); });
 
 
@@ -33,5 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/feedback', feedbackRouter);
+app.use('/bike', bikeRouter);
 
 module.exports = app;

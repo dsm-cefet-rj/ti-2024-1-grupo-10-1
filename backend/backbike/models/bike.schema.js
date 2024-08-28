@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const BikeSchema = new mongoose.Schema({
-    id_bike: {
+    bikeId: {
         type: Number,
         required: true
     },
@@ -9,16 +9,16 @@ const BikeSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    valor: {
+    price: {
         type: Number,
         required: true
     },
-    descricao: {
+    description: {
         type: String,
         required: true,
         trim: true
     },
-    titulo: {
+    title: {
         type: String,
         required: true,
         trim: true
@@ -35,12 +35,7 @@ const BikeSchema = new mongoose.Schema({
     imagem: {
         type: String,
         required: true
-    },
-    // id: {
-    //     type: String,
-    //     required: true,
-    //     unique: true // Definindo como único para garantir que não haja duplicatas
-    // }
+    }
 });
 
 const Bike = mongoose.model('Bike', BikeSchema);
