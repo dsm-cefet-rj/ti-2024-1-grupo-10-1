@@ -1,10 +1,6 @@
 const mongoose = require("mongoose")
 
 var usersSchema = new mongoose.Schema({
-    // _id: {
-    //     type: mongoose.Schema.ObjectId,
-    //     auto: true
-    // },
     nome: {
         type: String,
         required: true
@@ -26,7 +22,7 @@ var usersSchema = new mongoose.Schema({
         required: true
     },
     FavIds: {
-        type: String,
+        type: [mongoose.Types.ObjectId],
         required: true
     },
 });
