@@ -14,7 +14,7 @@ router.route("/")
 	})
 	// Adiciona um produto
 	.post((req, res, next) => {
-		const newBike = req.body;
+		let newBike = req.body;
 		Bike.create(newBike).then((newBike) => {
 			res.json({ objAdded: newBike, "status": "OK" });
 		}).catch((err) => {
@@ -28,7 +28,7 @@ router.route("/")
 // Retorna um produto específico
 router.route('/:id')
 	.get(function (req, res, next) {
-		const bikeId = req.params.id
+		let bikeId = req.params.id
 
 		Bike.findById(bikeId).
 			then((bikeData) => {
@@ -40,8 +40,8 @@ router.route('/:id')
 	})
 	// Atualiza um ou vários campos de um elemento
 	.patch(function (req, res, next) {
-		const bikeId = req.params.id
-		const bikeNewData = req.body
+		let bikeId = req.params.id
+		let bikeNewData = req.body
 
 		Bike.findByIdAndUpdate(bikeId, bikeNewData, { new: true }). // {new: true} --> Retorna o elemento atualizado
 			then((produto) => {
@@ -50,12 +50,12 @@ router.route('/:id')
 			catch((error) => {
 				res.status(500).json({ message: error.message });
 				next();
-			})
+			});
 	})
 	// DELETE /produtos/:id
 	// Remove um produto específico
 	.delete(function (req, res, next) {
-		const bikeId = req.params.id;
+		let bikeId = req.params.id;
 
 		Bike.findByIdAndDelete(bikeId).
 			then((bike) => {
