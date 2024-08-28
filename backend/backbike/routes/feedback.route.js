@@ -5,11 +5,9 @@ var Feedback = require("../models/feedback.schema")
 
 router.route("/")
 	.get((req, res, next) => {
-		// TODO: Não consigo coletar um dado que está no bd. Sempre vem uma info vazia
 		Feedback.find()
 			.then((data) => {
-				console.log("lalal")
-				res.json({ "elementos": data })
+				res.json(data)
 			})
 			.catch((err) => {
 				res.json({ message: err.message })
@@ -17,7 +15,7 @@ router.route("/")
 	})
 	// Add um novo feedback
 	.post((req, res, next) => {
-		// Nem testei ainda
+		// Funciona
 		const newFeedback = req.body;
 		Feedback.create(newFeedback)
 			.then((newFeed) => {
