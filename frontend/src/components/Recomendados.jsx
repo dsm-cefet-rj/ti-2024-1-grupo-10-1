@@ -11,9 +11,7 @@ const Recomendados = () => {
 	useEffect(() => {
 		fetchAllProducts(setProdutos);
 	}, []);
-	/*
-		Modelo:
-	*/
+	// Ideia: Limitar o nº de bikes recomendadas em X
 	return (
 		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 mt-10 mx-5">
 			{produtos.map((produto) => (

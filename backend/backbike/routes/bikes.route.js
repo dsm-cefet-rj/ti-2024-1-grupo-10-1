@@ -9,7 +9,24 @@ router.route("/")
 		try {
 
 			data = await Bike.find({});
-			res.json(data);
+
+
+			// Gambiarra para transformar _id em bikeId... Ver como melhorar
+
+			const modifiedBikes = data.map(bike => {
+				return {
+					bikeId: bike._id,
+					userId: bike.userId,
+					price: bike.price,
+					description: bike.description,
+					title: bike.title,
+					favCounter: bike.favCounter,
+					tipo: bike.tipo,
+					imagem: bike.imagem,
+				};
+			});
+
+			res.json(modifiedBikes);
 
 		} catch (error) {
 			next();
@@ -22,7 +39,7 @@ router.route("/")
 		Bike.create(newBike).then((newBike) => {
 			res.json({ objAdded: newBike, "status": "OK" });
 		}).catch((err) => {
-			res.json({ objAdded: newBike, "status": "ERROR", "message": err.message });
+			res.status(400).json({ objAdded: newBike, "status": "ERROR", "message": err.message });
 			next();
 		});
 	});
