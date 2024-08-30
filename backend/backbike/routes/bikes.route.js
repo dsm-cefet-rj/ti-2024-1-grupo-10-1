@@ -43,23 +43,24 @@ router.route('/:id')
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id
 
-			let bikeData = await Bike.findById(bikeId);
+			let bikeData = await Bike.findById(bikeId).lean();
+
 			if (bikeData != null) {
 
-				//TODO: Lidar com _id...
+				const { _id, bikeId, ...resto } = bikeData;
 				res.status(200)
-				res.json(bikeData)
+				res.json({ bikeId: _id, ...resto });
+				return;
+
 			} else {
 				let err = {};
 				res.status(404)
 				// let err = new Error("O produto de id " + req.params.id + " não foi encontrado");
 				res.json(err);
-
 			}
 		}
 		catch (errorParam) {
 			console.log(errorParam);
-
 			res.status(500).json({ message: errorParam.message })
 		}
 	})
