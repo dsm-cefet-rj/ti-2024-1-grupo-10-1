@@ -69,6 +69,7 @@ export const PostUser = async (newUser) => {
 		// else {
 		// 	throw AxiosError.ERR_BAD_RESPONSE;
 		// }
+		return response;
 	} catch (error) {
 		console.error(
 			"Erro ao inserir novo usuario a lista de usuarios:",
@@ -83,6 +84,7 @@ export const PutUser = async (user_data) => {
 			URL + user_endpoint + "/" + user_data.id,
 			user_data
 		);
+		return response;
 	} catch (error) {
 		console.error("Erro ao atualizar os dados do usuario:", error);
 	}
@@ -92,6 +94,7 @@ export const fetchFeedbacks = async () => {
 	try {
 		const resp = await axios.get(URL + feedback_endpoint);
 		// if (response.status == 200) await setTarget(response.data);
+		return resp;
 	} catch (error) {
 		console.error("Erro ao carregar os feedbacks dos usuários:", error);
 	}
