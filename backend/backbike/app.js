@@ -19,7 +19,9 @@ var bikeRouter = require('./routes/bikes.route');
 const connect = mongoose.connect(process.env.MONGODB_URL + ":" + process.env.MONGODB_PORT + "/" + process.env.DATABASE_NAME);
 connect.then((db) => {
 	console.log("Banco de Dados (" + process.env.DATABASE_NAME + ") conectado a porta " + process.env.MONGODB_PORT);
-}, (err) => { console.log(err); });
+}, (err) => {
+	console.log(err);
+});
 
 
 var app = express();
@@ -27,8 +29,9 @@ var app = express();
 
 app.use(cors({
 	methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-	// credentials: true
+	credentials: true
 }));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -39,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define os endpoints de cada "entidade"
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/feedback', feedbackRouter);
 app.use('/bike', bikeRouter);
+app.use('/feedback', feedbackRouter);
 
 module.exports = app;
