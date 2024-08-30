@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require("cors")
 
 // Utilizando o banco de dados 
 const mongoose = require("mongoose")
@@ -23,6 +24,11 @@ connect.then((db) => {
 
 var app = express();
 
+
+app.use(cors({
+	methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+	// credentials: true
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
