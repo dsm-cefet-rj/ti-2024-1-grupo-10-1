@@ -5,13 +5,34 @@ var Bike = require("../models/bike.schema");
 
 router.route("/")
 	// Coleta todos os produtos
-	.get((req, res, next) => {
-		Bike.find({}).then((data) => {
-			res.json(data)
-		}).catch((err) => {
+	.get(async (req, res, next) => {
+		try {
+
+			data = await Bike.find({});
+			
+
+			// Gambiarra para transformar _id em bikeId... Ver como melhorar
+
+			const modifiedBikes = data.map(bike => {
+				return {
+					bikeId: bike._id,
+					userId: bike.userId,
+					price: bike.price,
+					description: bike.description,
+					title: bike.title,
+					favCounter: bike.favCounter,
+					tipo: bike.tipo,
+					imagem: bike.imagem,
+				};
+			});
+
+			res.json(modifiedBikes);
+
+		} catch (error) {
 			next();
-		});
+		}
 	})
+
 	// Adiciona um produto
 	.post((req, res, next) => {
 		let newBike = req.body;
@@ -27,16 +48,19 @@ router.route("/")
 // GET /produtos/:id
 // Retorna um produto específico
 router.route('/:id')
-	.get(function (req, res, next) {
-		let bikeId = req.params.id
+	.get(async function (req, res, next) {
+		try {
+			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
+			let bikeId = req.params.id
 
-		Bike.findById(bikeId).
-			then((bikeData) => {
-				res.json(bikeData)
-			}).
-			catch((error) => {
-				res.status(500).json({ message: error.message })
-			})
+			let bikeData = await Bike.findById(bikeId);
+
+			// Lidar com _id...
+			res.json(bikeData)
+		}
+		catch (error) {
+			res.status(500).json({ message: error.message })
+		}
 	})
 	// Atualiza um ou vários campos de um elemento
 	.patch(function (req, res, next) {
