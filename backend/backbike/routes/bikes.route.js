@@ -9,22 +9,11 @@ router.route("/")
 	.get(async (req, res, next) => {
 		try {
 
-			data = await Bike.find({});
+			allBikes = await Bike.find({}).lean();
 
-
-			// Gambiarra para transformar _id em bikeId... Ver como melhorar
-
-			const modifiedBikes = data.map(bike => {
-				return {
-					bikeId: bike._id,
-					userId: bike.userId,
-					price: bike.price,
-					description: bike.description,
-					title: bike.title,
-					favCounter: bike.favCounter,
-					tipo: bike.tipo,
-					imagem: bike.imagem,
-				};
+			const modifiedBikes = allBikes.map(bike => {
+				const { _id, bikeId, ...resto } = bike;
+				return { bikeId: _id, ...resto };
 			});
 
 			res.json(modifiedBikes);
@@ -58,15 +47,20 @@ router.route('/:id')
 			if (bikeData != null) {
 
 				//TODO: Lidar com _id...
+				res.status(200)
 				res.json(bikeData)
 			} else {
-				let err = new Error("O produto de id " + req.params.id + " não foi encontrado");
-				err.status(404);
-				return next(err);
+				let err = {};
+				res.status(404)
+				// let err = new Error("O produto de id " + req.params.id + " não foi encontrado");
+				res.json(err);
+
 			}
 		}
-		catch (error) {
-			res.status(500).json({ message: error.message })
+		catch (errorParam) {
+			console.log(errorParam);
+
+			res.status(500).json({ message: errorParam.message })
 		}
 	})
 	// Atualiza um ou vários campos de um elemento

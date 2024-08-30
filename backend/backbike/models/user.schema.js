@@ -22,10 +22,10 @@ var usersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    FavIds: {
-        type: [mongoose.Types.ObjectId],
-        required: true
-    },
+    FavIds: [{
+		type: mongoose.Types.ObjectId,
+		ref: "Bike",
+    }],
 });
 
 // usersSchema.method("transform", function() {
