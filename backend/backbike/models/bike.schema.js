@@ -29,7 +29,7 @@ const BikeSchema = new mongoose.Schema({
     },
     tipo: {
         type: String,
-        enum: ['MTB', 'Passeio', 'Speed', 'Electrica', 'Other'], // Enumeração para limitar os tipos permitidos, pode ser ajustado conforme necessário
+        enum: ['MTB', 'Passeio', 'Speed', 'Eletrica', 'Other'], // Enumeração para limitar os tipos permitidos, pode ser ajustado conforme necessário
         required: true
     },
     imagem: {
