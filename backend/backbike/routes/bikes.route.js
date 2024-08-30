@@ -9,24 +9,7 @@ router.route("/")
 		try {
 
 			data = await Bike.find({});
-			
-
-			// Gambiarra para transformar _id em bikeId... Ver como melhorar
-
-			const modifiedBikes = data.map(bike => {
-				return {
-					bikeId: bike._id,
-					userId: bike.userId,
-					price: bike.price,
-					description: bike.description,
-					title: bike.title,
-					favCounter: bike.favCounter,
-					tipo: bike.tipo,
-					imagem: bike.imagem,
-				};
-			});
-
-			res.json(modifiedBikes);
+			res.json(data);
 
 		} catch (error) {
 			next();
@@ -45,9 +28,9 @@ router.route("/")
 	});
 
 
-// GET /produtos/:id
-// Retorna um produto específico
+
 router.route('/:id')
+	// Retorna um produto específico
 	.get(async function (req, res, next) {
 		try {
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
