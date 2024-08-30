@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Bike = require("../models/bike.schema");
+const { Error } = require('mongoose');
 
 router.route("/")
 	// Coleta todos os produtos
@@ -54,9 +55,15 @@ router.route('/:id')
 			let bikeId = req.params.id
 
 			let bikeData = await Bike.findById(bikeId);
+			if (bikeData != null) {
 
-			// Lidar com _id...
-			res.json(bikeData)
+				//TODO: Lidar com _id...
+				res.json(bikeData)
+			} else {
+				let err = new Error("O produto de id " + req.params.id + " não foi encontrado");
+				err.status(404);
+				return next(err);
+			}
 		}
 		catch (error) {
 			res.status(500).json({ message: error.message })
