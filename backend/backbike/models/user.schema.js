@@ -1,4 +1,5 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+// nomalize = require("normalize-mongoose");
 
 var usersSchema = new mongoose.Schema({
     nome: {
@@ -26,5 +27,16 @@ var usersSchema = new mongoose.Schema({
         required: true
     },
 });
+
+// usersSchema.method("transform", function() {
+// 	var obj = this.toObject();
+
+// 	obj.id = obj._id;
+// 	delete obj._id;
+
+// 	return obj;
+// })
+
+// usersSchema.plugin(nomalize);
 
 module.exports = mongoose.model('User', usersSchema);
