@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors")
 
+
 // Utilizando o banco de dados 
 const mongoose = require("mongoose")
 
@@ -38,7 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// AS ROTAS VÊM POR ÚLTIMO SEMPRE
 // Define os endpoints de cada "entidade"
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
