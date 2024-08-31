@@ -17,26 +17,28 @@ router.route("/")
 	})
 
 	// Adicionar usuário
-	// .post(async (req, res, next) => {
-	// 	try {
-	// 		const { senha } = req.body;
-	// 		// Alguma análise/filtro antes de add ao bd?
+	.post(async (req, res, next) => {
+		try {
+			const {senha} = req.body;
+			// Alguma análise/filtro antes de add ao bd?
 
-	// 		// TODO: Criar testes de checagem
+			// TODO: Criar testes de checagem
 
-	// 		// Codificar a senha usando bcrypt
-	// 		new_user.senha = await bcrypt.hash(senha, 12);
+			// Codificar a senha usando bcrypt
+			new_senha = await bcrypt.hash(senha, 12);
 
-	// 		data_new_user = await Usuario.create(newUser);
+			req.body.senha = new_senha;
 
-	// 		res.json({ objAdded: data_new_user, "status": "OK" });
+			data_new_user = await Usuario.create(req.body);
 
-	// 	}
-	// 	catch (err) {
-	// 		res.json({ objAdded: newUser, "status": "ERROR", "message": err.message });
-	// 		next();
-	// 	}
-	// });
+			res.json({ objAdded: data_new_user, "status": "OK" });
+		}
+		catch (err) {
+			res.status(500);
+			res.json({ objAdded: new_user, "status": "ERROR", "message": err.message });
+			next();
+		}
+	});
 
 
 router.route("/login")
@@ -50,7 +52,9 @@ router.route("/login")
 			if (!username || !passwd) {
 				return res.status(400).json({ error: 'Email ou senha vazios' });
 			}
+
 			console.log("Usuario " + username + "\nSenha: " + passwd);
+
 			const user = await Usuario.findOne({ email: username });
 			if (!user) {
 				return res.status(404).json({ error: 'Usuário não encontrado' });
