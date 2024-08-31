@@ -25,17 +25,10 @@ var usersSchema = new mongoose.Schema({
     FavIds: [{
 		type: mongoose.Types.ObjectId,
 		ref: "Bike",
+		default: []
     }],
 });
 
-// usersSchema.method("transform", function() {
-// 	var obj = this.toObject();
-
-// 	obj.id = obj._id;
-// 	delete obj._id;
-
-// 	return obj;
-// })
 
 // usersSchema.plugin(nomalize);
 
