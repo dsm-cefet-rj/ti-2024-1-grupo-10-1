@@ -75,7 +75,7 @@ router.route("/login")
 
 			console.log("Usuario " + email + "\nSenha: " + senha);
 
-			const user = await Usuario.findOne({ email });
+			const user = await Usuario.findOne({ email }).lean();
 			if (!user) {
 				return res.status(404).json({ error: 'Usuário não encontrado' });
 			}
@@ -85,11 +85,13 @@ router.route("/login")
 				return res.status(401).json({ error: 'Senha incorreta' });
 			}
 
-			const { _id } = user;
+			const { _id, ...data } = user;
 			const token = jwt.sign({ id: _id }, process.env.SESSION_SECRET, { expiresIn: '24h' });
 
-			return res.status(200).json({//retorna o token que vai ser usado em situações restritas pro usuário
-				token,
+			//retorna o token que vai ser usado em situações restritas pro usuário
+			return res.status(200).json({
+				token: token,
+				data: data
 			});
 
 		} catch (error) {
