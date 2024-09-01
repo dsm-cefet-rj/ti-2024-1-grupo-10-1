@@ -19,48 +19,68 @@ router.route("/")
 	// Adicionar usuário
 	.post(async (req, res, next) => {
 		try {
-			const {senha} = req.body;
-			// Alguma análise/filtro antes de add ao bd?
+			const { nome, CEP, email, senha, telefone } = req.body;
 
-			// TODO: Criar testes de checagem
+			// Verificação de preenchimento dos campos obrigatórios
+			if (!nome || !CEP || !email || !senha || !telefone) {
+				return res.status(400).json({ status: "ERROR", message: "Todos os campos são obrigatórios!" });
+			}
+
+			// Verificação de email no padrão correto
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(email)) {
+				return res.status(400).json({ status: "ERROR", message: "Email inválido! O email deve estar no formato nome@dominio.com" });
+			}
+
+			// Verificação do CEP (Brasil: 8 dígitos, números apenas)
+			const cepRegex = /^\d{5}-?\d{3}$/;
+			if (!cepRegex.test(CEP)) {
+				return res.status(400).json({ status: "ERROR", message: "CEP inválido! Deve conter 8 dígitos no formato XXXXX-XXX ou XXXXXXXX" });
+			}
+
+			// Verificação de telefone (Brasil: 10 ou 11 dígitos)
+			const phoneRegex = /^\d{10,11}$/;
+			if (!phoneRegex.test(telefone)) {
+				return res.status(400).json({ status: "ERROR", message: "Telefone inválido! Deve conter 10 ou 11 dígitos." });
+			}
 
 			// Codificar a senha usando bcrypt
-			new_senha = await bcrypt.hash(senha, 12);
+			const hashedPassword = await bcrypt.hash(senha, 12);
+			req.body.senha = hashedPassword;
 
-			req.body.senha = new_senha;
+			// Criação do novo usuário
+			const newUser = await Usuario.create(req.body);
 
-			data_new_user = await Usuario.create(req.body);
-
-			res.json({ objAdded: data_new_user, "status": "OK" });
-		}
-		catch (err) {
-			res.status(500);
-			res.json({ objAdded: new_user, "status": "ERROR", "message": err.message });
+			// Retornar o usuário criado com status OK
+			res.json({ objAdded: newUser, status: "OK" });
+		} catch (err) {
+			res.status(500).json({ status: "ERROR", message: err.message });
 			next();
 		}
 	});
+
 
 
 router.route("/login")
 	// Logar
 	.post(async (req, res, next) => {
 
-		const { username, passwd } = req.body;
+		const { email, senha } = req.body;
 
 		try {
 
-			if (!username || !passwd) {
+			if (!email || !senha) {
 				return res.status(400).json({ error: 'Email ou senha vazios' });
 			}
 
-			console.log("Usuario " + username + "\nSenha: " + passwd);
+			console.log("Usuario " + email + "\nSenha: " + senha);
 
-			const user = await Usuario.findOne({ email: username });
+			const user = await Usuario.findOne({ email });
 			if (!user) {
 				return res.status(404).json({ error: 'Usuário não encontrado' });
 			}
 
-			const pass_ok = await bcrypt.compare(passwd, user.senha);
+			const pass_ok = await bcrypt.compare(senha, user.senha);
 			if (!pass_ok) {
 				return res.status(401).json({ error: 'Senha incorreta' });
 			}
@@ -68,17 +88,10 @@ router.route("/login")
 			const { _id } = user;
 			const token = jwt.sign({ id: _id }, process.env.SESSION_SECRET, { expiresIn: '24h' });
 
-			return res.status(200).json({
-				token: token,
-				usuario: {
-					userId: _id,
-					nome: user.nome,
-					email: user.email,
-					tel: user.telefone,
-					cep: user.CEP,
-					favBikes: user.FavIds
-				}
+			return res.status(200).json({//retorna o token que vai ser usado em situações restritas pro usuário
+				token,
 			});
+
 		} catch (error) {
 			return res.status(500).json({ error: 'Erro ao buscar usuário: ' + error.message });
 		}
