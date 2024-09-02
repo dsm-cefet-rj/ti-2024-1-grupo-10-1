@@ -43,5 +43,4 @@ npm start # Iniciando o backend da aplicação
 ```
 
 
-Com isso a aplicação já está pronta para ser utilizada. Para utilizá-lo localmente vá a URL indicada pelo 
-Com isso, o projeto já deve estar rodando localmente na porta informada
+Com isso a aplicação já está pronta para ser utilizada. Para utilizá-lo localmente vá a URL indicada pelo frontend.
