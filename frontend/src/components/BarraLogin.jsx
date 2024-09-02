@@ -30,19 +30,24 @@ const BarraLogin = () => {
 			if (!response.status) {
 				// Algo deu errado na requisição
 			} else {
-				// console.log(response);
-				// alert(JSON.stringify(response));
-
+				console.log(response);
+				alert(JSON.stringify(response));
+				
 				// Melhor forma? Alternativas?
 				localStorage.setItem("token", response.token);
+				// Só consigo verificar a chegada do token pelo registro de request - Como vejo que armazeno o token?
+
 				updateNome(response.data.nome);
 				updateCep(response.data.CEP);
 				updateEmail(response.data.email);
 				updateTel(response.data.telefone);
 				setUserFavs(response.data.FavIds);
-				// setLoggedAccount(true);
+				// Não atualiza o estado corretamente. Bloqueia o acesso as seções com restrição (Meus Anuncios, Favoritos, Meus Dados)
+				setLoggedAccount(true);
 
 				console.log("Usuario logado com sucesso!");
+
+				// Nenhum desses conosle.log() aparece devido ao redirecionamento... o que fazer?
 			}
 		} catch (error) {
 			// Tratar os erros
