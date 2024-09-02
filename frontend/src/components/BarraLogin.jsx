@@ -1,95 +1,54 @@
-import React, { useState, useEffect } from 'react'
-import useUserStore from './UserUtils';
-import { Link } from 'react-router-dom';
-import { fetchUsers } from './BackendUtils';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import useUserStore from "./UserUtils";
+import { Link } from "react-router-dom";
+import { LoginUser } from "./BackendUtils";
 
 const BarraLogin = () => {
-
-	const [users, setUsers] = useState([]);
-
-	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs } = useUserStore((state) => ({
+	
+	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs, updateTel, } = useUserStore((state) => ({
 		updateNome: state.updateNome,
 		updateEmail: state.updateEmail,
 		updateCep: state.updateCep,
 		setLoggedAccount: state.setLoggedAccount,
 		setUserId: state.updateId,
-		setUserFavs: state.updateFavs
+		setUserFavs: state.updateFavs,
+		updateTel: state.updateTel,
 	}));
-
-
-	/* NÃO APAGAR ESSE CÓDIGO
-	useEffect(() => {
-		const fetchUsers = async () => {
-			try {
-				const response = await axios.get('http://localhost:3000/users');
-				if (response.status == 200) setUsers(response.data);
-			} catch (error) {
-				console.error('Erro ao buscar lista de usuarios:', error);
-			}
-		};
-		
-		fetchUsers();
-	}, []);
-	*/
-
-	useEffect(() => {
-		fetchUsers(setUsers);
-	}, []);
-
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-
-	// 	let email = document.getElementById("email").value;
-	// 	let senha = document.getElementById("pass").value;
-
-	// 	// Verificar se os dados coincidem com algum usuário
-	// 	let user_found = users.filter(usuario => { return usuario.email === email && usuario.senha === senha });
-
-	// 	if (user_found.length != 1) {
-	// 		// Deu merda, mais de um usuario com mesmas credenciais
-	// 		console.log("Algo deu errado");
-	// 	} else {
-	// 		user_found = user_found[0];
-
-	// 		console.log(user_found);
-	// 		setUserId(user_found.id);
-
-	// 		updateNome(user_found.nome);
-	// 		updateEmail(user_found.email);
-	// 		updateCep(user_found.CEP);
-	// 		setUserFavs(user_found.FavCollection);
-
-	// 		setLoggedAccount(true);
-	// 		// console.log(user);
-	// 	}
-	// };
 
 	const handleLogin = async () => {
 		try {
-			// Captura os valores dos campos de email e senha
+
 			let email = document.getElementById("email").value;
 			let senha = document.getElementById("pass").value;
 
-			// Faz a requisição POST para o endpoint de login
-			const response = await axios.post('http://localhost:3015/users/login', {
-				email: email,
-				senha: senha
-			});
+			/*
+				Estrut. de uma request correta:
+				{status: true, token: "token", data: { dados do usuario } }
+			*/
+			let response = LoginUser(email, senha);
 
-			// Tratar a resposta de sucesso
-			if (response.status === 200) {
-				localStorage.setItem('token', response.data.token) //usando armazenamento local do browser para fixar o token do usuario logado
-				console.log('Login realizado com sucesso:', response.data);
-				console.log(response.data);
-				// Você pode redirecionar o usuário ou realizar alguma outra ação
-				// window.location.href = "/dashboard"; // Exemplo de redirecionamento
+			if (!response.status) {
+				// Algo deu errado na requisição
+			} else {
+				// console.log(response);
+				// alert(JSON.stringify(response));
+
+				// Melhor forma? Alternativas?
+				localStorage.setItem("token", response.token);
+				updateNome(response.data.nome);
+				updateCep(response.data.CEP);
+				updateEmail(response.data.email);
+				updateTel(response.data.telefone);
+				setUserFavs(response.data.FavIds);
+				// setLoggedAccount(true);
+
+				console.log("Usuario logado com sucesso!");
 			}
 		} catch (error) {
 			// Tratar os erros
-			console.error('Erro ao tentar fazer login:', error.response ? error.response.data : error.message);
-			// Você pode exibir uma mensagem de erro no frontend se desejar
-			alert('Erro ao tentar fazer login, verifique suas credenciais.');
+			console.error("Erro ao tentar fazer login:",
+				error.response ? error.response.data : error.message
+			);
 		}
 	};
 
@@ -133,7 +92,7 @@ const BarraLogin = () => {
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default BarraLogin
+export default BarraLogin;
