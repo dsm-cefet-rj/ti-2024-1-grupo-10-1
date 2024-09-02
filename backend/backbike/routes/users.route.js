@@ -65,37 +65,50 @@ router.route("/login")
 	// Logar
 	.post(async (req, res, next) => {
 
-		const { email, senha } = req.body;
+		const { email: email, pass: req_senha } = req.body;
 
 		try {
 
-			if (!email || !senha) {
+			if (!email || !req_senha) {
 				return res.status(400).json({ error: 'Email ou senha vazios' });
 			}
-
-			console.log("Usuario " + email + "\nSenha: " + senha);
-
+			// Não mexa nessa linha
 			const user = await Usuario.findOne({ email }).lean();
+
 			if (!user) {
 				return res.status(404).json({ error: 'Usuário não encontrado' });
 			}
 
-			const pass_ok = await bcrypt.compare(senha, user.senha);
+			// Separação do id, da senha e dos dados do usuário
+			const { _id, senha, ...userData } = user;
+
+			const pass_ok = await bcrypt.compare(req_senha, senha);
+
 			if (!pass_ok) {
 				return res.status(401).json({ error: 'Senha incorreta' });
 			}
 
-			const { _id, ...data } = user;
+			// Geração do token
 			const token = jwt.sign({ id: _id }, process.env.SESSION_SECRET, { expiresIn: '24h' });
+
+			// if (!token) {
+			// 	 ???
+			// }
 
 			//retorna o token que vai ser usado em situações restritas pro usuário
 			return res.status(200).json({
 				token: token,
-				data: data
+				data: userData
 			});
 
 		} catch (error) {
-			return res.status(500).json({ error: 'Erro ao buscar usuário: ' + error.message });
+			return res.status(500).json({
+				title: 'Erro ao buscar logar',
+				error: error.message,
+				data: user,
+				is_passOk: pass_ok
+			});
+			next();
 		}
 	});
 
