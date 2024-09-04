@@ -60,7 +60,12 @@ router.route("/")
 		}
 	});
 
-
+router.route("/:id")
+	.get((req, res, next) => {
+		User.findById(req.params.id).then((data) => {
+			res.json(data);
+		})
+	});
 
 
 router.post('/login', passport.authenticate('local', {

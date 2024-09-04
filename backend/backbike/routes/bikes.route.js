@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Bike = require("../models/bike.schema");
-const { Error } = require('mongoose');
+var User = require("../models/user.schema");
 
 router.route("/")
 	// Coleta todos os produtos
@@ -12,7 +12,7 @@ router.route("/")
 			allBikes = await Bike.find({}).lean();
 
 			const modifiedBikes = allBikes.map(bike => {
-				const { _id, bikeId, ...resto } = bike;
+				const { _id, bikeId, __v,  ...resto } = bike;
 				return { bikeId: _id, ...resto };
 			});
 
@@ -43,12 +43,12 @@ router.route('/:id')
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id
 
-			let bikeData = await Bike.findById(bikeId).lean();
+			let bikeData = await Bike.findById(bikeId).populate("userId").lean();
 
 			if (bikeData != null) {
 
-				const { _id, bikeId, ...resto } = bikeData;
 				res.status(200)
+				const { _id, bikeId, __v, ...resto } = bikeData;
 				res.json({ bikeId: _id, ...resto });
 				return;
 

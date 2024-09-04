@@ -1,9 +1,13 @@
+
 const mongoose = require("mongoose");
 // nomalize = require("normalize-mongoose");
 
 var passportLocalMongoose = require('passport-local-mongoose')
 
 var usersSchema = new mongoose.Schema({
+	userId: {
+		type: mongoose.Types.ObjectId,	
+	},
     nome: {
         type: String,
         required: true
