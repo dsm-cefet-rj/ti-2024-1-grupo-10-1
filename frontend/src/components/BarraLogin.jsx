@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import useUserStore from './UserUtils';
 import { Link } from 'react-router-dom';
-import { fetchUsers } from './BackendUtils';
+import { fetchUsers, handleLogin} from './BackendUtils';
 import axios from 'axios';
 
 const BarraLogin = () => {
@@ -37,7 +37,7 @@ const BarraLogin = () => {
 		fetchUsers(setUsers);
 	}, []);
 
-	// const handleSubmit = (e) => {
+	// const handleSubmit = (e) => { //nao sei o que ta fazendo de 53-64 mas fora isso o handlelogin do util substitui
 	// 	e.preventDefault();
 
 	// 	let email = document.getElementById("email").value;
@@ -65,32 +65,9 @@ const BarraLogin = () => {
 	// 	}
 	// };
 
-	const handleLogin = async () => {
-		try {
-			// Captura os valores dos campos de email e senha
-			let email = document.getElementById("email").value;
-			let senha = document.getElementById("pass").value;
-
-			// Faz a requisição POST para o endpoint de login
-			const response = await axios.post('http://localhost:3015/users/login', {
-				email: email,
-				senha: senha
-			});
-
-			// Tratar a resposta de sucesso
-			if (response.status === 200) {
-				localStorage.setItem('token', response.data.token) //usando armazenamento local do browser para fixar o token do usuario logado
-				console.log('Login realizado com sucesso:', response.data);
-				console.log(response.data);
-				// Você pode redirecionar o usuário ou realizar alguma outra ação
-				// window.location.href = "/dashboard"; // Exemplo de redirecionamento
-			}
-		} catch (error) {
-			// Tratar os erros
-			console.error('Erro ao tentar fazer login:', error.response ? error.response.data : error.message);
-			// Você pode exibir uma mensagem de erro no frontend se desejar
-			alert('Erro ao tentar fazer login, verifique suas credenciais.');
-		}
+	const handleSubmitTemporaria = (e) => {
+		e.preventDefault(); // Previne o comportamento padrão do botão
+		handleLogin(e); // Chama o handleSubmit de BackendUtils
 	};
 
 	return (

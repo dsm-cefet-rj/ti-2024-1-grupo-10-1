@@ -10,9 +10,9 @@ const CiclistaHome = () => {
 			</div>
 
 			<div className="mt-[638px] absolute inset-0 flex items-center justify-center z-10">
-				<a href="#" className="mt-2 sm:mt-6 md:mt-16 max-w-sm p-5 bg-white border border-black rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-					<h5 className="mb-2 text-lg sm:text-xl md:text-2xl tracking-tight text-gray-900 dark:text-white">Mais Recomendados</h5>
-				</a>
+				<div className="mt-5 sm:mt-6 md:mt-16 max-w-sm p-5 bg-white border border-black rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+					<h5 className="mb-2 text-lg sm:text-xl md:text-2xl tracking-tight text-gray-900 dark:text-white">Bikes Disponíveis</h5>
+				</div>
 			</div>
 		</div>
 	);

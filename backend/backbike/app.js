@@ -3,7 +3,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors")
-
+var passport = require('passport')
+var authenticate = require('./authenticate')
+const session = require('express-session');
+const Usuario = require('./models/user.schema');
 
 // Utilizando o banco de dados 
 const mongoose = require("mongoose")
@@ -25,7 +28,7 @@ connect.then((db) => {
 });
 
 
-var app = express();
+const app = express();
 
 
 app.use(cors({
@@ -38,6 +41,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Configurar a sessão
+app.use(session({
+
+	secret: 'your_session_secret',
+	resave: false,
+	saveUninitialized: false
+}));
+
+
+// Middleware do Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
 
 // AS ROTAS VÊM POR ÚLTIMO SEMPRE
 // Define os endpoints de cada "entidade"
