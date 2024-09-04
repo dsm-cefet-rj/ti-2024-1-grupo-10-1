@@ -1,0 +1,5 @@
+module.exports = {
+
+'secretKey': "secret",
+    'mongoUrl': "mongodb://127.0.0.1/bikeseller"
+}

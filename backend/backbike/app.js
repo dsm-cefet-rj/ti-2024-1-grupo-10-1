@@ -7,6 +7,8 @@ var passport = require('passport')
 var authenticate = require('./authenticate')
 const session = require('express-session');
 var FileStore = require('session-file-store')(session)  
+var config = require('./config')
+
 
 // Utilizando o banco de dados 
 const mongoose = require("mongoose")
@@ -21,7 +23,7 @@ var bikeRouter = require('./routes/bikes.route');
 
 
 
-const url = "mongodb://127.0.0.1/bikeseller";;
+const url = config.mongoUrl;
 const connect = mongoose.connect(url);
 
 connect.then((db) => {
