@@ -4,12 +4,12 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const passport = require('passport');
-const Usuario = require("../models/user.schema")
+const User = require("../models/user.schema")
 
 router.route("/")
 	// Listagem de usuarios.
 	.get((req, res, next) => {
-		Usuario.find({}).then((data) => {
+		User.find({}).then((data) => {
 			res.json(data);
 		}).catch((err) => {
 			res.json({ "status": "ERROR", "message": err.message });
@@ -41,13 +41,13 @@ router.route("/")
 				return res.status(400).json({ status: "ERROR", message: "Telefone inválido!" });
 			}
 			
-			const existingUser = await Usuario.findOne({ email });
+			const existingUser = await User.findOne({ email });
 			if (existingUser) {
 				return res.status(400).json({ status: "ERROR", message: "O e-mail já está registrado." });
 			}
 
-			const newUser = new Usuario({ nome, CEP, email, telefone });
-			Usuario.register(newUser, senha, (err, user) => {
+			const newUser = new User({ nome, CEP, email, telefone });
+			User.register(newUser, senha, (err, user) => {
 				if (err) {
 					return res.status(500).json({ status: "ERROR", message: err.message });
 				}
@@ -76,7 +76,7 @@ router.route("/update")
 		let userId = req.params.id;
 		let userNewData = req.body;
 
-		Usuario.findByIdAndUpdate(userId, userNewData, { new: true }). // {new: true} --> Retorna o elemento atualizado
+		User.findByIdAndUpdate(userId, userNewData, { new: true }). // {new: true} --> Retorna o elemento atualizado
 			then((newUser) => {
 				res.json(newUser);
 			})
@@ -88,7 +88,7 @@ router.route("/update")
 // 	// Endpoint para carregar os dados do usuário por ID
 // 	.get((req, res, next) => {
 // 		let input_id = req.params.id;
-// 		Usuario.findById(input_id)
+// 		User.findById(input_id)
 // 			.then((UserData) => {
 // 				res.json(UserData);
 // 			})
@@ -105,7 +105,7 @@ router.route("/delete")
 	.delete((req, res, next) => {
 		let userId = req.params.id;
 
-		Usuario.findByIdAndDelete(userId).
+		User.findByIdAndDelete(userId).
 			then((user) => {
 				res.json(user);
 			}).

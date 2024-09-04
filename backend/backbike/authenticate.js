@@ -1,15 +1,14 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-
-const Usuario = require('./models/user.schema'); 
+const User = require('./models/user.schema'); 
 
 // Configuração da estratégia Local
 passport.use(new LocalStrategy(
     { usernameField: 'email' }, // O campo para login é o e-mail
     async (email, password, done) => {
         try {
-            const user = await Usuario.findOne({ email });
+            const user = await User.findOne({ email });
             if (!user) {
                 return done(null, false, { message: 'Incorrect email.' });
             }
@@ -37,7 +36,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await Usuario.findById(id);
+        const user = await User.findById(id);
         done(null, user);
     } catch (err) {
         done(err, false);

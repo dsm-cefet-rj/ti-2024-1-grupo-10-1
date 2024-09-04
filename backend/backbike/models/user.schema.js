@@ -32,4 +32,4 @@ var usersSchema = new mongoose.Schema({
 
 usersSchema.plugin(passportLocalMongoose, { usernameField: 'email' });//Configura o campo usado como "nome de usuário" (no login) para ser o email em vez do padrão username
 
-module.exports = mongoose.model('Usuario', usersSchema);
+module.exports = mongoose.model('User', usersSchema);
