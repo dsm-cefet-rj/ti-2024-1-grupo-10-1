@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const BikeSchema = new mongoose.Schema({
     bikeId: {
-        type: Number,
-        required: true
+        type: Number // ObjectId
     },
     userId: {
         type: Number,
