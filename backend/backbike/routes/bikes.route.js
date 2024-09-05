@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-
+var authenticate = require('../authenticate');
 var Bike = require("../models/bike.schema");
 const { Error } = require('mongoose');
 
 router.route("/")
 	// Coleta todos os produtos
-	.get(async (req, res, next) => {
+	.get(async(req, res, next) => {
 		try {
 
 			allBikes = await Bike.find({}).lean();
@@ -24,7 +24,7 @@ router.route("/")
 	})
 
 	// Adiciona um produto
-	.post((req, res, next) => {
+	.post(authenticate.verifyUser, (req, res, next) => {//verifica se esta logado
 		let newBike = req.body;
 		Bike.create(newBike).then((newBike) => {
 			res.json({ objAdded: newBike, "status": "OK" });
@@ -38,7 +38,7 @@ router.route("/")
 
 router.route('/:id')
 	// Retorna um produto específico
-	.get(async function (req, res, next) {
+	.get(authenticate.verifyUser,async function (req, res, next) {
 		try {
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id

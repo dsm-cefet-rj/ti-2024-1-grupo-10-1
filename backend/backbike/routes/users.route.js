@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
+var authenticate = require('../authenticate')
 const passport = require('passport');
 const User = require("../models/user.schema")
 
@@ -63,11 +63,14 @@ router.route("/")
 
 
 
-router.post('/login', passport.authenticate('local', {
-	successRedirect: '/profile',
-	failureRedirect: '/login',
-	failureFlash: true
-}));
+// Rota de login sem sessão
+router.post('/login', passport.authenticate('local', { session: false }), (req, res) => {
+	const token = authenticate.getToken({ id: req.user._id });
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'application/json');//token no header
+	res.json({ user: req.user._id, token: token, sucess: true});//isso vai pro frontend
+});
+
 
 
 
