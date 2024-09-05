@@ -68,13 +68,12 @@ router.route("/:id")
 	});
 
 
+
 router.post('/login', passport.authenticate('local', {
 	successRedirect: '/profile',
 	failureRedirect: '/login',
 	failureFlash: true
 }));
-
-
 
 router.route("/update")
 	.patch((req, res, next) => {

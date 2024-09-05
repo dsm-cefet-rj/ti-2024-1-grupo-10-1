@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useUserStore from './UserUtils';
-import { fetchUser, PutUser } from './BackendUtils';
+import { fetchUser, PatchUser } from './BackendUtils';
 
 export default function EditarCadastro() {
 
@@ -25,7 +25,7 @@ export default function EditarCadastro() {
 	const handleUpdate = async () => {
 		try {
 
-			PutUser(newUserData);
+			PatchUser(newUserData);
 			// Adicionar um modal de aviso!! p substituir esse alert.
 			alert('Cadastro atualizado com sucesso!');
 			// Deslogar automaticamente - Obrigar o login novamente
