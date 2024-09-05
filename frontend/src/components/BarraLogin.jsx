@@ -5,18 +5,16 @@ import { fetchUsers, handleLogin} from './BackendUtils';
 import axios from 'axios';
 
 const BarraLogin = () => {
-
-	const [users, setUsers] = useState([]);
-
-	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs } = useUserStore((state) => ({
+	
+	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs, updateTel, } = useUserStore((state) => ({
 		updateNome: state.updateNome,
 		updateEmail: state.updateEmail,
 		updateCep: state.updateCep,
 		setLoggedAccount: state.setLoggedAccount,
 		setUserId: state.updateId,
-		setUserFavs: state.updateFavs
+		setUserFavs: state.updateFavs,
+		updateTel: state.updateTel,
 	}));
-
 
 	/* NÃO APAGAR ESSE CÓDIGO
 	useEffect(() => {
@@ -68,6 +66,7 @@ const BarraLogin = () => {
 	const handleSubmitTemporaria = (e) => {
 		e.preventDefault(); // Previne o comportamento padrão do botão
 		handleLogin(e); // Chama o handleLogin de BackendUtils
+
 	};
 
 	return (
@@ -110,7 +109,7 @@ const BarraLogin = () => {
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default BarraLogin
+export default BarraLogin;

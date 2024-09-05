@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchAllProducts } from './BackendUtils';
-
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { fetchAllProducts } from "./BackendUtils";
 
 const Recomendados = () => {
-	
 	const [produtos, setProdutos] = useState([]);
 
 	useEffect(() => {

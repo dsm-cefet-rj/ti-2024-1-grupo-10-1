@@ -9,12 +9,13 @@ const user_endpoint = "/users";
 const bike_endpoint = "/bike";
 const feedback_endpoint = "/feedback";
 
-export const fetchAllProducts = async (setTarget) => {//Busca todos os produtos (bicicletas) no back-end via a rota /bike
+export const fetchAllProducts = async (setTarget) => {
+	//Busca todos os produtos (bicicletas) no back-end via a rota /bike
 	try {
-		const response = await axios.get(URL + bike_endpoint);//Faz uma requisição GET para buscar todos os produtos da API.
+		const response = await axios.get(URL + bike_endpoint); //Faz uma requisição GET para buscar todos os produtos da API.
 
 		if (response.status == 200) {
-			await setTarget(response.data);//Se a resposta for 200 (sucesso), armazena os dados retornados na variável setTarget.
+			await setTarget(response.data); //Se a resposta for 200 (sucesso), armazena os dados retornados na variável setTarget.
 		} else {
 			throw AxiosError.ERR_BAD_RESPONSE;
 		}
@@ -23,12 +24,13 @@ export const fetchAllProducts = async (setTarget) => {//Busca todos os produtos 
 	}
 };
 
-export const fetchProduct = async (setTarget, id) => {// Busca um produto específico (bicicleta) pelo id
+export const fetchProduct = async (setTarget, id) => {
+	// Busca um produto específico (bicicleta) pelo id
 	try {
-		const response = await axios.get(URL + bike_endpoint + "/" + id);// Envia uma requisição GET para /bike/:id
+		const response = await axios.get(URL + bike_endpoint + "/" + id); // Envia uma requisição GET para /bike/:id
 
 		if (response.status == 200) {
-			await setTarget(response.data);//se bem-sucedida, define o estado com os dados do produto específico.
+			await setTarget(response.data); //se bem-sucedida, define o estado com os dados do produto específico.
 		} else {
 			throw AxiosError.ERR_BAD_RESPONSE;
 		}
@@ -38,7 +40,18 @@ export const fetchProduct = async (setTarget, id) => {// Busca um produto espec�
 };
 
 
-export const fetchUsers = async (setTarget) => {//Busca todos os usuários cadastrados no sistema.
+export const fetchUser = async (setTarget, userid) => {
+	//Busca dados de um usuário específico pelo userid
+	try {
+		const response = await axios.get(URL + user_endpoint + `${userid}`); //Requisição GET para /users/:userid e atualiza o estado com os dados do usuário.
+		setTarget(response.data);
+	} catch (error) {
+		console.error("Ocorreu um erro ao buscar os dados:", error);
+	}
+};
+
+export const fetchUsers = async (setTarget) => {
+	//Busca todos os usuários cadastrados no sistema.
 	try {
 		const response = await axios.get(URL + user_endpoint);
 		if (response.status == 200) {
@@ -51,7 +64,8 @@ export const fetchUsers = async (setTarget) => {//Busca todos os usuários cadas
 	}
 };
 
-export const PostUser = async (newUser) => {// Envia dados de um novo usuário para o back-end (cadastrar um usuário).
+export const PostUser = async (newUser) => {
+	// Envia dados de um novo usuário para o back-end (cadastrar um usuário).
 	try {
 		const response = await axios.post(URL + user_endpoint, newUser);
 		// Verificar se a resposta do backend foi correta
@@ -70,7 +84,8 @@ export const PostUser = async (newUser) => {// Envia dados de um novo usuário p
 	}
 };
 
-export const PutUser = async (user_data) => {//Atualiza os dados de um usuário existente.
+export const PatchUser = async (user_data) => {
+	//Atualiza os dados de um usuário existente.
 	try {
 		const response = await axios.patch(
 			URL + user_endpoint + "/" + user_data.id,
@@ -81,7 +96,6 @@ export const PutUser = async (user_data) => {//Atualiza os dados de um usuário 
 		console.error("Erro ao atualizar os dados do usuario:", error);
 	}
 };
-
 
 // Função para buscar feedbacks do backend
 export const fetchFeedbacks = async () => {

@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var authenticate = require('../authenticate');
 var Bike = require("../models/bike.schema");
-const { Error } = require('mongoose');
 
 router.route("/")
 	// Coleta todos os produtos
@@ -12,7 +11,7 @@ router.route("/")
 			allBikes = await Bike.find({}).lean();
 
 			const modifiedBikes = allBikes.map(bike => {
-				const { _id, bikeId, ...resto } = bike;
+				const { _id, bikeId, __v, ...resto } = bike;
 				return { bikeId: _id, ...resto };
 			});
 
@@ -43,14 +42,19 @@ router.route('/:id')
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id
 
-			let bikeData = await Bike.findById(bikeId).lean();
+			let bikeData = await Bike.findById(bikeId).populate("userId").lean();
 
 			if (bikeData != null) {
 
-				const { _id, bikeId, ...resto } = bikeData;
-				res.status(200)
-				res.json({ bikeId: _id, ...resto });
-				return;
+				// Filtrando apenas o que desejo exibir da bicicleta (resto_bike) através da desestruturação do objeto
+				const { _id: id_bike, bikeId, __v: _v_bike, userId: critical_sellerData, ...resto_bike } = bikeData;
+				
+				// Filtrando apenas o que desejo exibir do vendedor da bike (resto vendedor) através da desestruturação do objeto
+				const { _id: id_vend, __v: _v_vend, CEP:cep_vend, senha:pass_vend, FavIds:fav_bikes_vend, ...resto_vendedor } = critical_sellerData;
+				
+				res.status(200);
+				// Exibo o id da bike, os dados do vendedor e os dados da bicicleta
+				res.json({ sellerData: resto_vendedor, ...resto_bike });
 
 			} else {
 				let err = {};

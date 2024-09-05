@@ -60,6 +60,12 @@ router.route("/")
 		}
 	});
 
+router.route("/:id")
+	.get((req, res, next) => {
+		User.findById(req.params.id).then((data) => {
+			res.json(data);
+		})
+	});
 
 
 
@@ -70,8 +76,6 @@ router.post('/login', passport.authenticate('local', { session: false }), (req, 
 	res.setHeader('Content-Type', 'application/json');//token no header
 	res.json({ user: req.user._id, token: token, sucess: true});//isso vai pro frontend
 });
-
-
 
 
 router.route("/update")
