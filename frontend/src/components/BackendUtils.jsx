@@ -120,24 +120,3 @@ export const handleLogin = async (e) => {
 	}
 };
 
-export const fetchUser = async (userId, setTarget) => {
-	try {
-		// Chama a função fetchUsers para obter todos os usuários
-		await fetchUsers(async (users) => {
-			// Filtra o usuário específico pelo ID
-			const user = users.find((user) => user.id === userId);
-
-			// Se o usuário for encontrado, atualiza o estado
-			if (user) {
-				console.log(user.nome);
-				await setTarget(user);
-			} else {
-				console.error("Usuário não encontrado");
-				// Atualiza o estado com um valor padrão se o usuário não for encontrado
-				await setTarget({ name: "Usuário desconhecido" });
-			}
-		});
-	} catch (error) {
-		console.error("Erro ao buscar usuário:", error);
-	}
-};
