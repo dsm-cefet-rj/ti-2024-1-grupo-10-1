@@ -31,9 +31,9 @@ const BarraLogin = () => {
 	}, []);
 	*/
 
-	useEffect(() => {
-		fetchUsers(setUsers);
-	}, []);
+	// useEffect(() => {
+	// 	fetchUsers(setUsers);
+	// }, []);
 
 	// const handleSubmit = (e) => { //nao sei o que ta fazendo de 53-64 mas fora isso o handlelogin do util substitui
 	// 	e.preventDefault();
@@ -63,11 +63,11 @@ const BarraLogin = () => {
 	// 	}
 	// };
 
-	const handleSubmitTemporaria = (e) => {
-		e.preventDefault(); // Previne o comportamento padrão do botão
-		handleLogin(e); // Chama o handleLogin de BackendUtils
+	// const handleSubmitTemporaria = (e) => {
+	// 	e.preventDefault(); // Previne o comportamento padrão do botão
+	// 	handleLogin(e); // Chama o handleLogin de BackendUtils
 
-	};
+	// };
 
 	return (
 		<div className="min-h-screen min-w-fit bg-gray-100 flex flex-col justify-center sm:py-10 border border-gray-300">
