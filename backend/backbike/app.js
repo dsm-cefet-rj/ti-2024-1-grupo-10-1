@@ -3,7 +3,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors")
-
+var passport = require('passport')
+var authenticate = require('./authenticate')
+const session = require('express-session');
+var FileStore = require('session-file-store')(session)  
 
 // Utilizando o banco de dados 
 const mongoose = require("mongoose")
@@ -17,16 +20,19 @@ var feedbackRouter = require('./routes/feedback.route');
 var bikeRouter = require('./routes/bikes.route');
 
 
-const connect = mongoose.connect(process.env.MONGODB_URL + ":" + process.env.MONGODB_PORT + "/" + process.env.DATABASE_NAME);
+
+const url = "mongodb://127.0.0.1/bikeseller";;
+const connect = mongoose.connect(url);
+
 connect.then((db) => {
-	console.log("Banco de Dados (" + process.env.DATABASE_NAME + ") conectado a porta " + process.env.MONGODB_PORT);
+	console.log("Banco de Dados conectado" );
 }, (err) => {
 	console.log(err);
 });
 
 
-var app = express();
 
+const app = express();
 
 app.use(cors({
 	methods: ['GET', 'POST', 'PATCH', 'DELETE'],
@@ -38,6 +44,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+// Middleware do Passport
+app.use(passport.initialize());
+
+
+
+
+
 
 // AS ROTAS VÊM POR ÚLTIMO SEMPRE
 // Define os endpoints de cada "entidade"

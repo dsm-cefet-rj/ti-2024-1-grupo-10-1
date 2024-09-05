@@ -3,12 +3,13 @@ var router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-var Usuario = require("../models/user.schema")
+const passport = require('passport');
+const User = require("../models/user.schema")
 
 router.route("/")
 	// Listagem de usuarios.
 	.get((req, res, next) => {
-		Usuario.find({}).then((data) => {
+		User.find({}).then((data) => {
 			res.json(data);
 		}).catch((err) => {
 			res.json({ "status": "ERROR", "message": err.message });
@@ -21,103 +22,65 @@ router.route("/")
 		try {
 			const { nome, CEP, email, senha, telefone } = req.body;
 
-			// Verificação de preenchimento dos campos obrigatórios
 			if (!nome || !CEP || !email || !senha || !telefone) {
 				return res.status(400).json({ status: "ERROR", message: "Todos os campos são obrigatórios!" });
 			}
 
-			// Verificação de email no padrão correto
 			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 			if (!emailRegex.test(email)) {
-				return res.status(400).json({ status: "ERROR", message: "Email inválido! O email deve estar no formato nome@dominio.com" });
+				return res.status(400).json({ status: "ERROR", message: "Email inválido!" });
 			}
 
-			// Verificação do CEP (Brasil: 8 dígitos, números apenas)
 			const cepRegex = /^\d{5}-?\d{3}$/;
 			if (!cepRegex.test(CEP)) {
-				return res.status(400).json({ status: "ERROR", message: "CEP inválido! Deve conter 8 dígitos no formato XXXXX-XXX ou XXXXXXXX" });
+				return res.status(400).json({ status: "ERROR", message: "CEP inválido!" });
 			}
 
-			// Verificação de telefone (Brasil: 10 ou 11 dígitos)
 			const phoneRegex = /^\d{10,11}$/;
 			if (!phoneRegex.test(telefone)) {
-				return res.status(400).json({ status: "ERROR", message: "Telefone inválido! Deve conter 10 ou 11 dígitos." });
+				return res.status(400).json({ status: "ERROR", message: "Telefone inválido!" });
+			}
+			
+			const existingUser = await User.findOne({ email });
+			if (existingUser) {
+				return res.status(400).json({ status: "ERROR", message: "O e-mail já está registrado." });
 			}
 
-			// Codificar a senha usando bcrypt
-			const hashedPassword = await bcrypt.hash(senha, 12);
-			req.body.senha = hashedPassword;
-
-			// Criação do novo usuário
-			const newUser = await Usuario.create(req.body);
-
-			// Retornar o usuário criado com status OK
-			res.json({ objAdded: newUser, status: "OK" });
+			const newUser = new User({ nome, CEP, email, telefone });
+			User.register(newUser, senha, (err, user) => {
+				if (err) {
+					return res.status(500).json({ status: "ERROR", message: err.message });
+				}
+				passport.authenticate('local')(req, res, () => {
+					res.json({ status: "OK", message: "Usuário registrado e logado", user });
+				});
+			});
 		} catch (err) {
 			res.status(500).json({ status: "ERROR", message: err.message });
-			next();
 		}
+	});
+
+router.route("/:id")
+	.get((req, res, next) => {
+		User.findById(req.params.id).then((data) => {
+			res.json(data);
+		})
 	});
 
 
 
-router.route("/login")
-	// Logar
-	.post(async (req, res, next) => {
-
-		const { email: email, pass: req_senha } = req.body;
-
-		try {
-
-			if (!email || !req_senha) {
-				return res.status(400).json({ error: 'Email ou senha vazios' });
-			}
-			// Não mexa nessa linha
-			const user = await Usuario.findOne({ email }).lean();
-
-			if (!user) {
-				return res.status(404).json({ error: 'Usuário não encontrado' });
-			}
-
-			// Separação do id, da senha e dos dados do usuário
-			const { _id, senha, ...userData } = user;
-
-			const pass_ok = await bcrypt.compare(req_senha, senha);
-
-			if (!pass_ok) {
-				return res.status(401).json({ error: 'Senha incorreta' });
-			}
-
-			// Geração do token
-			const token = jwt.sign({ id: _id }, process.env.SESSION_SECRET, { expiresIn: '24h' });
-
-			// if (!token) {
-			// 	 ???
-			// }
-
-			//retorna o token que vai ser usado em situações restritas pro usuário
-			return res.status(200).json({
-				token: token,
-				data: userData
-			});
-
-		} catch (error) {
-			return res.status(500).json({
-				title: 'Erro ao buscar logar',
-				error: error.message,
-				data: user,
-				is_passOk: pass_ok
-			});
-			next();
-		}
-	});
+router.post('/login', passport.authenticate('local', {
+	successRedirect: '/profile',
+	failureRedirect: '/login',
+	failureFlash: true
+}));
 
 router.route("/update")
 	.patch((req, res, next) => {
 		let userId = req.params.id;
 		let userNewData = req.body;
 
-		Usuario.findByIdAndUpdate(userId, userNewData, { new: true }). // {new: true} --> Retorna o elemento atualizado
+		User.findByIdAndUpdate(userId, userNewData, { new: true }). // {new: true} --> Retorna o elemento atualizado
 			then((newUser) => {
 				res.json(newUser);
 			})
@@ -129,7 +92,7 @@ router.route("/update")
 // 	// Endpoint para carregar os dados do usuário por ID
 // 	.get((req, res, next) => {
 // 		let input_id = req.params.id;
-// 		Usuario.findById(input_id)
+// 		User.findById(input_id)
 // 			.then((UserData) => {
 // 				res.json(UserData);
 // 			})
@@ -146,7 +109,7 @@ router.route("/delete")
 	.delete((req, res, next) => {
 		let userId = req.params.id;
 
-		Usuario.findByIdAndDelete(userId).
+		User.findByIdAndDelete(userId).
 			then((user) => {
 				res.json(user);
 			}).

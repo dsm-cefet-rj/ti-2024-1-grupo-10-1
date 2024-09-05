@@ -25,28 +25,33 @@ const ListaBikes = () => {
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 				<h2 className="text-2xl font-bold tracking-tight text-gray-900">Resultados:</h2>
 
-				<div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+				{/* Condição para verificar se há bicicletas filtradas de determinado tipo*/}
+				{filteredBikes.length === 0 ? (
+					<p className="text-lg text-gray-700 mt-4">Nenhuma bicicleta encontrada para o tipo selecionado :(</p>
+				) : (
+
+				<div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
 					{filteredBikes.map((bike) => (
-						<Link to={has_logged ? `/bike/${bike.id_bike}` : '/login'} key={bike.id_bike} className="group relative">
-							<div className="group relative">
-								<div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-									<img src={bike.imagem} alt={bike.titulo} className="h-full w-full object-cover object-center lg:h-full lg:w-full" />
-								</div>
-								<div className="mt-4 flex justify-between">
-									<div>
-										<h3 className="text-sm text-gray-700">
-											<a href={bike.href}>
-												<span aria-hidden="true" className="absolute inset-0" /> {bike.titulo}
-											</a>
-										</h3>
-										<p className="mt-1 text-sm text-gray-500">{bike.descricao}</p>
-									</div>
-									<p className="text-sm font-medium text-gray-900">{`R$ ${bike.valor.toFixed(2)}`}</p>
-								</div>
+						<Link
+							to={has_logged ? `/bike/${bike.bikeId}` : '/login'}
+							key={bike.bikeId}
+							className="relative bg-black border border-black">
+
+							<img
+								src={bike.imagem}
+								alt={bike.titulo}
+								className="object-cover w-full h-72"
+							/>
+
+							<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
+								<p className="text-lg font-medium">Preço: {`R$ ${bike.price.toFixed(2)}`}</p>
+								<p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">{bike.description}</p>
 							</div>
+
 						</Link>
 					))}
 				</div>
+				)}
 			</div>
 		</div>
 	);

@@ -135,3 +135,31 @@ export const fetchFeedbacks = async () => {
 		console.error("Erro ao carregar os feedbacks dos usuários:", error);
 	}
 };
+
+export const handleLogin = async (e) => {
+	try {
+		// Captura os valores dos campos de email e senha
+		let email = document.getElementById("email").value;
+		let senha = document.getElementById("pass").value;
+
+		// Faz a requisição POST para o endpoint de login
+		const response = await axios.post('http://localhost:3015/users/login', {
+			email: email,
+			senha: senha
+		});
+
+		// Tratar a resposta de sucesso
+		if (response.status === 200) {
+			localStorage.setItem('token', response.data.token) //usando armazenamento local do browser para fixar o token do usuario logado
+			console.log('Login realizado com sucesso:', response.data);
+			console.log(response.data);
+			// redirecionar o usuário ou realizar alguma outra ação
+			// window.location.href = "/dashboard"; // Exemplo de redirecionamento
+		}
+	} catch (error) {
+		// Tratar os erros
+		console.error('Erro ao tentar fazer login:', error.response ? error.response.data : error.message);
+		// Você pode exibir uma mensagem de erro no frontend se desejar
+		alert('Erro ao tentar fazer login, verifique suas credenciais.');
+	}
+};

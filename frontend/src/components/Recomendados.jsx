@@ -10,13 +10,15 @@ const Recomendados = () => {
 	}, []);
 	// Ideia: Limitar o nº de bikes recomendadas em X
 	return (
-		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 mt-10 mx-5">
+		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 mt-40 mx-5">
 			{produtos.map((produto) => (
-				<Link key={produto.bikeId} to={`/bike/${produto.bikeId}`} className="relative bg-black">
+				<Link key={produto.bikeId} 
+				to={`/bike/${produto.bikeId}`} 
+					className="relative bg-black border border-black">
 					<img src={produto.imagem} className="object-cover w-full h-72" alt={produto.title} />
 					<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
 						<p className="text-lg">Preço: {produto.price}</p>
-						<p className="text-sm">{produto.description}</p>
+						<p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis"> {produto.description}</p>
 					</div>
 				</Link>
 			))}

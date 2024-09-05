@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import useUserStore from "./UserUtils";
-import { Link } from "react-router-dom";
-import { LoginUser } from "./BackendUtils";
+import React, { useState, useEffect } from 'react'
+import useUserStore from './UserUtils';
+import { Link } from 'react-router-dom';
+import { fetchUsers, handleLogin} from './BackendUtils';
+import axios from 'axios';
 
 const BarraLogin = () => {
 	
@@ -15,46 +16,57 @@ const BarraLogin = () => {
 		updateTel: state.updateTel,
 	}));
 
-	const handleLogin = async () => {
-		try {
-
-			let email = document.getElementById("email").value;
-			let senha = document.getElementById("pass").value;
-
-			/*
-				Estrut. de uma request correta:
-				{status: true, token: "token", data: { dados do usuario } }
-			*/
-			let response = LoginUser(email, senha);
-
-			if (!response.status) {
-				// Algo deu errado na requisição
-			} else {
-				console.log(response);
-				alert(JSON.stringify(response));
-				
-				// Melhor forma? Alternativas?
-				localStorage.setItem("token", response.token);
-				// Só consigo verificar a chegada do token pelo registro de request - Como vejo que armazeno o token?
-
-				updateNome(response.data.nome);
-				updateCep(response.data.CEP);
-				updateEmail(response.data.email);
-				updateTel(response.data.telefone);
-				setUserFavs(response.data.FavIds);
-				// Não atualiza o estado corretamente. Bloqueia o acesso as seções com restrição (Meus Anuncios, Favoritos, Meus Dados)
-				setLoggedAccount(true);
-
-				console.log("Usuario logado com sucesso!");
-
-				// Nenhum desses conosle.log() aparece devido ao redirecionamento... o que fazer?
+	/* NÃO APAGAR ESSE CÓDIGO
+	useEffect(() => {
+		const fetchUsers = async () => {
+			try {
+				const response = await axios.get('http://localhost:3000/users');
+				if (response.status == 200) setUsers(response.data);
+			} catch (error) {
+				console.error('Erro ao buscar lista de usuarios:', error);
 			}
-		} catch (error) {
-			// Tratar os erros
-			console.error("Erro ao tentar fazer login:",
-				error.response ? error.response.data : error.message
-			);
-		}
+		};
+		
+		fetchUsers();
+	}, []);
+	*/
+
+	useEffect(() => {
+		fetchUsers(setUsers);
+	}, []);
+
+	// const handleSubmit = (e) => { //nao sei o que ta fazendo de 53-64 mas fora isso o handlelogin do util substitui
+	// 	e.preventDefault();
+
+	// 	let email = document.getElementById("email").value;
+	// 	let senha = document.getElementById("pass").value;
+
+	// 	// Verificar se os dados coincidem com algum usuário
+	// 	let user_found = users.filter(usuario => { return usuario.email === email && usuario.senha === senha });
+
+	// 	if (user_found.length != 1) {
+	// 		// Deu merda, mais de um usuario com mesmas credenciais
+	// 		console.log("Algo deu errado");
+	// 	} else {
+	// 		user_found = user_found[0];
+
+	// 		console.log(user_found);
+	// 		setUserId(user_found.id);
+
+	// 		updateNome(user_found.nome);
+	// 		updateEmail(user_found.email);
+	// 		updateCep(user_found.CEP);
+	// 		setUserFavs(user_found.FavCollection);
+
+	// 		setLoggedAccount(true);
+	// 		// console.log(user);
+	// 	}
+	// };
+
+	const handleSubmitTemporaria = (e) => {
+		e.preventDefault(); // Previne o comportamento padrão do botão
+		handleLogin(e); // Chama o handleSubmit de BackendUtils
+
 	};
 
 	return (
