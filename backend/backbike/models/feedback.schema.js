@@ -6,11 +6,6 @@ const FeedbackSchema = new mongoose.Schema({
         ref: 'User', // Referência para a coleção de usuários (opcional)
         required: true
     },
-    id_bike: {
-        type: String, // Supondo que o Id_bike seja um ObjectId referenciando uma bicicleta
-        ref: 'Bike', // Referência para a coleção de bicicletas (opcional)
-        required: true
-    },
     content: {
         type: String,
         required: true,

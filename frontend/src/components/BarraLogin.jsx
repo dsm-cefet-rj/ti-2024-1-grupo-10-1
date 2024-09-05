@@ -65,7 +65,7 @@ const BarraLogin = () => {
 
 	const handleSubmitTemporaria = (e) => {
 		e.preventDefault(); // Previne o comportamento padrão do botão
-		handleLogin(e); // Chama o handleSubmit de BackendUtils
+		handleLogin(e); // Chama o handleLogin de BackendUtils
 
 	};
 
