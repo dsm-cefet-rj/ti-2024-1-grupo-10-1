@@ -22,9 +22,10 @@ export const fetchAllProducts = async (setTarget) => {
 	}
 };
 
+// Funcionalidade de Visualização de uma Bike com seu respectivo vendedor, caso usuário esteja logado
 export const fetchProduct = async (setTarget, id) => {
-	// Busca um produto específico (bicicleta) pelo id
 	try {
+		// Busca um produto específico (bicicleta) pelo id
 		const response = await axios.get(URL + bike_endpoint + "/" + id); // Envia uma requisição GET para /bike/:id
 
 		if (response.status == 200) {
@@ -114,9 +115,8 @@ export const handleLogin = async (e) => {
 		// }
 	} catch (error) {
 		// Tratar os erros
-		console.error("Erro ao tentar fazer login:", error.response ? error.response.data : error.message);                      
+		console.error("Erro ao tentar fazer login:", error.response ? error.response.data : error.message);
 		// Você pode exibir uma mensagem de erro no frontend se desejar
 		alert("Erro ao tentar fazer login, verifique suas credenciais.");
 	}
 };
-
