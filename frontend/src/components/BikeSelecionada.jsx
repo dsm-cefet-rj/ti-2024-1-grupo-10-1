@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // useParams do react-router-dom
-import { fetchProduct, fetchUser } from "./BackendUtils";
+import { fetchProduct } from "./BackendUtils";
 import useUserStore from "./UserUtils";
 import coracao from "../assets/Coraçao.png";
 
