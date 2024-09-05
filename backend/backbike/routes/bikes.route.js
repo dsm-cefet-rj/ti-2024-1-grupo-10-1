@@ -37,7 +37,8 @@ router.route("/")
 
 router.route('/:id')
 	// Retorna um produto específico
-	.get(authenticate.verifyUser,async function (req, res, next) {
+	// Por enquanto não avalia se o usuário está logado ou não - Caso esteja, retor 
+	.get(async function (req, res, next) {
 		try {
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id
