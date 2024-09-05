@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const config = require('./config');
+require('dotenv').config();
 const User = require('./models/user.schema');
 const jwt = require('jsonwebtoken');
 
@@ -34,7 +34,7 @@ passport.use(new LocalStrategy(
 // Configuração da estratégia JWT
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = config.secretKey;
+opts.secretOrKey = process.env.SECRET_KEY;
 
 passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
     try {
@@ -53,5 +53,5 @@ exports.verifyUser = passport.authenticate('jwt', { session: false });
 
 // Geração do token JWT
 exports.getToken = function (user) {
-    return jwt.sign(user, config.secretKey, { expiresIn: 3600 }); // 3600 segundos = 1 hora
+    return jwt.sign(user, process.env.SECRET_KEY, { expiresIn: 60*60*1 }); // 3600 * 2 segundos = 2 hora
 };

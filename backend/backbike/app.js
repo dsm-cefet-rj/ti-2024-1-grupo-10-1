@@ -5,13 +5,11 @@ var logger = require('morgan');
 var cors = require("cors")
 var passport = require('passport')
 var authenticate = require('./authenticate')  
-var config = require('./config')
-
+require('dotenv').config();
 
 // Utilizando o banco de dados 
 const mongoose = require("mongoose")
 
-require('dotenv').config();
 
 // Criando listeners para cada entidade em cada endpoint
 var indexRouter = require('./routes/index.route');
@@ -20,12 +18,11 @@ var feedbackRouter = require('./routes/feedback.route');
 var bikeRouter = require('./routes/bikes.route');
 
 
-
-const url = config.mongoUrl;
+const url = process.env.MONGODB_URL + ":" + process.env.MONGODB_PORT + "/" + process.env.DATABASE_NAME;
 const connect = mongoose.connect(url);
 
 connect.then((db) => {
-	console.log("Banco de Dados conectado" );
+	console.log("Banco de Dados conectado na porta " + process.env.MONGODB_PORT );
 }, (err) => {
 	console.log(err);
 });
