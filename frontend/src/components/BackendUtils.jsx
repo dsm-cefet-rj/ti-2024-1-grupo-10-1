@@ -1,5 +1,3 @@
-// TODO: Implementar objeto do axios - configurações
-
 import axios from "axios";
 
 const PORT = 3015;
@@ -39,16 +37,6 @@ export const fetchProduct = async (setTarget, id) => {
 	}
 };
 
-export const fetchUser = async (setTarget, userid) => {
-	//Busca dados de um usuário específico pelo userid
-	try {
-		const response = await axios.get(URL + user_endpoint + `${userid}`); //Requisição GET para /users/:userid e atualiza o estado com os dados do usuário.
-		setTarget(response.data);
-	} catch (error) {
-		console.error("Ocorreu um erro ao buscar os dados:", error);
-	}
-};
-
 export const fetchUsers = async (setTarget) => {
 	//Busca todos os usuários cadastrados no sistema.
 	try {
@@ -76,66 +64,32 @@ export const PostUser = async (newUser) => {
 		// }
 		return response;
 	} catch (error) {
-		console.error(
-			"Erro ao inserir novo usuario a lista de usuarios:",
-			error
-		);
+		console.error("Erro ao inserir novo usuario a lista de usuarios:", error);
 	}
 };
 
 export const PatchUser = async (user_data) => {
 	//Atualiza os dados de um usuário existente.
 	try {
-		const response = await axios.patch(
-			URL + user_endpoint + "/" + user_data.id,
-			user_data
-		);
+		const response = await axios.patch(URL + user_endpoint + "/" + user_data.id, user_data);
 		return response;
 	} catch (error) {
 		console.error("Erro ao atualizar os dados do usuario:", error);
 	}
 };
 
-export const LoginUser = async (email, senha) => {
-	
-	let response = await axios.post(URL + user_endpoint + "/login", {
-		email: email,
-		pass: senha,
-	});
-
-	if (response.status == 200) {
-		response.status = true;
-		// ...
-	}
-	else if (response.status == 400) {
-		// Isso não faz nem sentido -> Já é verificado antes da requisição
-	}
-	else if (response.status == 404) {
-		// Usuário inexistente
-		response.status = false
-	}
-	else if (response.status == 401) {
-		// Senha incorreta
-		response.status = false
-	}
-	else if (response.status == 500) {
-		// Erro interno não tratado
-		response.status = false
-
-	}
-	return response;
-};
-
+// Função para buscar feedbacks do backend
 export const fetchFeedbacks = async () => {
 	try {
-		const resp = await axios.get(URL + feedback_endpoint);
-		// if (response.status == 200) await setTarget(response.data);
-		return resp;
+		const response = await axios.get("http://localhost:3015/feedback"); // requisição de get no back
+		return response.data;
 	} catch (error) {
-		console.error("Erro ao carregar os feedbacks dos usuários:", error);
+		console.error("Erro ao buscar feedbacks:", error);
+		return [];
 	}
 };
 
+// TODO: Essa função deveria estar em BarraLogin.jsx e somente a parte de requisição deveria estar nessa pagina
 export const handleLogin = async (e) => {
 	try {
 		// Captura os valores dos campos de email e senha
@@ -143,23 +97,47 @@ export const handleLogin = async (e) => {
 		let senha = document.getElementById("pass").value;
 
 		// Faz a requisição POST para o endpoint de login
-		const response = await axios.post('http://localhost:3015/users/login', {
+		const response = await axios.post(URL + user_endpoint + "/login", {
 			email: email,
-			senha: senha
+			senha: senha,
 		});
 
 		// Tratar a resposta de sucesso
 		if (response.status === 200) {
-			localStorage.setItem('token', response.data.token) //usando armazenamento local do browser para fixar o token do usuario logado
-			console.log('Login realizado com sucesso:', response.data);
+			localStorage.setItem("token", response.data.token); //usando armazenamento local do browser para fixar o token do usuario logado
+			console.log("Login realizado com sucesso:", response.data);
 			console.log(response.data);
 			// redirecionar o usuário ou realizar alguma outra ação
-			// window.location.href = "/dashboard"; // Exemplo de redirecionamento
 		}
+		// else {
+
+		// }
 	} catch (error) {
 		// Tratar os erros
-		console.error('Erro ao tentar fazer login:', error.response ? error.response.data : error.message);
+		console.error("Erro ao tentar fazer login:", error.response ? error.response.data : error.message);                      
 		// Você pode exibir uma mensagem de erro no frontend se desejar
-		alert('Erro ao tentar fazer login, verifique suas credenciais.');
+		alert("Erro ao tentar fazer login, verifique suas credenciais.");
+	}
+};
+
+export const fetchUser = async (userId, setTarget) => {
+	try {
+		// Chama a função fetchUsers para obter todos os usuários
+		await fetchUsers(async (users) => {
+			// Filtra o usuário específico pelo ID
+			const user = users.find((user) => user.id === userId);
+
+			// Se o usuário for encontrado, atualiza o estado
+			if (user) {
+				console.log(user.nome);
+				await setTarget(user);
+			} else {
+				console.error("Usuário não encontrado");
+				// Atualiza o estado com um valor padrão se o usuário não for encontrado
+				await setTarget({ name: "Usuário desconhecido" });
+			}
+		});
+	} catch (error) {
+		console.error("Erro ao buscar usuário:", error);
 	}
 };
