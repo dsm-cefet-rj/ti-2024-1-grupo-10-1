@@ -90,13 +90,10 @@ export const fetchFeedbacks = async () => {
 	}
 };
 
-// TODO: Essa função deveria estar em BarraLogin.jsx e somente a parte de requisição deveria estar nessa pagina
-export const handleLogin = async (e) => {
-	try {
-		// Captura os valores dos campos de email e senha
-		let email = document.getElementById("email").value;
-		let senha = document.getElementById("pass").value;
 
+// NÃO MEXA NESTA CARALHA DE FUNÇÃO
+export const fetchLogin = async (email, senha) => {
+	try {
 		// Faz a requisição POST para o endpoint de login
 		const response = await axios.post(URL + user_endpoint + "/login", {
 			email: email,
@@ -105,18 +102,20 @@ export const handleLogin = async (e) => {
 
 		// Tratar a resposta de sucesso
 		if (response.status === 200) {
-			localStorage.setItem("token", response.data.token); //usando armazenamento local do browser para fixar o token do usuario logado
+			localStorage.setItem("token", response.data.token); //Usando armazenamento local do browser para fixar o token do usuario logado
 			console.log("Login realizado com sucesso:", response.data);
 			console.log(response.data);
-			// redirecionar o usuário ou realizar alguma outra ação
+			// Redirecionar o usuário ou realizar alguma outra ação
 		}
-		// else {
-
-		// }
+		return response.data;
 	} catch (error) {
 		// Tratar os erros
 		console.error("Erro ao tentar fazer login:", error.response ? error.response.data : error.message);
 		// Você pode exibir uma mensagem de erro no frontend se desejar
 		alert("Erro ao tentar fazer login, verifique suas credenciais.");
+		return {};
 	}
 };
+
+
+
