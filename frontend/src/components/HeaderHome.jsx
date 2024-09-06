@@ -69,9 +69,9 @@ const HeaderHome = () => {
 
 						{/* Itens do Menu de Hambúrguer */}
 
-						{/* <Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link> */}
-						{has_logged && <Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>}
-						{!has_logged && <Link to="/login" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>}
+						<Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>
+						{/* {has_logged && <Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>}
+						{!has_logged && <Link to="/login" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>} */}
 
 						<Link to="/feedback" className='cursor-pointer flex items-center gap-2 mb-4'><b>Feedbacks</b></Link>
 						{/* {has_logged && <Link to="/feedback" className='cursor-pointer flex items-center gap-2 mb-4'><b>Feedbacks</b></Link>} */}
