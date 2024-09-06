@@ -100,7 +100,19 @@ export const fetchFeedbacks = async () => {
 
 // ?????????
 export const fetchFavorites = async (id) => { 
+	try {
+		// Busca um produto específico (bicicleta) pelo id
+		const response = await axios.get(URL + user_endpoint + "/favorites/" + id); // Envia uma requisição GET para /bike/:id
 
+		if (response.status == 200) {
+			return response.data;
+		} else {
+			throw AxiosError.ERR_BAD_RESPONSE;
+		}
+	} catch (error) {
+		console.error("Ocorreu um erro ao buscar os dados:", error);
+		return [];
+	}
 };
 
 // NÃO MEXA NESTA CARALHA DE FUNÇÃO
@@ -116,7 +128,6 @@ export const fetchLogin = async (email, senha) => {
 		if (response.status === 200) {
 			localStorage.setItem("token", response.data.token); //Usando armazenamento local do browser para fixar o token do usuario logado
 			console.log("Login realizado com sucesso:", response.data);
-			console.log(response.data);
 			// Redirecionar o usuário ou realizar alguma outra ação
 		}
 		return response.data;
