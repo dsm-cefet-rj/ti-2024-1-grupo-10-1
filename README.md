@@ -24,6 +24,9 @@ Com isso a parte de frontend da aplicação já está disponível na porta indic
 - Com o MongoDB instalado, execute os códigos a seguir (em outro terminal) para ativar o serviço do banco de dados:
 ```
 sudo systemctl start mongod.service
+ou no Windows
+net start MongoDB
+
 # Verifique se o serviço de banco de dados está ativo através deste comando: 
 sudo systemctl status mongod.service
 ### Saida:
