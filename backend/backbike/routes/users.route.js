@@ -40,13 +40,14 @@ router.route("/")
 			if (!phoneRegex.test(telefone)) {
 				return res.status(400).json({ status: "ERROR", message: "Telefone inválido!" });
 			}
-			
+
 			const existingUser = await User.findOne({ email });
 			if (existingUser) {
 				return res.status(400).json({ status: "ERROR", message: "O e-mail já está registrado." });
 			}
 
 			const newUser = new User({ nome, CEP, email, telefone });
+
 			User.register(newUser, senha, (err, user) => {
 				if (err) {
 					return res.status(500).json({ status: "ERROR", message: err.message });
@@ -65,20 +66,19 @@ router.route("/:id")
 		User.findById(req.params.id).then((data) => {
 			res.json(data);
 		})
-	});
+	}
+	)// Endpoint para deletar um usuário por ID
+	.delete((req, res, next) => {
+		let userId = req.params.id;
 
-
-
-// Rota de login sem sessão
-router.post('/login', passport.authenticate('local', { session: false }), (req, res) => {
-	const token = authenticate.getToken({ id: req.user._id });
-	res.statusCode = 200;
-	res.setHeader('Content-Type', 'application/json');//token no header
-	res.json({ user: req.user._id, token: token, sucess: true});//isso vai pro frontend
-});
-
-
-router.route("/update")
+		User.findByIdAndDelete(userId).
+			then((user) => {
+				res.json(user);
+			}).
+			catch((error) => {
+				res.status(500).json({ message: error.message });
+			});
+	})
 	.patch((req, res, next) => {
 		let userId = req.params.id;
 		let userNewData = req.body;
@@ -92,6 +92,23 @@ router.route("/update")
 				next();
 			});
 	});
+
+
+
+// Rota de login sem sessão
+router.post('/login', passport.authenticate('local', { session: false }), (req, res) => {
+
+	const token = authenticate.getToken({ id: req.user._id });
+	const { _id: id, salt: salt, hash: hash, ...userData } = req.user.toObject();
+
+	res.status(200);
+	res.setHeader('Content-Type', 'application/json'); //Token no header
+	res.json({ userId: id, ...userData, token: token, sucess: true });
+});
+
+
+router.route("/update")
+	;
 // 	// Endpoint para carregar os dados do usuário por ID
 // 	.get((req, res, next) => {
 // 		let input_id = req.params.id;
@@ -107,19 +124,8 @@ router.route("/update")
 
 // Endpoint para atualizar um usuário por ID
 
-router.route("/delete")
-	// Endpoint para deletar um usuário por ID
-	.delete((req, res, next) => {
-		let userId = req.params.id;
 
-		User.findByIdAndDelete(userId).
-			then((user) => {
-				res.json(user);
-			}).
-			catch((error) => {
-				res.status(500).json({ message: error.message });
-			});
-	});
+
 
 
 module.exports = router;
