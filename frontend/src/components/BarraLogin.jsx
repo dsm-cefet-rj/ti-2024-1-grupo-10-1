@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useUserStore from "./UserUtils";
 import { Link } from "react-router-dom";
-import { fetchUsers, fetchLogin } from "./BackendUtils";
+import { fetchLogin } from "./BackendUtils";
 
 const BarraLogin = () => {
 	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs, updateTel } = useUserStore((state) => ({
@@ -72,8 +72,15 @@ const BarraLogin = () => {
 			const user_data = await fetchLogin(email, senha);
 
 			if (user_data != null) {
-				// Setta o estado zustand
 				console.log(user_data);
+				// Setta o estado zustand
+				updateNome(user_data.nome);
+				updateEmail(user_data.email);
+				updateCep(user_data.CEP);
+				setUserId(user_data.userId);
+				setUserFavs(user_data.FavIds);
+				updateTel(user_data.telefone);
+				setLoggedAccount(true);
 			} else {
 				throw Error;
 			}

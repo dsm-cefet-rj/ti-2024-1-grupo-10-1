@@ -18,7 +18,7 @@ const useUserStore = create((set) => ({
 
 	// Estado inicial do usuário
 	user: {
-		id: -1,
+		id: 0,
 		profile: {
 			nome: "",
 			email: "",
