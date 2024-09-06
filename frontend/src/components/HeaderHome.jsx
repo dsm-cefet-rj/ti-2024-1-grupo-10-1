@@ -34,9 +34,9 @@ const HeaderHome = () => {
 				{/* Menu de Navegação para Dispositivos Maiores */}
 				<nav className="hidden md:flex items-center gap-7">
 
-					{/* <Link to="/favoritos" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link> */}
-					{has_logged && <Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mx-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>}
-					{!has_logged && <Link to="/login" className='cursor-pointer flex items-center gap-2 mx-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>} {/*Adiciona o componente B */}
+					<Link to="/favoritos" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>
+					{/* {has_logged && <Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mx-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>}
+					{!has_logged && <Link to="/login" className='cursor-pointer flex items-center gap-2 mx-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>} Adiciona o componente B */}
 
 					<Link to="/feedback" className='cursor-pointer flex items-center gap-2 mx-2'><img src={batePapo} alt="Bate Papo" /> <span>Feedbacks</span></Link>
 
