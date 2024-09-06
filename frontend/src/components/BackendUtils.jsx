@@ -7,6 +7,8 @@ const user_endpoint = "/users";
 const bike_endpoint = "/bike";
 const feedback_endpoint = "/feedback";
 
+
+// Bikes
 export const fetchAllProducts = async (setTarget) => {
 	//Busca todos os produtos (bicicletas) no back-end via a rota /bike
 	try {
@@ -52,6 +54,8 @@ export const fetchUsers = async (setTarget) => {
 	}
 };
 
+
+// Usuário
 export const PostUser = async (newUser) => {
 	// Envia dados de um novo usuário para o back-end (cadastrar um usuário).
 	try {
@@ -79,6 +83,7 @@ export const PatchUser = async (user_data) => {
 	}
 };
 
+// Feedbacks
 // Função para buscar feedbacks do backend
 export const fetchFeedbacks = async () => {
 	try {
@@ -90,6 +95,13 @@ export const fetchFeedbacks = async () => {
 	}
 };
 
+
+// Auxiliares
+
+// ?????????
+export const fetchFavorites = async (id) => { 
+
+};
 
 // NÃO MEXA NESTA CARALHA DE FUNÇÃO
 export const fetchLogin = async (email, senha) => {
