@@ -107,8 +107,21 @@ router.post('/login', passport.authenticate('local', { session: false }), (req, 
 });
 
 
-router.route("/update")
-	;
+router.route("/favorites/:id").
+	get(async (req, res, next) => {
+		const id = req.params.id;
+		let user = await User.findById(id).populate("FavIds", ["bikeId", "price", "description", "title","imagem", "tipo"]);
+
+		if (user != null) {
+			
+			res.status(200);
+			res.json({ status:"OK", favs:user.FavIds });
+		} else {
+			res.status(404);
+			res.json({ message: "Usuário inexistente no banco de dados" });
+		}
+
+	});
 // 	// Endpoint para carregar os dados do usuário por ID
 // 	.get((req, res, next) => {
 // 		let input_id = req.params.id;
