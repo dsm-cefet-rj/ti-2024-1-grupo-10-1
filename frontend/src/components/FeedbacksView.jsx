@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { fetchFeedbacks, fetchUser } from './BackendUtils'; // Importando a função de BackendUtils
+// import { fetchFeedbacks, fetchUser } from './BackendUtils'; // Importando a função de BackendUtils
 import conor from '../assets/conor.png';
 import biker from '../assets/biker.jpg';
 import ironman from '../assets/ironman.png';
 import chimaev from '../assets/chimaev.jpg';
 
 const FeedbacksView = () => {
-    const [feedbacks, setFeedbacks] = useState([]);
-    const [userNames, setUserNames] = useState({});
+    // const [feedbacks, setFeedbacks] = useState([]);
+    // const [userNames, setUserNames] = useState({});
 
-    useEffect(() => {
-        const getFeedbacks = async () => {
-            // Busca todos os feedbacks
-            const data = await fetchFeedbacks();
-            setFeedbacks(data);
+    // useEffect(() => {
+    //     const getFeedbacks = async () => {
+    //         // Busca todos os feedbacks
+    //         const data = await fetchFeedbacks();
+    //         setFeedbacks(data);
 
-            // Busca nomes dos usuários com base no userId de cada feedback
-            const names = {};
-            const fetchNames = data.map(async (feedback) => {
-                if (feedback.userId) {
-                    // Usando fetchUser para buscar o usuário
-                    await fetchUser(feedback.userId, (user) => {
-                        if (user && user.nome) {
-                            names[feedback.userId] = user.nome;
-                        } else {
-                            names[feedback.userId] = 'Usuário desconhecido';
-                        }
-                    });
-                }
-            });
-            await Promise.all(fetchNames); // Aguarda todas as promessas serem resolvidas
-            setUserNames(names);
-        };
+    //         // Busca nomes dos usuários com base no userId de cada feedback
+    //         const names = {};
+    //         const fetchNames = data.map(async (feedback) => {
+    //             if (feedback.userId) {
+    //                 // Usando fetchUser para buscar o usuário
+    //                 await fetchUser(feedback.userId, (user) => {
+    //                     if (user && user.nome) {
+    //                         names[feedback.userId] = user.nome;
+    //                     } else {
+    //                         names[feedback.userId] = 'Usuário desconhecido';
+    //                     }
+    //                 });
+    //             }
+    //         });
+    //         await Promise.all(fetchNames); // Aguarda todas as promessas serem resolvidas
+    //         setUserNames(names);
+    //     };
 
-        getFeedbacks();
-    }, []);
+    //     getFeedbacks();
+    // }, []);
 
     return (
         <div className="py-8 w-full">

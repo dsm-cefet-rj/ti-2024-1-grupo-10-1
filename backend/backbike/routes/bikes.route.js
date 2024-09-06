@@ -5,16 +5,18 @@ var Bike = require("../models/bike.schema");
 
 router.route("/")
 	// Coleta todos os produtos
-	.get(async(req, res, next) => {
+	.get(async (req, res, next) => {
 		try {
 
 			allBikes = await Bike.find({}).lean();
 
+			// Foda-se vai na gambiarra mermo
 			const modifiedBikes = allBikes.map(bike => {
 				const { _id, bikeId, __v, ...resto } = bike;
 				return { bikeId: _id, ...resto };
 			});
 
+			// res.json(allBikes);
 			res.json(modifiedBikes);
 
 		} catch (error) {
@@ -37,7 +39,8 @@ router.route("/")
 
 router.route('/:id')
 	// Retorna um produto específico
-	.get(authenticate.verifyUser,async function (req, res, next) {
+	// Por enquanto não avalia se o usuário está logado ou não - Caso esteja, retor 
+	.get(async function (req, res, next) {
 		try {
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id
@@ -70,6 +73,7 @@ router.route('/:id')
 	})
 	// Atualiza um ou vários campos de um elemento
 	.patch(function (req, res, next) {
+		//TODO: Checar se as entradas estão vazias
 		let bikeId = req.params.id
 		let bikeNewData = req.body
 
