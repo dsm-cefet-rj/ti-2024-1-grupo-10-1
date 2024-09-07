@@ -110,7 +110,7 @@ export const handleLogout = () => {
 //achar usuario
 export const fetchUserData = async () => {
 	try {
-		const response = await axios.get(URL + user_endpoint + "/mybikes", {
+		const response = await axios.get(URL + user_endpoint + "/me", {
 			headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 		});
 		return response.data;

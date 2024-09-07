@@ -119,7 +119,7 @@ router.route('/:id')
 	});
 
 
-router.route('/mybikes')
+router.route('/me')
 	// Rota para obter bicicletas postadas pelo usuário logado
 	.get(async (req, res, next) => {
 		try {
