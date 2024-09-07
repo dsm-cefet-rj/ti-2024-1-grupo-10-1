@@ -26,7 +26,6 @@ const Minhaconta = () => {
 
 
 	return (
-		
 		< div className="mx-auto right-0 mt-12 w-60" >
 			<div className="bg-white rounded overflow-hidden shadow-lg">
 				<div className="text-center p-6 bg-purple-600 border-b">

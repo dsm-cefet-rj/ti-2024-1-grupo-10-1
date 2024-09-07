@@ -8,7 +8,7 @@ const Recomendados = () => {
 	useEffect(() => {
 		fetchAllProducts(setProdutos);
 	}, []);
-	// Ideia: Limitar o nº de bikes recomendadas em X
+	// Ideia: Limitar o nº de bikes recomendadas em X, no max
 	return (
 		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 mt-40 mx-5">
 			{produtos.map((produto) => (

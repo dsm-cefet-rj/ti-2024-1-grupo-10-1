@@ -13,6 +13,7 @@ const isUserLoggedIn = () => {
 
 const HeaderHome = () => {
 	const [menuOpen, setMenuOpen] = useState(false);
+
 	const isLoggedIn = isUserLoggedIn(); // Verifica se o usuário está logado
 
 	return (
@@ -31,6 +32,7 @@ const HeaderHome = () => {
 
 				{/* Menu de Navegação para Dispositivos Maiores */}
 				<nav className="hidden md:flex items-center gap-7">
+
 					{isLoggedIn && <Link to="/favoritos" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>}
 					{!isLoggedIn && <Link to="/login" className='cursor-pointer flex items-center gap-2'><img src={fav} alt="Loja" /> <span>Favoritos</span></Link>}
 
@@ -39,6 +41,7 @@ const HeaderHome = () => {
 					
 					{isLoggedIn && <Link to="/conta" className='cursor-pointer flex items-center gap-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>}
 					{!isLoggedIn && <Link to="/login" className='cursor-pointer flex items-center gap-2 mx-2'><img src={ciclista} alt="Ciclista" /> <span>Conta</span></Link>} 
+
 
 					{isLoggedIn ?
 						<Link to="/anuncios" className="text-center text-sm px-3 py-2.5 mx-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg">Quero Anunciar</Link>
@@ -65,6 +68,7 @@ const HeaderHome = () => {
 						</button>
 
 						{/* Itens do Menu de Hambúrguer */}
+
 						{isLoggedIn && <Link to="/favoritos" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>}
 						{!isLoggedIn && <Link to="/login" className='cursor-pointer flex items-center gap-2 mb-4'><b>Favoritos</b></Link>}
 
