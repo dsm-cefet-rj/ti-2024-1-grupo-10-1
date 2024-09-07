@@ -119,9 +119,9 @@ router.route('/:id')
 	});
 
 
-router.route('/me')
+router.route('/mybikes')
 	// Rota para obter bicicletas postadas pelo usuário logado
-	.get(authenticate.verifyUser, async (req, res, next) => {
+	.get(async (req, res, next) => {
 		try {
 			const userId = req.user._id;
 			const bikes = await Bike.find({ userId }).lean();
