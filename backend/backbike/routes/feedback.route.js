@@ -5,53 +5,53 @@ var Feedback = require("../models/feedback.schema");
 
 // Rota para listar e adicionar feedbacks
 router.route("/")
-	.get(async(req, res, next) => {
+	.get(async (req, res, next) => {
 		try {
-		data = await Feedback.find().populate("userId").lean();// Popula os dados do usuário baseado no userId
+			data = await Feedback.find().populate("userId", "nome").lean();// Popula os dados do usuário baseado no userId
+			if (data !== null) {
+
+
 				// Filtra os dados para enviar apenas o necessário
 				const feedbacks = data.map((feedback) => {
-					// Desestruturação para remover dados sensíveis do usuário
-					const {_id: id_feedback, __v: _v_feedback, userId: critical_sellerData,  ...resto_feedback } = feedback;
-					const {_id: id_vend, __v: _v_vend, CEP: cep_vend, FavIds: fav_vend, email: email_vend, telefone: tel_vend, ...resto_vendedor } = critical_sellerData;
+					// Desestruturação para remover dados sensíveis do usuário (id)
+					const { _id: id_feedback, __v: _v_feedback, userId: poster_data, ...resto_feedback } = feedback;
 
-					return {
-						sellerData: resto_vendedor,
-					...resto_feedback
-					};
-					
+					const { nome: poster_name } = poster_data;
+
+					return { feedbackId: id_feedback, posterName: poster_name, ...resto_feedback };
+
 				});
-				res.json({feedbacks});
+				res.json({ feedbacks: feedbacks });
 			}
-			
-		 catch (errorParam) {
+		} catch (errorParam) {
 			console.log(errorParam);
 			res.status(500).json({ message: errorParam.message })
 		}
 	})
 
 	.post(authenticate.verifyUser, async (req, res) => {
-    console.log('Authenticated User:', req.user); // Adicione este log para verificar o conteúdo de req.user
+		console.log('Authenticated User:', req.user); // Adicione este log para verificar o conteúdo de req.user
 
-    try {
-        if (!req.user || !req.user._id) {
-            return res.status(401).json({ status: 'ERROR', message: 'User not authenticated' });
-        }
+		try {
+			if (!req.user || !req.user._id) {
+				return res.status(401).json({ status: 'ERROR', message: 'User not authenticated' });
+			}
 
-        const newFeedback = {
-            userId: req.user._id,
-            content: req.body.content,
-            publication_date: new Date()
-        };
+			const newFeedback = {
+				userId: req.user._id,
+				content: req.body.content,
+				publication_date: new Date()
+			};
 
-        const feedback = await Feedback.create(newFeedback);
-        res.json({ objAdded: feedback, status: 'OK' });
-    } catch (err) {
-        res.status(500).json({ status: 'ERROR', message: err.message });
-    }
-});
+			const feedback = await Feedback.create(newFeedback);
+			if (feedback !== null) res.json({ objAdded: feedback, status: 'OK' });
+		} catch (err) {
+			res.status(500).json({ status: 'ERROR', message: err.message });
+		}
+	});
 
 
-	
+
 // Rota para atualizar e deletar feedbacks
 router.route("/:id")
 	// Atualizar um feedback existente
