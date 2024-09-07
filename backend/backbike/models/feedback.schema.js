@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const FeedbackSchema = new mongoose.Schema({
     userId: {
-        type: String, // Supondo que o Id_user seja um ObjectId referenciando um usuário
+        type: mongoose.Types.ObjectId, // Supondo que o Id_user seja um ObjectId referenciando um usuário
         ref: 'User', // Referência para a coleção de usuários (opcional)
         required: true
     },
@@ -12,8 +12,8 @@ const FeedbackSchema = new mongoose.Schema({
         trim: true // Remove espaços em branco no início e no final
     },
     publication_date: {
-        type: String,
-        // default: Date.now // Define a data de publicação como a data atual por padrão
+        type: Date,
+        default: Date.now // Define a data de publicação como a data atual por padrão
     }
 });
 

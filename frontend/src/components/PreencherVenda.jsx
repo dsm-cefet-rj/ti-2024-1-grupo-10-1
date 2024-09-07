@@ -1,54 +1,68 @@
 import React, { useState } from 'react';
-import camera from '../assets/cameraIcon.png'; //
-
+import { postBike } from './BackendUtils'; // Função para fazer o POST para o backend
 
 const PreencherVenda = () => {
-	const [images, setImages] = useState(Array(5).fill(null)); // Array para armazenar as imagens selecionadas
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
+	const [price, setPrice] = useState('');
+	const [tipo, setTipo] = useState('');
+	const [imagem, setImagem] = useState('');
 
-	const handleImageChange = (index, event) => {
-		const selectedImage = event.target.files[0]; // Seleciona apenas a primeira imagem
-		const updatedImages = [...images];
-		updatedImages[index] = URL.createObjectURL(selectedImage); // Armazena a URL da imagem selecionada
-		setImages(updatedImages);
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		// Validação dos dados
+		if (!title || !description || !price || !tipo || !imagem) {
+			alert('Todos os campos são obrigatórios.');
+			return;
+		}
+
+		// Criar o objeto bike
+		const bikeData = {
+			title,
+			description,
+			price,
+			tipo,
+			imagem
+		};
+
+		try {
+			// Fazer a requisição POST para o backend
+			const response = await postBike(bikeData);
+			alert('Bike cadastrada com sucesso!');
+		} catch (error) {
+			alert('Erro ao cadastrar bike: ' + error.message);
+		}
 	};
 
 	return (
 		<div>
-			<form className="mt-10 max-w-lg mx-auto">
+			<form className="mt-10 max-w-lg mx-auto" onSubmit={handleSubmit}>
 				<div className="mb-5">
-					<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título<span className='text-red-500 inline-block'>*</span></label>
-					<input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+					<label className="block mb-2 text-sm font-medium text-gray-900">Título<span className='text-red-500 inline-block'>*</span></label>
+					<input value={title} onChange={(e) => setTitle(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
 
-					<label className="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição <span className='text-red-500 inline-block'>*</span></label>
-					<input className="h-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex: 'Bicicleta Rav2r Speed Carbono Aro 700 Kit, 2 anos de uso.'" required />
+					<label className="mt-5 block mb-2 text-sm font-medium text-gray-900">Descrição <span className='text-red-500 inline-block'>*</span></label>
+					<input value={description} onChange={(e) => setDescription(e.target.value)} className="h-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Descrição da bicicleta" required />
 
-					<label className="mt-7 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor(R$)<span className='text-red-500 inline-block'>*</span></label>
-					<input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+					<label className="mt-7 block mb-2 text-sm font-medium text-gray-900">Valor(R$)<span className='text-red-500 inline-block'>*</span></label>
+					<input value={price} onChange={(e) => setPrice(e.target.value)} type="number" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+
+					<label className="mt-7 block mb-2 text-sm font-medium text-gray-900">Tipo <span className='text-red-500 inline-block'>*</span></label>
+					<select value={tipo} onChange={(e) => setTipo(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+						<option value="">Selecione um tipo</option>
+						<option value="MTB">MTB</option>
+						<option value="Passeio">Passeio</option>
+						<option value="Speed">Speed</option>
+						<option value="Eletrica">Elétrica</option>
+						<option value="Other">Outro</option>
+					</select>
+
+					<label className="mt-7 block mb-2 text-sm font-medium text-gray-900">Imagem URL <span className='text-red-500 inline-block'>*</span></label>
+					<input value={imagem} onChange={(e) => setImagem(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="URL da imagem" required />
 				</div>
 
-				{/* Espaços para inserir fotos */}
-				<div className="grid grid-cols-1 gap-4">
-
-
-					Fotos:
-					<label htmlFor="main-photo" className="relative col-span-3 md:col-span-1 w-full border-dashed border-2 border-gray-300 rounded-lg overflow-hidden cursor-pointer flex justify-center items-center">
-						<img src={images[0] || camera} alt="Foto Principal" className="w-30 h-30 object-cover" />
-						<input type="file" id="main-photo" accept="image/*" className="absolute inset-0 opacity-0" onChange={(e) => handleImageChange(0, e)} />
-					</label>
-
-
-					{[...Array(4)].map((_, index) => (
-						<label key={index + 1} htmlFor={`additional-photo-${index + 1}`} className="relative w-full border-dashed border-2 border-gray-300 rounded-lg overflow-hidden cursor-pointer flex justify-center items-center">
-							<img src={images[index + 1] || camera} alt={`Foto ${index + 1}`} className="w-30 h-30  object-cover" />
-							<input type="file" id={`additional-photo-${index + 1}`} accept="image/*" className="absolute inset-0 opacity-0" onChange={(e) => handleImageChange(index + 1, e)} />
-						</label>
-					))}
-				</div>
-
-				{/* <label className="mt-7 block mb-2 text-sm font-medium text-gray-900 dark:text-white">CEP*</label>
-				<input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required /> */}
-
-				<button type="submit" className="mb-10 mt-7 text-white bg-purple-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Anunciar 	Bike</button>
+				<button type="submit" className="mb-10 mt-7 text-white bg-purple-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Anunciar Bike</button>
 			</form>
 		</div>
 	);

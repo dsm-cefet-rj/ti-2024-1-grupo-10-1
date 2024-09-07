@@ -25,14 +25,32 @@ router.route("/")
 	})
 
 	// Adiciona um produto
-	.post(authenticate.verifyUser, (req, res, next) => {//verifica se esta logado
-		let newBike = req.body;
-		Bike.create(newBike).then((newBike) => {
-			res.json({ objAdded: newBike, "status": "OK" });
-		}).catch((err) => {
-			res.status(400).json({ objAdded: newBike, "status": "ERROR", "message": err.message });
+	.post(authenticate.verifyUser, async (req, res, next) => {
+		try {
+			const { title, description, price, tipo, imagem } = req.body;
+
+			// Verifica se todos os campos necessários estão presentes
+			if (!title || !description || !price || !tipo || !imagem) {
+				return res.status(400).json({ status: 'ERROR', message: 'Campos incompletos.' });
+			}
+
+			// Cria um novo objeto Bike com o userId
+			const newBike = {
+				title,
+				description,
+				price,
+				tipo,
+				imagem,
+				userId: req.user._id // Obtém o ID do usuário do objeto req
+			};
+
+			// Cria a bicicleta no banco de dados
+			const bike = await Bike.create(newBike);
+			res.status(201).json({ status: 'OK', objAdded: bike });
+		} catch (err) {
+			res.status(400).json({ status: 'ERROR', message: err.message });
 			next();
-		});
+		}
 	});
 
 
@@ -51,10 +69,10 @@ router.route('/:id')
 
 				// Filtrando apenas o que desejo exibir da bicicleta (resto_bike) através da desestruturação do objeto
 				const { _id: id_bike, bikeId, __v: _v_bike, userId: critical_sellerData, ...resto_bike } = bikeData;
-				
+
 				// Filtrando apenas o que desejo exibir do vendedor da bike (resto vendedor) através da desestruturação do objeto
-				const { _id: id_vend, __v: _v_vend, CEP:cep_vend, senha:pass_vend, FavIds:fav_bikes_vend, ...resto_vendedor } = critical_sellerData;
-				
+				const { _id: id_vend, __v: _v_vend, CEP: cep_vend, FavIds: fav_bikes_vend, ...resto_vendedor } = critical_sellerData;
+
 				res.status(200);
 				// Exibo o id da bike, os dados do vendedor e os dados da bicicleta
 				res.json({ sellerData: resto_vendedor, ...resto_bike });
@@ -98,6 +116,27 @@ router.route('/:id')
 			catch((error) => {
 				res.status(500).json({ message: error.message })
 			})
+	});
+
+
+router.route('/me')
+	// Rota para obter bicicletas postadas pelo usuário logado
+	.get(authenticate.verifyUser, async (req, res, next) => {
+		try {
+			const userId = req.user._id;
+			const bikes = await Bike.find({ userId }).lean();
+
+			// Modifica o formato dos dados conforme necessário
+			const modifiedBikes = bikes.map(bike => {
+				const { _id, bikeId, __v, ...resto } = bike;
+				return { bikeId: _id, ...resto };
+			});
+
+			res.status(200).json(modifiedBikes);
+		} catch (err) {
+			res.status(500).json({ status: 'ERROR', message: err.message });
+			next();
+		}
 	});
 
 module.exports = router;

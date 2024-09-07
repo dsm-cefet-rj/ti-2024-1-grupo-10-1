@@ -73,7 +73,6 @@ const BarraLogin = () => {
 
 			if (user_data != null) {
 				// Setta o estado zustand
-				console.log(user_data);
 			} else {
 				throw Error;
 			}

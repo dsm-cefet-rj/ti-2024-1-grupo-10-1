@@ -1,5 +1,7 @@
 import axios from "axios";
 
+
+
 const PORT = 3015;
 const URL = "http://localhost:" + PORT;
 
@@ -40,6 +42,26 @@ export const fetchProduct = async (setTarget, id) => {
 	}
 };
 
+
+export const postBike = async (bikeData) => {
+	try {
+		const token = localStorage.getItem('token'); // Obtém o token do localStorage
+		const response = await axios.post('http://localhost:3015/bike', bikeData, {
+			headers: {
+				Authorization: `Bearer ${token}` // Adiciona o token no cabeçalho
+			}
+		});
+		
+		return response.data;
+	} catch (error) {
+		console.log(response.data);
+		console.error('Erro ao criar a bicicleta:', error);
+		throw error;
+	}
+};
+
+
+// Usuário
 export const fetchUsers = async (setTarget) => {
 	//Busca todos os usuários cadastrados no sistema.
 	try {
@@ -55,7 +77,6 @@ export const fetchUsers = async (setTarget) => {
 };
 
 
-// Usuário
 export const PostUser = async (newUser) => {
 	// Envia dados de um novo usuário para o back-end (cadastrar um usuário).
 	try {
@@ -83,6 +104,27 @@ export const PatchUser = async (user_data) => {
 	}
 };
 
+export const handleLogout = () => {
+	// Remover o token JWT armazenado
+	localStorage.removeItem('token');
+
+	// Redirecionar para a página de login ou inicial
+	window.location.href = '/login';  // ou use react-router para redirecionar
+};
+
+//achar usuario
+export const fetchUserData = async () => {
+	try {
+		const response = await axios.get('http://localhost:3015/me', {
+			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+		});
+		return response.data;
+	} catch (error) {
+		console.error('Erro ao buscar dados do usuário', error);
+		throw error;
+	}
+};
+
 // Feedbacks
 // Função para buscar feedbacks do backend
 export const fetchFeedbacks = async () => {
@@ -95,6 +137,23 @@ export const fetchFeedbacks = async () => {
 	}
 };
 
+// Função para criar um feedback
+export const postFeedback = async (content, token) => {
+	try {
+		const response = await axios.post('http://localhost:3015/feedback', // URL do endpoint
+			{ content },
+			{
+				headers: {
+					'Authorization': `Bearer ${token}`, // Inclui o token no cabeçalho
+					'Content-Type': 'application/json'
+				}
+			}
+		);
+		return response.data; // Retorna a resposta da requisição
+	} catch (error) {
+		throw new Error(error.response?.data?.message || 'Erro ao enviar o feedback.');
+	}
+};
 
 // Auxiliares
 
@@ -116,7 +175,8 @@ export const fetchLogin = async (email, senha) => {
 		if (response.status === 200) {
 			localStorage.setItem("token", response.data.token); //Usando armazenamento local do browser para fixar o token do usuario logado
 			console.log("Login realizado com sucesso:", response.data);
-			console.log(response.data);
+			console.log(localStorage.getItem('token')); // Verifique se o token está armazenado corretamente
+			window.location.reload();//GAMBIARRA PRA AUTENTICAÇÃO DO FRONT(HEADERHOME) FUNCIONAR (f5)
 			// Redirecionar o usuário ou realizar alguma outra ação
 		}
 		return response.data;
@@ -128,6 +188,9 @@ export const fetchLogin = async (email, senha) => {
 		return {};
 	}
 };
+
+
+
 
 
 
