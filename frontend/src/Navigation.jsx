@@ -12,6 +12,7 @@ const Navigation = () => {
         <li><Link to="/Anuncios">Anunciar</Link></li>
         <li><Link to="/Conta">Minha Conta</Link></li>
         <li><Link to="/BikeView">Bike clicada</Link></li>
+        <li><Link to="/MeusAnuncios">Minhas Bikes</Link></li>
       </ul>
     </nav>
   );

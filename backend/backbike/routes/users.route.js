@@ -140,5 +140,15 @@ router.route("/favorites/:id").
 
 
 
+//rota pra pegar meus dados (usario logado)
+router.get('/me', async (req, res) => {
+	try {
+		const user = await User.findById(req.user._id); // req.user deve ser preenchido pela autenticação
+		if (!user) return res.status(404).send('Usuário não encontrado');
+		res.json(user);
+	} catch (error) {
+		res.status(500).send('Erro ao buscar informações do usuário');
+	}
+});
 
 module.exports = router;

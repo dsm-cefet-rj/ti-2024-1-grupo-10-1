@@ -5,26 +5,50 @@ var Feedback = require("../models/feedback.schema");
 
 // Rota para listar e adicionar feedbacks
 router.route("/")
-	.get((req, res, next) => {
-		Feedback.find()
-			.then((data) => {
-				res.json(data);
-			})
-			.catch((err) => {
-				res.json({ message: err.message });
-			});
+	.get(async(req, res, next) => {
+		try {
+		data = await Feedback.find().populate("userId").lean();// Popula os dados do usuário baseado no userId
+				// Filtra os dados para enviar apenas o necessário
+				const feedbacks = data.map((feedback) => {
+					// Desestruturação para remover dados sensíveis do usuário
+					const {_id: id_feedback, __v: _v_feedback, userId: critical_sellerData,  ...resto_feedback } = feedback;
+					const {_id: id_vend, __v: _v_vend, CEP: cep_vend, FavIds: fav_vend, email: email_vend, telefone: tel_vend, ...resto_vendedor } = critical_sellerData;
+
+					return {
+						sellerData: resto_vendedor,
+					...resto_feedback
+					};
+					
+				});
+				res.json({feedbacks});
+			}
+			
+		 catch (errorParam) {
+			console.log(errorParam);
+			res.status(500).json({ message: errorParam.message })
+		}
 	})
 
-	.post(authenticate.verifyUser, (req, res, next) => {
-		const newFeedback = req.body;
-		Feedback.create(newFeedback)
-			.then((newFeed) => {
-				res.json({ objAdded: newFeed, "status": "OK" });
-			})
-			.catch((err) => { 
-				res.json({ "status": "ERROR", "message": err.message });
-			});
-	});
+	.post(authenticate.verifyUser, async (req, res) => {
+    console.log('Authenticated User:', req.user); // Adicione este log para verificar o conteúdo de req.user
+
+    try {
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ status: 'ERROR', message: 'User not authenticated' });
+        }
+
+        const newFeedback = {
+            userId: req.user._id,
+            content: req.body.content,
+            publication_date: new Date()
+        };
+
+        const feedback = await Feedback.create(newFeedback);
+        res.json({ objAdded: feedback, status: 'OK' });
+    } catch (err) {
+        res.status(500).json({ status: 'ERROR', message: err.message });
+    }
+});
 
 
 	
@@ -47,6 +71,7 @@ router.route("/:id")
 				res.status(500).json({ "status": "ERROR", "message": err.message });
 			});
 	})
+
 	// Deletar um feedback existente
 	.delete(authenticate.verifyUser, (req, res, next) => {
 		const feedbackId = req.params.id;

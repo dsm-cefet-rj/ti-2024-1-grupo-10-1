@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-
+import { handleLogout } from './BackendUtils'; // Importa a função handleLogout
 import useUserStore from './UserUtils';
 
 const Minhaconta = () => {
@@ -26,7 +26,6 @@ const Minhaconta = () => {
 
 
 	return (
-		// user.logged &&
 		< div className="mx-auto right-0 mt-12 w-60" >
 			<div className="bg-white rounded overflow-hidden shadow-lg">
 				<div className="text-center p-6 bg-purple-600 border-b">
@@ -64,14 +63,16 @@ const Minhaconta = () => {
 						</div>
 
 						<div className="pl-3">
-							<p className="text-sm font-medium text-gray-800 leading-none">Meus anúncios</p>
-							<p className="text-xs text-gray-500">Veja seus anúncios</p>
+							<Link to="/minhasbikes">
+								<p className="text-sm font-medium text-gray-800 leading-none">Meus anúncios</p>
+								<p className="text-xs text-gray-500">Veja seus anúncios</p>
+							</Link>
 						</div>
 					</a>
 				</div>
 
 				<div className="">
-					<Link className="w-full px-4 py-2 pb-4 hover:bg-gray-100 flex" onClick={checkoutLogin} to="/home">
+					<Link className="w-full px-4 py-2 pb-4 hover:bg-gray-100 flex" onClick={handleLogout} to="/home">
 						<p className="text-sm font-medium text-gray-800 leading-none">Sair</p>
 					</Link>
 				</div>

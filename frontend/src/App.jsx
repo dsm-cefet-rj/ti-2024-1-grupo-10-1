@@ -12,6 +12,7 @@ import Conta from './pages/Conta'
 import BikeView from './pages/BikeView';
 import FeedbackPost from './pages/FeedbackPost';
 import EditarCadastro from './pages/EditarCadastro';
+import MeusAnuncios from './pages/MeusAnuncios';
 
 const App = () => {
 
@@ -30,6 +31,7 @@ const App = () => {
 				<Route path="/bike/:id" element={<BikeView />} />
 				<Route path="/feedbackpost" element={<FeedbackPost />} />
 				<Route path= "/editarcadastro" element= {<EditarCadastro/>} />
+				<Route path="/minhasbikes" element={<MeusAnuncios/>} />
 				<Route path='*' element={<Navigate to={"/"} />}></Route>
 			</Routes>
 		</Router>

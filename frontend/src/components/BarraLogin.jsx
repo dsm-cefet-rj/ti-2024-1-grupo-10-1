@@ -72,6 +72,7 @@ const BarraLogin = () => {
 			const user_data = await fetchLogin(email, senha);
 
 			if (user_data != null) {
+
 				console.log(user_data);
 				// Setta o estado zustand
 				updateNome(user_data.nome);
@@ -81,6 +82,7 @@ const BarraLogin = () => {
 				setUserFavs(user_data.FavIds);
 				updateTel(user_data.telefone);
 				setLoggedAccount(true);
+
 			} else {
 				throw Error;
 			}
