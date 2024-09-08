@@ -23,7 +23,6 @@ const HeaderHome = () => {
 				<Link to="/home">
 					<img src={logo} className='w-56 h-40 md:w-40 md:h-auto' alt="Logo" />
 				</Link>
-
 				{/* Menu de Navegação para Dispositivos Maiores */}
 				<nav className="hidden md:flex items-center gap-7">
 
