@@ -13,6 +13,7 @@ import BikeView from './pages/BikeView';
 import FeedbackPost from './pages/FeedbackPost';
 import EditarCadastro from './pages/EditarCadastro';
 import MeusAnuncios from './pages/MeusAnuncios';
+import EdicaoVenda from './pages/EdicaoVenda';
 
 const App = () => {
 
@@ -26,6 +27,7 @@ const App = () => {
 				<Route path="/bike" element={<Bike />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/anuncios" element={<Anuncios />} />
+				<Route path="/edicaoVenda" element={<EdicaoVenda />} />
 				<Route path="/conta" element={<Conta />} />
 				<Route path="/favoritos" element={<Favoritos />} />
 				<Route path="/bike/:id" element={<BikeView />} />
