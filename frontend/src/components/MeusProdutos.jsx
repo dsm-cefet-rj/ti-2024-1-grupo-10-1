@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchLogin, fetchProductsByUser } from "./BackendUtils";
+import { fetchLogin, fetchProductsByUser, removeBike } from "./BackendUtils";
 
 const MeusProdutos = () => {
 	const [products, setProducts] = useState([]);
@@ -12,26 +12,22 @@ const MeusProdutos = () => {
 			setLoading(true);
 			setError(null);
 
+			// Logar como parracho
+			const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
+
 			try {
-				// Logar como parracho
-				const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
+				const token = localStorage.getItem("token");
+				if (!token) {
+					setError("Você precisa estar logado para ver suas bicicletas.");
+					setLoading(false);
+					return;
+				}
+				if (id != 0) {
+					const my_annouces = await fetchProductsByUser(id, token);
 
-				
-				// const token = localStorage.getItem("token");
-				// if (!token) {
-				// 	setError("Você precisa estar logado para ver suas bicicletas.");
-				// 	setLoading(false);
-				// 	return;
-				// }
-
-				// const response = await axios.get("http://localhost:3015/bike/me", {
-				// 	headers: { Authorization: `Bearer ${token}` },
-				// });
-
-				const my_annouces = await fetchProductsByUser(id);
-
-				if (my_annouces !== null) {
-					setProducts(my_annouces);
+					if (my_annouces !== null) {
+						setProducts(my_annouces);
+					}
 				}
 			} catch (err) {
 				setError("Ocorreu um erro ao carregar minhas bicicletas.");
@@ -43,6 +39,26 @@ const MeusProdutos = () => {
 
 		fetchBikes();
 	}, []);
+
+
+	const handleDelete = async (e) => {
+		e.preventDefault();
+		try {
+			const remove_id = e.target.name;
+
+			let has_deleted = await removeBike(remove_id);
+
+			if (has_deleted) {
+				console.log("Produto deletado com sucesso");
+				// Atualiza a coleção/estado na pagina 
+				setProducts(products.filter((produto) => produto.bikeId !== remove_id));
+			} else {
+				console.log("Ocorreu algum erro inesperado");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<div className="bg-white">
@@ -58,13 +74,30 @@ const MeusProdutos = () => {
 				) : (
 					<div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
 						{products.map((bike) => (
-							<Link to={`/bike/${bike.bikeId}`} key={bike.bikeId} className="relative bg-black border border-black">
-								<img src={bike.imagem} alt={bike.title} className="object-cover w-full h-72" />
-								<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
-									<p className="text-lg font-medium">Preço: {`R$ ${bike.price.toFixed(2)}`}</p>
-									<p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">{bike.description}</p>
+							<div key={bike.bikeId} className="relative bg-black border border-black">
+								<Link to={`/bike/${bike.bikeId}`} className="relative bg-black border border-black">
+									<img src={bike.imagem} alt={bike.title} className="object-cover w-full h-72" />
+									<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
+										<p className="text-lg font-medium">Preço: {`R$ ${bike.price.toFixed(2)}`}</p>
+										<p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">{bike.description}</p>
+									</div>
+								</Link>
+								<div className="p-4">
+									<Link
+										to={`/editarproduto/${bike.bikeId}`}
+										className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+									>
+										Editar
+									</Link>
+									<button
+										onClick={handleDelete}
+										name={bike.bikeId}
+										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+									>
+										X
+									</button>
 								</div>
-							</Link>
+							</div>
 						))}
 					</div>
 				)}

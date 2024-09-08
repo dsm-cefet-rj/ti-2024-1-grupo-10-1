@@ -1,21 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navigation from './Navigation';
-import Home from './pages/Home';
-import Bike from './pages/Bike';
-import Login from './pages/Login';
-import Feedback from './pages/Feedback';
-import CadastroCliente from './pages/CadastroCliente';
-import Favoritos from './pages/Favoritos';
-import Anuncios from './pages/Anuncios';
-import Conta from './pages/Conta'
-import BikeView from './pages/BikeView';
-import FeedbackPost from './pages/FeedbackPost';
-import EditarCadastro from './pages/EditarCadastro';
-import MeusAnuncios from './pages/MeusAnuncios';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Navigation from "./Navigation";
+import Home from "./pages/Home";
+import Bike from "./pages/Bike";
+import Login from "./pages/Login";
+import Feedback from "./pages/Feedback";
+import CadastroCliente from "./pages/CadastroCliente";
+import Favoritos from "./pages/Favoritos";
+import Anuncios from "./pages/Anuncios";
+import Conta from "./pages/Conta";
+import BikeView from "./pages/BikeView";
+import FeedbackPost from "./pages/FeedbackPost";
+import EditarCadastro from "./pages/EditarCadastro";
+import MeusAnuncios from "./pages/MeusAnuncios";
+import EditarProduto from "./pages/EditarProduto";
 
 const App = () => {
-
 	return (
 		<Router>
 			<Routes>
@@ -29,13 +29,15 @@ const App = () => {
 				<Route path="/conta" element={<Conta />} />
 				<Route path="/favoritos" element={<Favoritos />} />
 				<Route path="/bike/:id" element={<BikeView />} />
+				<Route path="/editarproduto/:id" element={<EditarProduto />} />
 				<Route path="/feedbackpost" element={<FeedbackPost />} />
-				<Route path= "/editarcadastro" element= {<EditarCadastro/>} />
-				<Route path="/minhasbikes" element={<MeusAnuncios/>} />
-				<Route path='*' element={<Navigate to={"/"} />}></Route>
+				<Route path="/editarcadastro" element={<EditarCadastro />} />
+				<Route path="/minhasbikes" element={<MeusAnuncios />} />
+
+				<Route path="*" element={<Navigate to={"/"} />}></Route>
 			</Routes>
 		</Router>
 	);
-}
+};
 
 export default App;

@@ -24,7 +24,11 @@ const BikeSelecionada = () => {
 
 	// Ao carregar a pagina, será carregado as informações da bike e do vendedor
 	useEffect(() => {
-		fetchProduct(setBike, id);
+		const getBike = async () => {
+			const bike_data = await fetchProduct(id, true);
+			setBike(bike_data);
+		};
+		getBike();
 		// fetchUser(setVendedor, bike.userId);
 	}, []);
 
