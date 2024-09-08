@@ -1,6 +1,4 @@
-import axios from "axios";
-
-
+import axios, { AxiosError } from "axios";
 
 const PORT = 3015;
 const URL = "http://localhost:" + PORT;
@@ -8,7 +6,6 @@ const URL = "http://localhost:" + PORT;
 const user_endpoint = "/users";
 const bike_endpoint = "/bike";
 const feedback_endpoint = "/feedback";
-
 
 // Bikes
 export const fetchAllProducts = async (setTarget) => {
@@ -42,24 +39,23 @@ export const fetchProduct = async (setTarget, id) => {
 	}
 };
 
-
 export const postBike = async (bikeData) => {
 	try {
-		const token = localStorage.getItem('token'); // Obtém o token do localStorage
-		const response = await axios.post('http://localhost:3015/bike', bikeData, {
+		const token = localStorage.getItem("token"); // Obtém o token do localStorage
+
+		const response = await axios.post(URL + bike_endpoint, bikeData, {
 			headers: {
-				Authorization: `Bearer ${token}` // Adiciona o token no cabeçalho
-			}
+				Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+			},
 		});
-		
+
 		return response.data;
 	} catch (error) {
-		console.log(response.data);
-		console.error('Erro ao criar a bicicleta:', error);
+		// console.log(response.data);
+		console.error("Erro ao criar a bicicleta:", error);
 		throw error;
 	}
 };
-
 
 // Usuário
 export const fetchUsers = async (setTarget) => {
@@ -75,7 +71,6 @@ export const fetchUsers = async (setTarget) => {
 		console.error("Erro ao buscar lista de usuarios:", error);
 	}
 };
-
 
 export const PostUser = async (newUser) => {
 	// Envia dados de um novo usuário para o back-end (cadastrar um usuário).
@@ -106,21 +101,21 @@ export const PatchUser = async (user_data) => {
 
 export const handleLogout = () => {
 	// Remover o token JWT armazenado
-	localStorage.removeItem('token');
+	localStorage.removeItem("token");
 
 	// Redirecionar para a página de login ou inicial
-	window.location.href = '/login';  // ou use react-router para redirecionar
+	window.location.href = "/login"; // ou use react-router para redirecionar
 };
 
 //achar usuario
 export const fetchUserData = async () => {
 	try {
-		const response = await axios.get('http://localhost:3015/me', {
-			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+		const response = await axios.get(URL + user_endpoint + "/me", {
+			headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 		});
 		return response.data;
 	} catch (error) {
-		console.error('Erro ao buscar dados do usuário', error);
+		console.error("Erro ao buscar dados do usuário", error);
 		throw error;
 	}
 };
@@ -129,8 +124,13 @@ export const fetchUserData = async () => {
 // Função para buscar feedbacks do backend
 export const fetchFeedbacks = async () => {
 	try {
-		const response = await axios.get("http://localhost:3015/feedback"); // requisição de get no back
-		return response.data;
+		const response = await axios.get(URL + feedback_endpoint);
+
+		if (response !== null) {
+			return response.data;
+		} else {
+			return [];
+		}
 	} catch (error) {
 		console.error("Erro ao buscar feedbacks:", error);
 		return [];
@@ -140,25 +140,25 @@ export const fetchFeedbacks = async () => {
 // Função para criar um feedback
 export const postFeedback = async (content, token) => {
 	try {
-		const response = await axios.post('http://localhost:3015/feedback', // URL do endpoint
+		const response = await axios.post(
+			URL + feedback_endpoint,
 			{ content },
 			{
 				headers: {
-					'Authorization': `Bearer ${token}`, // Inclui o token no cabeçalho
-					'Content-Type': 'application/json'
-				}
+					Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho
+					"Content-Type": "application/json",
+				},
 			}
 		);
 		return response.data; // Retorna a resposta da requisição
 	} catch (error) {
-		throw new Error(error.response?.data?.message || 'Erro ao enviar o feedback.');
+		throw new Error(error.response?.data?.message || "Erro ao enviar o feedback.");
 	}
 };
 
 // Auxiliares
 
-// ?????????
-export const fetchFavorites = async (id) => { 
+export const fetchFavorites = async (id) => {
 	try {
 		// Busca um produto específico (bicicleta) pelo id
 		const response = await axios.get(URL + user_endpoint + "/favorites/" + id); // Envia uma requisição GET para /bike/:id
@@ -188,12 +188,14 @@ export const fetchLogin = async (email, senha) => {
 			localStorage.setItem("token", response.data.token); //Usando armazenamento local do browser para fixar o token do usuario logado
 			console.log("Login realizado com sucesso:", response.data);
 
-			console.log(localStorage.getItem('token')); // Verifique se o token está armazenado corretamente
-			window.location.reload();//GAMBIARRA PRA AUTENTICAÇÃO DO FRONT(HEADERHOME) FUNCIONAR (f5)
+			// console.log(localStorage.getItem("token")); // Verifique se o token está armazenado corretamente
 
-			// Redirecionar o usuário ou realizar alguma outra ação
+			// window.location.reload(); //GAMBIARRA PRA AUTENTICAÇÃO DO FRONT(HEADERHOME) FUNCIONAR (f5) - Não funciona.....
+
+			return response.data;
+		} else {
+			return {};
 		}
-		return response.data;
 	} catch (error) {
 		// Tratar os erros
 		console.error("Erro ao tentar fazer login:", error.response ? error.response.data : error.message);
@@ -204,7 +206,20 @@ export const fetchLogin = async (email, senha) => {
 };
 
 
+export const fetchProductsByUser = async (id) => {
+	try {
+		if (id !== null) {
 
+			const ProductsFromUser = await axios.get(URL + bike_endpoint + "/productsFrom/" + id);
 
-
-
+			if (ProductsFromUser.status == 200) {
+				return ProductsFromUser.data;
+			} else {
+				throw AxiosError.ERR_BAD_RESPONSE;
+			}
+		}
+	} catch (error) {
+		console.error("Ocorreu um erro ao buscar os dados:", error);
+		return [];
+	}
+};
