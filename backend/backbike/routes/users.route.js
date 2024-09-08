@@ -49,14 +49,16 @@ router.route("/")
 
 			const newUser = new User({ nome, CEP, email, telefone });
 
-			User.register(newUser, senha, (err, user) => {
-				if (err) {
-					return res.status(500).json({ status: "ERROR", message: err.message });
-				}
-				passport.authenticate('local')(req, res, () => {
-					res.json({ status: "OK", message: "Usuário registrado e logado", user });
+				User.register(newUser, senha, (err, user) => {
+					if (err) {
+						return res.status(500).json({ status: "ERROR", message: err.message });
+					}
+					passport.authenticate('local')(req, res, () => {
+						
+						res.json({ status: "OK", message: "Usuário registrado e logado", user });
+					});
 				});
-			});
+			}
 		} catch (err) {
 			res.status(500).json({ status: "ERROR", message: err.message });
 		}
