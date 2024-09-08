@@ -8,6 +8,7 @@ const User = require("../models/user.schema")
 
 router.route("/")
 	// Listagem de usuarios.
+	
 	.get((req, res, next) => {
 		User.find({}).then((data) => {
 			res.json(data);
