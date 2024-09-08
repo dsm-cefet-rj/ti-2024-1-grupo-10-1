@@ -21,7 +21,8 @@ const FormEditProduto = () => {
 				// Chama uma função do backendUtils
 				if (bikeId !== null) {
 					
-					await fetchProduct(setBike, bikeId);
+					var bike_data = await fetchProduct(bikeId);
+					setBike(bike_data);
 				}
 				// const response = await axios.get(`http://localhost:3015/bike/${bikeId}`);
 				// var response = null;

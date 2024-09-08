@@ -24,14 +24,15 @@ export const fetchAllProducts = async (setTarget) => {
 };
 
 // Funcionalidade de Visualização de uma Bike com seu respectivo vendedor, caso usuário esteja logado
-export const fetchProduct = async (setTarget, id) => {
+export const fetchProduct = async (id, return_owner_info = false) => {
 	try {
 		if (id !== null) {
 			// Busca um produto específico (bicicleta) pelo id
-			const response = await axios.get(URL + bike_endpoint + "/" + id); // Envia uma requisição GET para /bike/:id
+			var response = await axios.get(URL + bike_endpoint + "/" + id); // Envia uma requisição GET para /bike/:id
 
 			if (response.status == 200) {
-				await setTarget(response.data); //se bem-sucedida, define o estado com os dados do produto específico.
+				if (!return_owner_info) delete response.data.sellerData;
+				return response.data; // Retorna o dado da bike, com ou sem os dados do vendedor
 			} else {
 				throw AxiosError.ERR_BAD_RESPONSE;
 			}
