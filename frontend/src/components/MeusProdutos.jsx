@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchLogin, fetchProductsByUser } from "./BackendUtils";
+import { fetchLogin, fetchProductsByUser, removeBike } from "./BackendUtils";
 
 const MeusProdutos = () => {
 	const [products, setProducts] = useState([]);
@@ -12,25 +12,22 @@ const MeusProdutos = () => {
 			setLoading(true);
 			setError(null);
 
+			// Logar como parracho
+			const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
+
 			try {
-				// Logar como parracho
-				const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
+				const token = localStorage.getItem("token");
+				if (!token) {
+					setError("Você precisa estar logado para ver suas bicicletas.");
+					setLoading(false);
+					return;
+				}
+				if (id != 0) {
+					const my_annouces = await fetchProductsByUser(id, token);
 
-				// const token = localStorage.getItem("token");
-				// if (!token) {
-				// 	setError("Você precisa estar logado para ver suas bicicletas.");
-				// 	setLoading(false);
-				// 	return;
-				// }
-
-				// const response = await axios.get("http://localhost:3015/bike/me", {
-				// 	headers: { Authorization: `Bearer ${token}` },
-				// });
-
-				const my_annouces = await fetchProductsByUser(id);
-
-				if (my_annouces !== null) {
-					setProducts(my_annouces);
+					if (my_annouces !== null) {
+						setProducts(my_annouces);
+					}
 				}
 			} catch (err) {
 				setError("Ocorreu um erro ao carregar minhas bicicletas.");
@@ -42,6 +39,25 @@ const MeusProdutos = () => {
 
 		fetchBikes();
 	}, []);
+
+	const handleDelete = async (e) => {
+		e.preventDefault();
+		try {
+			const remove_id = e.target.name;
+
+			let has_deleted = await removeBike(remove_id);
+
+			if (has_deleted) {
+				console.log("Produto deletado com sucesso");
+				// Atualiza a coleção/estado na pagina 
+				setProducts(products.filter((produto) => produto.bikeId !== remove_id));
+			} else {
+				console.log("Ocorreu algum erro inesperado");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<div className="bg-white">
@@ -72,7 +88,13 @@ const MeusProdutos = () => {
 									>
 										Editar
 									</Link>
-									<Link className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"> Deletar</Link>
+									<button
+										onClick={handleDelete}
+										name={bike.bikeId}
+										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+									>
+										X
+									</button>
 								</div>
 							</div>
 						))}

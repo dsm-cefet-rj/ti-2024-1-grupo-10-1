@@ -52,7 +52,12 @@ export const postBike = async (bikeData) => {
 			},
 		});
 
-		return response.data;
+		if (response !== null) {
+			if (response.status == 201) {
+				return response.data;
+			}
+		}
+
 	} catch (error) {
 		// console.log(response.data);
 		console.error("Erro ao criar a bicicleta:", error);
@@ -60,7 +65,7 @@ export const postBike = async (bikeData) => {
 	}
 };
 
-export const updateBike = async (id, bikeData) => {
+export const patchBike = async (id, bikeData) => {
 	try {
 		const token = localStorage.getItem("token"); // Obtém o token do localStorage
 
@@ -74,6 +79,27 @@ export const updateBike = async (id, bikeData) => {
 	} catch (error) {
 		// console.log(response.data);
 		console.error("Erro ao criar a bicicleta:", error);
+		throw error;
+	}
+};
+
+export const removeBike = async (id) => {
+	try {
+		const token = localStorage.getItem("token"); // Obtém o token do localStorage
+		const response = await axios.delete(URL + bike_endpoint + "/" + id, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		if (response !== null) {
+			if (response.status == 200) {
+				return true;
+			}
+		}
+	} catch (error) {
+		console.error("Erro ao criar a bicicleta:", error);
+
 		throw error;
 	}
 };
@@ -226,10 +252,12 @@ export const fetchLogin = async (email, senha) => {
 	}
 };
 
-export const fetchProductsByUser = async (id) => {
+export const fetchProductsByUser = async (id, token) => {
 	try {
 		if (id !== null) {
-			const ProductsFromUser = await axios.get(URL + bike_endpoint + "/productsFrom/" + id);
+			const ProductsFromUser = await axios.get(URL + bike_endpoint + "/productsFrom/" + id, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
 
 			if (ProductsFromUser.status == 200) {
 				return ProductsFromUser.data;

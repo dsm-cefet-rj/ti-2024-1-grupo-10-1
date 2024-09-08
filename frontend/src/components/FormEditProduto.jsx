@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchProduct, updateBike } from "./BackendUtils";
+import { fetchProduct, patchBike} from "./BackendUtils";
 
 const FormEditProduto = () => {
 	const { id: bikeId } = useParams(); // Pega o bikeId da URL
@@ -52,7 +52,7 @@ const FormEditProduto = () => {
 		e.preventDefault();
 		// Avaliar se todos os campos estão preenchidos corretamente
 		try {
-			var response = await updateBike(bikeId, bike);
+			var response = await patchBike(bikeId, bike);
 			if (response !== null) {
 				setMessage("Anúncio atualizado com sucesso!");
 				console.log("Produto atualizado com sucesso");
