@@ -60,6 +60,24 @@ export const postBike = async (bikeData) => {
 	}
 };
 
+export const updateBike = async (id, bikeData) => {
+	try {
+		const token = localStorage.getItem("token"); // Obtém o token do localStorage
+
+		const response = await axios.patch(URL + bike_endpoint + "/" + id, bikeData, {
+			headers: {
+				Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+			},
+		});
+
+		return response.data;
+	} catch (error) {
+		// console.log(response.data);
+		console.error("Erro ao criar a bicicleta:", error);
+		throw error;
+	}
+};
+
 // Usuário
 export const fetchUsers = async (setTarget) => {
 	//Busca todos os usuários cadastrados no sistema.

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchProduct } from "./BackendUtils";
+import { fetchProduct, updateBike } from "./BackendUtils";
 
 const FormEditProduto = () => {
-
-	const { id:bikeId } = useParams(); // Pega o bikeId da URL
+	const { id: bikeId } = useParams(); // Pega o bikeId da URL
 	const [bike, setBike] = useState({});
 
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [message, setMessage] = useState("");
 
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	// Busca as informações da bike com base no ID
 	useEffect(() => {
@@ -20,7 +19,6 @@ const FormEditProduto = () => {
 				setLoading(true);
 				// Chama uma função do backendUtils
 				if (bikeId !== null) {
-					
 					var bike_data = await fetchProduct(bikeId);
 					setBike(bike_data);
 				}
@@ -53,15 +51,18 @@ const FormEditProduto = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		// Avaliar se todos os campos estão preenchidos corretamente
-
-		// try {
-		//     await axios.put(`http://localhost:3015/bike/${bikeId}`, bike);
-		//     setMessage('Anúncio atualizado com sucesso!');
-		//     navigate('/minhas-bikes'); // Redireciona para a lista de bikes
-		// } catch (err) {
-		//     setError('Erro ao atualizar o anúncio.');
-		//     console.error(err);
-		// }
+		try {
+			var response = await updateBike(bikeId, bike);
+			if (response !== null) {
+				setMessage("Anúncio atualizado com sucesso!");
+				console.log("Produto atualizado com sucesso");
+				navigate("/minhasbikes"); // Redireciona para a lista de bikes
+			}
+		} catch (error) {
+			console.error(error);
+			console.error("Erro ao atualizar produto:", error.response ? error.response.data : error.message);
+			setError("Erro ao atualizar o anúncio.");
+		}
 	};
 
 	return (
