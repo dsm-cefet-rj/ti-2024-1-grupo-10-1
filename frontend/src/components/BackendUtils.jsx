@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import axios, { AxiosError } from "axios";
 
 const PORT = 3015;

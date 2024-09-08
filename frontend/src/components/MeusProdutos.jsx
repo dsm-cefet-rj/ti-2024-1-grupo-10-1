@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchLogin, fetchProductsByUser, removeBike } from "./BackendUtils";
 
@@ -39,6 +39,7 @@ const MeusProdutos = () => {
 
 		fetchBikes();
 	}, []);
+
 
 	const handleDelete = async (e) => {
 		e.preventDefault();
