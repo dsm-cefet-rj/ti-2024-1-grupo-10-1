@@ -26,13 +26,15 @@ export const fetchAllProducts = async (setTarget) => {
 // Funcionalidade de Visualização de uma Bike com seu respectivo vendedor, caso usuário esteja logado
 export const fetchProduct = async (setTarget, id) => {
 	try {
-		// Busca um produto específico (bicicleta) pelo id
-		const response = await axios.get(URL + bike_endpoint + "/" + id); // Envia uma requisição GET para /bike/:id
+		if (id !== null) {
+			// Busca um produto específico (bicicleta) pelo id
+			const response = await axios.get(URL + bike_endpoint + "/" + id); // Envia uma requisição GET para /bike/:id
 
-		if (response.status == 200) {
-			await setTarget(response.data); //se bem-sucedida, define o estado com os dados do produto específico.
-		} else {
-			throw AxiosError.ERR_BAD_RESPONSE;
+			if (response.status == 200) {
+				await setTarget(response.data); //se bem-sucedida, define o estado com os dados do produto específico.
+			} else {
+				throw AxiosError.ERR_BAD_RESPONSE;
+			}
 		}
 	} catch (error) {
 		console.error("Ocorreu um erro ao buscar os dados:", error);
@@ -205,11 +207,9 @@ export const fetchLogin = async (email, senha) => {
 	}
 };
 
-
 export const fetchProductsByUser = async (id) => {
 	try {
 		if (id !== null) {
-
 			const ProductsFromUser = await axios.get(URL + bike_endpoint + "/productsFrom/" + id);
 
 			if (ProductsFromUser.status == 200) {
