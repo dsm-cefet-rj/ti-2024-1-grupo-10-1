@@ -26,6 +26,8 @@ Com isso a parte de frontend da aplicação já está disponível na porta indic
 sudo systemctl start mongod.service
 # Verifique se o serviço de banco de dados está ativo através deste comando: 
 sudo systemctl status mongod.service
+Ou no Windonws
+net start MongoDB
 ### Saida:
 ● mongod.service - MongoDB Database Server
 	***
