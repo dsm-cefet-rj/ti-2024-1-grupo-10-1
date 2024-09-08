@@ -35,6 +35,25 @@ const ListaMinhasBikes = () => {
 
         fetchBikes();
     }, []);
+    /*useEffect(() => {
+        const fetchBikes = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                // Requisição à API sem a necessidade de autenticação
+                const response = await axios.get('http://localhost:3015/bike/me');
+                setBikes(response.data);
+            } catch (err) {
+                setError('Ocorreu um erro ao carregar minhas bicicletas.');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchBikes();
+    }, []);*/
 
     return (
         <div className="bg-white">
@@ -50,20 +69,29 @@ const ListaMinhasBikes = () => {
                 ) : (
                     <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
                         {bikes.map((bike) => (
-                            <Link
-                                to={`/bike/${bike.bikeId}`}
-                                key={bike.bikeId}
-                                className="relative bg-black border border-black">
-                                <img
-                                    src={bike.imagem}
-                                    alt={bike.title}
-                                    className="object-cover w-full h-72"
-                                />
-                                <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
-                                    <p className="text-lg font-medium">Preço: {`R$ ${bike.price.toFixed(2)}`}</p>
-                                    <p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">{bike.description}</p>
+                            <div key={bike.bikeId} className="relative bg-black border border-black">
+                                <Link to={`/bike/${bike.bikeId}`}>
+                                    <img
+                                        src={bike.imagem}
+                                        alt={bike.title}
+                                        className="object-cover w-full h-72"
+                                    />
+                                    <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
+                                        <p className="text-lg font-medium">Preço: {`R$ ${bike.price.toFixed(2)}`}</p>
+                                        <p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">{bike.description}</p>
+                                    </div>
+                                </Link>
+
+                                {/* Botão Editar Anúncio */}
+                                <div className="p-4">
+                                    <Link 
+                                        to={`/EdicaoVenda/${bike.bikeId}`} 
+                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    >
+                                        Editar Anúncio
+                                    </Link>
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 )}
