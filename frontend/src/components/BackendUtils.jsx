@@ -58,7 +58,6 @@ export const postBike = async (bikeData) => {
 				return response.data;
 			}
 		}
-
 	} catch (error) {
 		// console.log(response.data);
 		console.error("Erro ao criar a bicicleta:", error);
@@ -124,12 +123,9 @@ export const PostUser = async (newUser) => {
 	// Envia dados de um novo usuário para o back-end (cadastrar um usuário).
 	try {
 		const response = await axios.post(URL + user_endpoint, newUser);
-		// Verificar se a resposta do backend foi correta
-		// if (response.status == 200) {
-		// 	// return ?
-		// }
-		// else {
-		// 	throw AxiosError.ERR_BAD_RESPONSE;
+
+		// if (response !== null) {
+		// 	if (response.status == 400 || response.status == 200) return response.data;
 		// }
 		return response;
 	} catch (error) {
@@ -147,19 +143,11 @@ export const PatchUser = async (user_data) => {
 	}
 };
 
-export const handleLogout = () => {
-	// Remover o token JWT armazenado
-	localStorage.removeItem("token");
-
-	// Redirecionar para a página de login ou inicial
-	window.location.href = "/login"; // ou use react-router para redirecionar
-};
-
 //achar usuario
-export const fetchUserData = async () => {
+export const fetchUserData = async (token) => {
 	try {
-		const response = await axios.get(URL + user_endpoint + "/me", {
-			headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+		const response = await axios.get(URL + user_endpoint + "/me/1", {
+			headers: { Authorization: `Bearer ${token}` },
 		});
 		return response.data;
 	} catch (error) {
@@ -206,10 +194,12 @@ export const postFeedback = async (content, token) => {
 
 // Auxiliares
 
-export const fetchFavorites = async (id) => {
+export const fetchFavorites = async (token) => {
 	try {
 		// Busca um produto específico (bicicleta) pelo id
-		const response = await axios.get(URL + user_endpoint + "/favorites/" + id); // Envia uma requisição GET para /bike/:id
+		const response = await axios.get(URL + user_endpoint + "/favorites/1", {
+			headers: { Authorization: `Bearer ${token}` },
+		}); // Envia uma requisição GET para /bike/:id
 
 		if (response.status == 200) {
 			return response.data;
@@ -238,7 +228,7 @@ export const fetchLogin = async (email, senha) => {
 
 			// console.log(localStorage.getItem("token")); // Verifique se o token está armazenado corretamente
 
-			// window.location.reload(); //GAMBIARRA PRA AUTENTICAÇÃO DO FRONT(HEADERHOME) FUNCIONAR (f5) - Não funciona.....
+			window.location.reload(); //GAMBIARRA PRA AUTENTICAÇÃO DO FRONT(HEADERHOME) FUNCIONAR (f5)
 
 			return response.data;
 		} else {
@@ -253,21 +243,20 @@ export const fetchLogin = async (email, senha) => {
 	}
 };
 
-export const fetchProductsByUser = async (id, token) => {
+export const fetchProductsByUser = async (token) => {
 	try {
-		if (id !== null) {
-			const ProductsFromUser = await axios.get(URL + bike_endpoint + "/productsFrom/" + id, {
-				headers: { Authorization: `Bearer ${token}` },
-			});
+		const ProductsFromUser = await axios.get(URL + bike_endpoint + "/productsFrom/1", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 
-			if (ProductsFromUser.status == 200) {
-				return ProductsFromUser.data;
-			} else {
-				throw AxiosError.ERR_BAD_RESPONSE;
-			}
+		if (ProductsFromUser.status == 200) {
+			return ProductsFromUser.data;
+		} else {
+			throw AxiosError.ERR_BAD_RESPONSE;
 		}
 	} catch (error) {
 		console.error("Ocorreu um erro ao buscar os dados:", error);
 		return [];
 	}
 };
+

@@ -8,7 +8,7 @@ const User = require("../models/user.schema")
 
 router.route("/")
 	// Listagem de usuarios.
-	
+
 	.get((req, res, next) => {
 		User.find({}).then((data) => {
 			res.json(data);
@@ -49,12 +49,14 @@ router.route("/")
 
 			const newUser = new User({ nome, CEP, email, telefone });
 
+			if (newUser !== null) {
+
 				User.register(newUser, senha, (err, user) => {
 					if (err) {
 						return res.status(500).json({ status: "ERROR", message: err.message });
 					}
 					passport.authenticate('local')(req, res, () => {
-						
+
 						res.json({ status: "OK", message: "Usuário registrado e logado", user });
 					});
 				});
@@ -110,48 +112,36 @@ router.post('/login', passport.authenticate('local', { session: false }), (req, 
 });
 
 
-router.route("/favorites/:id").
-	get(async (req, res, next) => {
-		const id = req.params.id;
-		let user = await User.findById(id).populate("FavIds", ["bikeId", "price", "description", "title","imagem", "tipo"]);
+router.route("/favorites/:id")
+	.get(authenticate.verifyUser, async (req, res, next) => {
+		// res.json({ data: req.user.FavIds });
+		// Id vindo da req através do middleware que traduz o token em objeto
+		let user = await User.findById(req.user._id).populate("FavIds", ["bikeId", "price", "description", "title", "imagem", "tipo"]);
 
+		// res.json({ teste: user });
 		if (user != null) {
-			
+
 			res.status(200);
-			res.json({ status:"OK", favs:user.FavIds });
+			res.json({ status: "OK", favs: user.FavIds });
 		} else {
 			res.status(404);
 			res.json({ message: "Usuário inexistente no banco de dados" });
 		}
 
 	});
-// 	// Endpoint para carregar os dados do usuário por ID
-// 	.get((req, res, next) => {
-// 		let input_id = req.params.id;
-// 		User.findById(input_id)
-// 			.then((UserData) => {
-// 				res.json(UserData);
-// 			})
-// 			.catch((error) => {
-// 				res.status(500).json({ message: error.message });
-// 				next();
-// 			});
-// 	})
-
-// Endpoint para atualizar um usuário por ID
 
 
-
-
-//rota pra pegar meus dados (usario logado)
-router.get('/me', async (req, res) => {
-	try {
-		const user = await User.findById(req.user._id); // req.user deve ser preenchido pela autenticação
-		if (!user) return res.status(404).send('Usuário não encontrado');
-		res.json(user);
-	} catch (error) {
-		res.status(500).send('Erro ao buscar informações do usuário');
-	}
-});
+//Rota pra pegar meus dados (usario logado)
+router.route('/me/:id')
+	.get(authenticate.verifyUser, async (req, res) => {
+		try {
+			const user = await User.findById(req.user._id, ["nome", "email"]); // req.user deve ser preenchido pela autenticação
+			if (!user) return res.status(404).send('Usuário não encontrado');
+			// Filtrar apenas os dados necessários
+			res.json({ nome:user.nome, email:user.email });
+		} catch (error) {
+			res.status(500).send('Erro ao buscar informações do usuário');
+		}
+	});
 
 module.exports = router;

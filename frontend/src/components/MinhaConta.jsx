@@ -1,27 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { fetchUserData } from "./BackendUtils";
 
-import useUserStore from "./UserUtils";
+// import useUserStore from "./UserUtils";
 
 const Minhaconta = () => {
 	const navigate = useNavigate();
-	
-	const { user, updateNome, updateEmail, updateCep, updateCheckIn } = useUserStore((state) => ({
-		user: state.user,
-		updateNome: state.updateNome,
-		updateEmail: state.updateEmail,
-		updateCep: state.updateCep,
-		updateCheckIn: state.setLoggedAccount,
-	}));
 
-	const checkoutLogin = () => {
-		console.log(user);
-		updateCheckIn(false);
-		updateNome("");
-		updateEmail("");
-		updateCep("");
-		console.log(user);
-	};
+	const [user, setUser] = useState({});
+
+	useEffect(() => {
+		const loadUser = async () => {
+			const token = localStorage.getItem("token");
+
+			const user_data = await fetchUserData(token);
+
+			setUser(user_data);
+		};
+		loadUser();
+	}, []);
+
 	const handleLogout = () => {
 		// Remover o token JWT armazenado
 		localStorage.removeItem("token");
@@ -47,8 +45,8 @@ const Minhaconta = () => {
 						></path>
 					</svg>
 
-					<p className="pt-2 text-lg font-semibold text-gray-50">{user.profile.nome || ""}</p>
-					<p className="text-sm text-gray-100">{user.profile.email || ""}</p>
+					<p className="pt-2 text-lg font-semibold text-gray-50">{user.nome || "Desconhecido"}</p>
+					<p className="text-sm text-gray-100">{user.email || "unknow@bikeseller.com"}</p>
 					<Link to="/editarcadastro" className="px-4 py-2 hover:bg-gra-100 flex">
 						<div className="mt-5">
 							<a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">

@@ -142,25 +142,26 @@ router.route('/me')
 	});
 
 
-router.get('/productsFrom/:id', async (req, res, next) => {
-	try {
-		const id = req.params.id;
-		if (id !== null) {
+router.route('/productsFrom/:id')
+	.get(authenticate.verifyUser, async (req, res, next) => {
+		try {
+			const id = req.user._id;
+			if (id !== null) {
 
-			user_products = await Bike.find({ userId: id }, ["_id", "description", "price", "title", "imagem",]).lean();
+				user_products = await Bike.find({ userId: id }, ["_id", "description", "price", "title", "imagem",]).lean();
 
-			if (user_products !== null) {
-				// Renomeia cada atributo _id
-				renamed_user_products = user_products.map((bike) => { return { bikeId: bike._id, ...bike }; })
-				res.json(renamed_user_products);
+				if (user_products !== null) {
+					// Renomeia cada atributo _id
+					renamed_user_products = user_products.map((bike) => { return { bikeId: bike._id, ...bike }; })
+					res.json(renamed_user_products);
+				}
 			}
-		}
 
-		// const user = await User.find(req.user._id); // req.user deve ser preenchido pela autenticação
-		// if (!user) return res.status(404).send('Usuário não encontrado');
-		// res.json(user);
-	} catch (error) {
-		res.status(500).send('Erro ao buscar informações' + error.message);
-	}
-});
+			// const user = await User.find(req.user._id); // req.user deve ser preenchido pela autenticação
+			// if (!user) return res.status(404).send('Usuário não encontrado');
+			// res.json(user);
+		} catch (error) {
+			res.status(500).send('Erro ao buscar informações' + error.message);
+		}
+	});
 module.exports = router;

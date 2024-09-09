@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import useUserStore from "./UserUtils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchLogin } from "./BackendUtils";
 
 const BarraLogin = () => {
-	const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs, updateTel } = useUserStore((state) => ({
-		updateNome: state.updateNome,
-		updateEmail: state.updateEmail,
-		updateCep: state.updateCep,
-		setLoggedAccount: state.setLoggedAccount,
-		setUserId: state.updateId,
-		setUserFavs: state.updateFavs,
-		updateTel: state.updateTel,
-	}));
+	const navigate = useNavigate();
+
+	// const { updateNome, updateEmail, updateCep, setLoggedAccount, setUserId, setUserFavs, updateTel } = useUserStore((state) => ({
+	// 	updateNome: state.updateNome,
+	// 	updateEmail: state.updateEmail,
+	// 	updateCep: state.updateCep,
+	// 	setLoggedAccount: state.setLoggedAccount,
+	// 	setUserId: state.updateId,
+	// 	setUserFavs: state.updateFavs,
+	// 	updateTel: state.updateTel,
+	// }));
 
 	/* NÃO APAGAR ESSE CÓDIGO
 	useEffect(() => {
@@ -60,7 +62,7 @@ const BarraLogin = () => {
 	// 		// console.log(user);
 	// 	}
 	// };
-	
+
 	// NÃO MEXA NESTA CARALHA DE FUNÇÃO
 	const handleLogin = async (e) => {
 		e.preventDefault();
@@ -72,17 +74,16 @@ const BarraLogin = () => {
 			const user_data = await fetchLogin(email, senha);
 
 			if (user_data != null) {
-
 				console.log(user_data);
 				// Setta o estado zustand
-				updateNome(user_data.nome);
-				updateEmail(user_data.email);
-				updateCep(user_data.CEP);
-				setUserId(user_data.userId);
-				setUserFavs(user_data.FavIds);
-				updateTel(user_data.telefone);
-				setLoggedAccount(true);
-
+				// updateNome(user_data.nome);
+				// updateEmail(user_data.email);
+				// updateCep(user_data.CEP);
+				// setUserId(user_data.userId);
+				// setUserFavs(user_data.FavIds);
+				// updateTel(user_data.telefone);
+				// setLoggedAccount(true);
+				navigate("/");
 			} else {
 				throw Error;
 			}
