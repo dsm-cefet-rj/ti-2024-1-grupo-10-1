@@ -9,6 +9,7 @@ const Minhaconta = () => {
 		user: state.user,
 		updateNome: state.updateNome,
 		updateEmail: state.updateEmail,
+		updateTelefone: state.updateTelefone,
 		updateCep: state.updateCep,
 		updateCheckIn: state.setLoggedAccount
 	}))
@@ -20,9 +21,15 @@ const Minhaconta = () => {
 		updateCheckIn(false);
 		updateNome("");
 		updateEmail("");
+		updateTelefone("");
 		updateCep("");
 		console.log(user);
 	}
+	  // Verifica se o usuário está logado; caso contrário, usa valores padrão
+	  const nomeUsuario = user && user.profile.nome ? user.profile.nome : 'Exemplo de Nome';
+	  const emailUsuario = user && user.profile.email ? user.profile.email : 'exemplo@email.com';
+	  const telefoneUsuario = user && user.profile.telefone ? user.profile.telefone : '(00) 00000-0000';
+
 
 
 	return (
@@ -33,6 +40,9 @@ const Minhaconta = () => {
 
 					<p className="pt-2 text-lg font-semibold text-gray-50">{user.profile.nome || ""}</p>
 					<p className="text-sm text-gray-100">{user.profile.email || ""}</p>
+					<p className="pt-2 text-lg font-semibold text-gray-50">{nomeUsuario}</p>
+          			<p className="text-sm text-gray-100">{emailUsuario}</p>
+          			<p className="text-sm text-gray-100">{telefoneUsuario}</p>
 					<Link to="/editarcadastro" className="px-4 py-2 hover:bg-gra-100 flex">
 						<div className="mt-5">
 							<a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">Alterar Informações</a>

@@ -23,17 +23,7 @@ const HeaderHome = () => {
 				<Link to="/home">
 					<img src={logo} className="w-56 h-40 md:w-40 md:h-auto" alt="Logo" />
 				</Link>
-
-				{/* Barra de Pesquisa */}
-				<div className="lg:w-3/6 md:w-9/12 flex justify-between items-center bg-white border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 md:mr-0">
-					<input
-						className="w-full border-white focus:outline-none"
-						placeholder="Buscar por modelo, marca..."
-						type="text"
-					/>
-					<img src={lupa} className="w-6 h-6" alt="Lupa" />
-				</div>
-
+				
 				{/* Menu de Navegação para Dispositivos Maiores */}
 				<nav className="hidden md:flex items-center gap-7">
 					<Link to={isLoggedIn ? "/favoritos" : "/login"} className="cursor-pointer flex items-center gap-2">
