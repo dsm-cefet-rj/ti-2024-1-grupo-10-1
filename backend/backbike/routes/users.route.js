@@ -135,10 +135,10 @@ router.route("/favorites/:id")
 router.route('/me/:id')
 	.get(authenticate.verifyUser, async (req, res) => {
 		try {
-			const user = await User.findById(req.user._id, ["nome", "email"]); // req.user deve ser preenchido pela autenticação
+			const user = await User.findById(req.user._id, ["nome", "email", "FavIds"]); // req.user deve ser preenchido pela autenticação
 			if (!user) return res.status(404).send('Usuário não encontrado');
 			// Filtrar apenas os dados necessários
-			res.json({ nome:user.nome, email:user.email });
+			res.json({ nome:user.nome, email:user.email, favs:user.FavIds });
 		} catch (error) {
 			res.status(500).send('Erro ao buscar informações do usuário');
 		}

@@ -9,22 +9,27 @@ const Minhaconta = () => {
 
 	const [user, setUser] = useState({});
 
-	useEffect(() => {
-		const loadUser = async () => {
-			const token = localStorage.getItem("token");
-
-			const user_data = await fetchUserData(token);
-
-			setUser(user_data);
-		};
-		loadUser();
-	}, []);
-
 	const handleLogout = () => {
 		// Remover o token JWT armazenado
 		localStorage.removeItem("token");
 		navigate("/");
 	};
+
+	useEffect(() => {
+		const loadUser = async () => {
+			const token = localStorage.getItem("token");
+
+			const response = await fetchUserData(token);
+
+			if (response.status == 200) {
+				setUser(response.data);
+			} else if (response.status == 401) {
+				// Força um logout
+				handleLogout();
+			}
+		};
+		loadUser();
+	}, []);
 
 	return (
 		<div className="mx-auto right-0 mt-12 w-60">

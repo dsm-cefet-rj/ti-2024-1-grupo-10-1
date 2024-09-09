@@ -33,6 +33,7 @@ export const fetchProduct = async (id, return_owner_info = false) => {
 
 			if (response.status == 200) {
 				if (!return_owner_info) delete response.data.sellerData;
+
 				return response.data; // Retorna o dado da bike, com ou sem os dados do vendedor
 			} else {
 				throw AxiosError.ERR_BAD_RESPONSE;
@@ -149,10 +150,14 @@ export const fetchUserData = async (token) => {
 		const response = await axios.get(URL + user_endpoint + "/me/1", {
 			headers: { Authorization: `Bearer ${token}` },
 		});
-		return response.data;
+		return { status: 200, data: response.data };
 	} catch (error) {
-		console.error("Erro ao buscar dados do usuário", error);
-		throw error;
+		if (error.response.status == 401) {
+			return { status: 401, data: null };
+		} else {
+			console.log("Erro ao buscar dados do usuário", error);
+			throw error;
+		}
 	}
 };
 
@@ -260,3 +265,14 @@ export const fetchProductsByUser = async (token) => {
 	}
 };
 
+export const AddRemoveFavorite = async (token, bikeId) => {
+	try {
+		const has_succeded = await axios.patch(URL + user_endpoint + "/fav/" + bikeId, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		if (has_succeded) return true;
+	} catch (error) {
+		console.error("Ocorreu um erro ao buscar os dados:", error);
+		return false;
+	}
+};

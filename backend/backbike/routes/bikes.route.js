@@ -120,28 +120,26 @@ router.route('/:id')
 			})
 	});
 
+/* Substituido pela rota produtsFrom/:id */
+// router.route('/me')
+// 	// Rota para obter bicicletas postadas pelo usuário logado
+// 	.get(authenticate.verifyUser, async (req, res, next) => {
+// 		try {
+// 			const userId = req.user._id;
+// 			const bikes = await Bike.find({ userId }).lean();
 
-router.route('/me')
-	// Rota para obter bicicletas postadas pelo usuário logado
-	.get(authenticate.verifyUser, async (req, res, next) => {
-		try {
-			const userId = req.user._id;
-			const bikes = await Bike.find({ userId }).lean();
+// 			// Modifica o formato dos dados conforme necessário
+// 			const modifiedBikes = bikes.map(bike => {
+// 				const { _id, bikeId, __v, ...resto } = bike;
+// 				return { bikeId: _id, ...resto };
+// 			});
 
-			// Modifica o formato dos dados conforme necessário
-			const modifiedBikes = bikes.map(bike => {
-				const { _id, bikeId, __v, ...resto } = bike;
-				return { bikeId: _id, ...resto };
-			});
-
-			res.status(200).json(modifiedBikes);
-		} catch (err) {
-			res.status(500).json({ status: 'ERROR', message: err.message });
-			next();
-		}
-	});
-
-
+// 			res.status(200).json(modifiedBikes);
+// 		} catch (err) {
+// 			res.status(500).json({ status: 'ERROR', message: err.message });
+// 			next();
+// 		}
+// 	});
 router.route('/productsFrom/:id')
 	.get(authenticate.verifyUser, async (req, res, next) => {
 		try {
