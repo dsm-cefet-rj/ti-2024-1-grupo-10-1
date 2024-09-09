@@ -82,17 +82,17 @@ const MeusProdutos = () => {
 										<p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">{bike.description}</p>
 									</div>
 								</Link>
-								<div className="p-4">
+								<div className="p-4 flex space-x-4">
 									<Link
 										to={`/editarproduto/${bike.bikeId}`}
-										className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+										className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition ease-in-out"
 									>
 										Editar
 									</Link>
 									<button
 										onClick={handleDelete}
 										name={bike.bikeId}
-										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out"
 									>
 										X
 									</button>
