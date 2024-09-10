@@ -12,7 +12,7 @@ const MeusProdutos = () => {
 			setLoading(true);
 			setError(null);
 
-			// Logar como parracho
+		/*	// Logar como parracho
 			const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
 
 			try {
@@ -35,6 +35,28 @@ const MeusProdutos = () => {
 			} finally {
 				setLoading(false);
 			}
+		};*/
+		try {
+			// Simulando produtos do backend, removendo a necessidade de login
+			const my_annouces = await fetchProductsByUser(1); // O 1 é um ID fictício
+
+			if (my_annouces !== null) {
+				// Adicionando produto de teste ao array
+				setProducts([...my_annouces, produtoTeste]);
+			}
+		} catch (err) {
+			setError("Ocorreu um erro ao carregar os produtos.");
+			console.error(err);
+		} finally {
+			setLoading(false);
+		}
+	};
+		const produtoTeste = {
+			bikeId: 999, // ID fictício
+			imagem: "https://via.placeholder.com/300", // Imagem fictícia
+			title: "Bicicleta de Teste",
+			description: "Esta é uma bicicleta adicionada para testar o layout.",
+			price: 500.00,
 		};
 
 		fetchBikes();
@@ -85,16 +107,16 @@ const MeusProdutos = () => {
 								<div className="p-4 flex space-x-4">
 									<Link
 										to={`/editarproduto/${bike.bikeId}`}
-										className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition ease-in-out"
+										className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
 									>
 										Editar
 									</Link>
 									<button
 										onClick={handleDelete}
 										name={bike.bikeId}
-										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out"
+										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-all duration-300 ease-in-out transfrom hover:scale-105 shadow-md"
 									>
-										X
+										Deletar
 									</button>
 								</div>
 							</div>
