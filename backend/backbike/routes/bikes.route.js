@@ -61,8 +61,7 @@ router.route("/")
 
 router.route('/:id')
 	// Retorna um produto específico
-	// Por enquanto não avalia se o usuário está logado ou não - Caso esteja, retor 
-	.get(async function (req, res, next) {
+	.get(async (req, res, next) => {
 		try {
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id
@@ -81,13 +80,13 @@ router.route('/:id')
 				// Filtrando apenas o que desejo exibir da bicicleta (resto_bike) através da desestruturação do objeto
 				const { _id: id_bike, bikeId, __v: _v_bike, userId: critical_sellerData, ...resto_bike } = bikeData;
 
-
 				// Filtrando apenas o que desejo exibir do vendedor da bike (resto vendedor) através da desestruturação do objeto
 				const { _id: id_vend, __v: _v_vend, CEP: cep_vend, FavIds: fav_bikes_vend, ...resto_vendedor } = critical_sellerData;
 
 				let count = result.length > 0 ? result[0].totalFavoritado : 0;
+
 				res.status(200);
-				// Exibo o id da bike, os dados do vendedor e os dados da bicicleta
+				// Exibo os dados do vendedor e os dados da bicicleta + o nº de usuarios que favoritaram essa bike
 				res.json({ sellerData: resto_vendedor, ...resto_bike, favCounter: count });
 
 			} else {

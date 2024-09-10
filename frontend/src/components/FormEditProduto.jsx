@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchProduct, patchBike} from "./BackendUtils";
+import { fetchProduct, patchBike } from "./BackendUtils";
 
 const FormEditProduto = () => {
 	const { id: bikeId } = useParams(); // Pega o bikeId da URL
@@ -40,11 +40,10 @@ const FormEditProduto = () => {
 	// Função para atualizar os valores do estado
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		setBike({
-			...bike,
+		setBike((prevState) => ({
+			...prevState,
 			[name]: value,
-		});
-		console.log(bike);
+		}));
 	};
 
 	// Função para enviar os dados atualizados para o backend

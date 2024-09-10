@@ -162,7 +162,7 @@ export const RemoveUser = async (token) => {
 	}
 };
 
-//achar usuario
+//Coleta o usuario
 export const fetchUserData = async (token) => {
 	try {
 		const response = await axios.get(URL + user_endpoint + "/me/1", {

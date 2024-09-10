@@ -158,11 +158,10 @@ const BikeSelecionada = () => {
 						<strong>Nome Completo: </strong>
 						{data_vend.nome != null ? data_vend.nome : "Faça login para ter acesso aos dados do vendedor"}
 						<br />
-						<strong>Email: </strong>{" "}
-						{data_vend.email != null ? data_vend.email : "Faça login para ter acesso aos dados do vendedor"}
+						<strong>Email: </strong> {data_vend.email != null ? data_vend.email : "???"}
 						<br />
 						<strong>Contato: </strong>
-						{data_vend.email != null ? data_vend.telefone : "Faça login para ter acesso aos dados do vendedor"}
+						{data_vend.email != null ? data_vend.telefone : "???"}
 						<hr className=" bg-gray-200 w-full mt-4" />
 					</div>
 
