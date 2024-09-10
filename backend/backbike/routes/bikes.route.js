@@ -79,7 +79,7 @@ router.route('/:id')
 			if (bikeData != null) {
 
 				// Filtrando apenas o que desejo exibir da bicicleta (resto_bike) através da desestruturação do objeto
-				const { _id: id_bike, bikeId, __v: _v_bike, userId: critical_sellerData, favCounter: _, ...resto_bike } = bikeData;
+				const { _id: id_bike, bikeId, __v: _v_bike, userId: critical_sellerData, ...resto_bike } = bikeData;
 
 
 				// Filtrando apenas o que desejo exibir do vendedor da bike (resto vendedor) através da desestruturação do objeto
