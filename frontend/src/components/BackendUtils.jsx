@@ -285,6 +285,7 @@ export const fetchProductsByUser = async (token) => {
 
 export const PatchFavorite = async (token, newFavs) => {
 	try {
+		console.log("Atualizando a lista para:", newFavs);
 		const response = await axios.patch(
 			URL + user_endpoint + "/123",
 			{ FavIds: newFavs },
@@ -293,15 +294,15 @@ export const PatchFavorite = async (token, newFavs) => {
 			}
 		);
 
-		console.log(response);
+		// console.log(response);
 		if (response.status == 200) {
-			return true;
+			return { status: 200, data: true };
 		}
 	} catch (error) {
-		// if (error.response.status == 401) {
-
-		// }
 		console.log("Ocorreu um erro ao buscar os dados:", error);
+		if (error.response.status == 401) {
+			return { status: 401, data: false };
+		}
 		return false;
 	}
 };
