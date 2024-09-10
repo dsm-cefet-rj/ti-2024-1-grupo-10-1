@@ -23,10 +23,10 @@ const BikeSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    favCounter: {
-        type: Number,
-        default: 0 // Valor padrão caso não seja fornecido
-    },
+    // favCounter: {
+    //     type: Number,
+    //     default: 0 // Valor padrão caso não seja fornecido
+    // },
     tipo: {
         type: String,
         enum: ['MTB', 'Passeio', 'Speed', 'Eletrica', 'Other'], // Enumeração para limitar os tipos permitidos, pode ser ajustado conforme necessário
