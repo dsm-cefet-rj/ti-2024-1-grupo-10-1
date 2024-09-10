@@ -72,8 +72,8 @@ const MeusProdutos = () => {
 				) : (
 					<div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
 						{products.map((bike) => (
-							<div key={bike.bikeId} className="relative bg-black border border-black">
-								<Link to={`/bike/${bike.bikeId}`} className="relative bg-black border border-black">
+							<div key={bike.bikeId} className="relative bg-black border border-black w-full">
+								<Link to={`/bike/${bike.bikeId}`} className="relative bg-black border border-black block w-full">
 									<img src={bike.imagem} alt={bike.title} className="object-cover w-full h-72" />
 									<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
 										<p className="text-lg font-medium">Preço: {`R$ ${bike.price.toFixed(2)}`}</p>
