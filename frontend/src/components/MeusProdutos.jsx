@@ -13,7 +13,7 @@ const MeusProdutos = () => {
 			setError(null);
 
 			// Logar como parracho
-			const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
+			// const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
 
 			try {
 				const token = localStorage.getItem("token");
@@ -22,12 +22,11 @@ const MeusProdutos = () => {
 					setLoading(false);
 					return;
 				}
-				if (id != 0) {
-					const my_annouces = await fetchProductsByUser(id, token);
 
-					if (my_annouces !== null) {
-						setProducts(my_annouces);
-					}
+				const my_annouces = await fetchProductsByUser(token);
+
+				if (my_annouces !== null) {
+					setProducts(my_annouces);
 				}
 			} catch (err) {
 				setError("Ocorreu um erro ao carregar minhas bicicletas.");
@@ -40,7 +39,6 @@ const MeusProdutos = () => {
 		fetchBikes();
 	}, []);
 
-
 	const handleDelete = async (e) => {
 		e.preventDefault();
 		try {
@@ -50,7 +48,7 @@ const MeusProdutos = () => {
 
 			if (has_deleted) {
 				console.log("Produto deletado com sucesso");
-				// Atualiza a coleção/estado na pagina 
+				// Atualiza a coleção/estado na pagina
 				setProducts(products.filter((produto) => produto.bikeId !== remove_id));
 			} else {
 				console.log("Ocorreu algum erro inesperado");

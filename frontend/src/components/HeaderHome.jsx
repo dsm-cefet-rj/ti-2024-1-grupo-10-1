@@ -8,7 +8,7 @@ import ciclista from "../assets/ciclista.png";
 
 // Função para verificar a existência do token (essa gambiarra só funciona pq dou f5 automatico no fetchlogin)
 const isUserLoggedIn = () => {
-	return !localStorage.getItem("token");
+	return localStorage.getItem("token");
 };
 
 const HeaderHome = () => {

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useUserStore from "./UserUtils";
-import { fetchLogin, fetchFavorites } from "./BackendUtils";
+import { fetchFavorites } from "./BackendUtils";
 
 // TODO: Prioridade 1: Exibir um elemento diferente para quando não houver bikes favoritadas ("Você não possui bikes favoritas por enquanto")
 
 const MeusFav = () => {
 	const [favoritos, setFavoritos] = useState([]);
 
-	const userState = useUserStore();
-	console.log(userState.user);
+	// const userState = useUserStore();
+	// console.log(userState.user);
 
 	// Utiliza o useEffect para executar uma única vez, no carregamento da pagina
 	/*useEffect(() => {
@@ -17,15 +16,16 @@ const MeusFav = () => {
 			// Login as parracho -> Será substituido pelo carregamento do estado do usuário
 			// const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
 
-			if (userState.user.id !== 0) {
-				// Collect favorites
-				const data_favorites = await fetchFavorites(userState.user.id);
-				// Check response
-				if (data_favorites != null) {
-					// Set favorite data
-					if (data_favorites.status == "OK") setFavoritos(data_favorites.favs);
-				}
-			} 
+			// if (userState.user.id !== 0) {
+			// Collect favorites
+			const token = localStorage.getItem("token");
+			const data_favorites = await fetchFavorites(token);
+			// Check response
+			if (data_favorites != null) {
+				// Set favorite data
+				if (data_favorites.status == "OK") setFavoritos(data_favorites.favs);
+			}
+			// }
 		};
 		getFavs();
 	}, []); */

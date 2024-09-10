@@ -120,47 +120,46 @@ router.route('/:id')
 			})
 	});
 
+/* Substituido pela rota produtsFrom/:id */
+// router.route('/me')
+// 	// Rota para obter bicicletas postadas pelo usuário logado
+// 	.get(authenticate.verifyUser, async (req, res, next) => {
+// 		try {
+// 			const userId = req.user._id;
+// 			const bikes = await Bike.find({ userId }).lean();
 
-router.route('/me')
-	// Rota para obter bicicletas postadas pelo usuário logado
+// 			// Modifica o formato dos dados conforme necessário
+// 			const modifiedBikes = bikes.map(bike => {
+// 				const { _id, bikeId, __v, ...resto } = bike;
+// 				return { bikeId: _id, ...resto };
+// 			});
+
+// 			res.status(200).json(modifiedBikes);
+// 		} catch (err) {
+// 			res.status(500).json({ status: 'ERROR', message: err.message });
+// 			next();
+// 		}
+// 	});
+router.route('/productsFrom/:id')
 	.get(authenticate.verifyUser, async (req, res, next) => {
 		try {
-			const userId = req.user._id;
-			const bikes = await Bike.find({ userId }).lean();
+			const id = req.user._id;
+			if (id !== null) {
 
-			// Modifica o formato dos dados conforme necessário
-			const modifiedBikes = bikes.map(bike => {
-				const { _id, bikeId, __v, ...resto } = bike;
-				return { bikeId: _id, ...resto };
-			});
+				user_products = await Bike.find({ userId: id }, ["_id", "description", "price", "title", "imagem",]).lean();
 
-			res.status(200).json(modifiedBikes);
-		} catch (err) {
-			res.status(500).json({ status: 'ERROR', message: err.message });
-			next();
+				if (user_products !== null) {
+					// Renomeia cada atributo _id
+					renamed_user_products = user_products.map((bike) => { return { bikeId: bike._id, ...bike }; })
+					res.json(renamed_user_products);
+				}
+			}
+
+			// const user = await User.find(req.user._id); // req.user deve ser preenchido pela autenticação
+			// if (!user) return res.status(404).send('Usuário não encontrado');
+			// res.json(user);
+		} catch (error) {
+			res.status(500).send('Erro ao buscar informações' + error.message);
 		}
 	});
-
-
-router.get('/productsFrom/:id', async (req, res, next) => {
-	try {
-		const id = req.params.id;
-		if (id !== null) {
-
-			user_products = await Bike.find({ userId: id }, ["_id", "description", "price", "title", "imagem",]).lean();
-
-			if (user_products !== null) {
-				// Renomeia cada atributo _id
-				renamed_user_products = user_products.map((bike) => { return { bikeId: bike._id, ...bike }; })
-				res.json(renamed_user_products);
-			}
-		}
-
-		// const user = await User.find(req.user._id); // req.user deve ser preenchido pela autenticação
-		// if (!user) return res.status(404).send('Usuário não encontrado');
-		// res.json(user);
-	} catch (error) {
-		res.status(500).send('Erro ao buscar informações' + error.message);
-	}
-});
 module.exports = router;
