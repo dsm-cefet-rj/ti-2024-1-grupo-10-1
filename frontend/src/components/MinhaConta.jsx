@@ -9,6 +9,7 @@ const Minhaconta = () => {
 
 	const [user, setUser] = useState({});
 
+
 	const handleLogout = () => {
 		// Remover o token JWT armazenado
 		localStorage.removeItem("token");
@@ -19,7 +20,9 @@ const Minhaconta = () => {
 		const loadUser = async () => {
 			const token = localStorage.getItem("token");
 
+
 			const response = await fetchUserData(token);
+
 
 			if (response.status == 200) {
 				setUser(response.data);
@@ -50,8 +53,10 @@ const Minhaconta = () => {
 						></path>
 					</svg>
 
+
 					<p className="pt-2 text-lg font-semibold text-gray-50">{user.nome || "Desconhecido"}</p>
 					<p className="text-sm text-gray-100">{user.email || "unknow@bikeseller.com"}</p>
+
 					<Link to="/editarcadastro" className="px-4 py-2 hover:bg-gra-100 flex">
 						<div className="mt-5">
 							<a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">

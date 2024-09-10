@@ -11,7 +11,7 @@ const MeusFav = () => {
 	// console.log(userState.user);
 
 	// Utiliza o useEffect para executar uma única vez, no carregamento da pagina
-	useEffect(() => {
+	/*useEffect(() => {
 		const getFavs = async () => {
 			// Login as parracho -> Será substituido pelo carregamento do estado do usuário
 			// const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
@@ -28,7 +28,28 @@ const MeusFav = () => {
 			// }
 		};
 		getFavs();
-	}, []);
+	}, []); */
+	useEffect(() => {
+		const getFavs = async () => {
+			if (userState.user.id !== 0) {
+				try {
+					// Buscar favoritos do usuário
+					const data_favorites = await fetchFavorites(userState.user.id);
+					console.log("Dados retornados de fetchFavorites:", data_favorites);
+
+					// Verifica se a resposta é válida
+					if (data_favorites && data_favorites.status === "OK") {
+						setFavoritos(data_favorites.favs);
+					} else {
+						console.error("Erro ao buscar favoritos ou nenhum favorito encontrado");
+					}
+				} catch (error) {
+					console.error("Erro durante a busca dos favoritos:", error);
+				}
+			}
+		};
+		getFavs();
+	}, [userState.user.id]);
 
 	// const userFavIds = useUserStore((state) => state.user.profile.favs);
 	// const logged = useUserStore((state) => state.user.logged);
