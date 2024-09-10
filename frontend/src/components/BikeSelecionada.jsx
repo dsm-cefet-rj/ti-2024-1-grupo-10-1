@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // useParams do react-router-dom
+import { useNavigate, useParams } from "react-router-dom"; // useParams do react-router-dom
 import { PatchFavorite, fetchProduct, fetchUserData } from "./BackendUtils";
 
 import coracao from "../assets/Coraçao.png";
@@ -8,62 +8,45 @@ const BikeSelecionada = () => {
 	// Id da bike selecionada
 	const { id } = useParams();
 
+	// Coleção de ids favoritados do usuário
+	const [favColl, setFavColl] = useState({ able: false, favs: [] });
+
 	// Informações da bike a serem carregadas a partir do id
 	const [bike, setBike] = useState({});
-
-	// Informação do usuario em relação ao favoritismo da bike
-	const [favorite, setFavorite] = useState(false);
-
-	// Coleção de ids favoritados do usuário
-	const [favColl, setFavColl] = useState([]);
 
 	// Informação do vendedor da bike
 	const [data_vend, setVend] = useState({});
 
 	const token = localStorage.getItem("token");
 
-	// var to_remove = false;
-
-	const toggleFavBnt = (e) => {
-		e.preventDefault();
-		if (e.target != null) {
-			const texto = document.getElementById("fav").children[1];
-			if (texto.innerText == "Remover dos Favoritos") {
-				// Vou remover
-				setFavorite(false);
-				texto.innerText = "Adicionar aos Favoritos";
-			} else if (texto.innerText == "Adicionar aos Favoritos") {
-				// Vou adicionar
-				texto.innerText = "Remover dos Favoritos";
-				setFavorite(true);
-			}
-		}
-	};
+	const navigate = useNavigate();
 
 	// Ao carregar a pagina, será carregado as informações da bike e do vendedor
 	useEffect(() => {
 		var is_logged = false;
 
-		const getUser = async () => {
+		const load_bike_and_user = async () => {
 			try {
+				// getUser
+
 				// Coleta os dados do usuário
 				const response = await fetchUserData(token);
 				// {status: 200, data: {nome:nome, email:email, fav: ids_favoritados }}
 				// {status: 401, data: null}
+
 				if (response.status == 200) {
+					// console.log("Usuário logado:", response.data);
 					is_logged = true;
-					const user_fav_collection = response.data.favs;
+					var idsFavoritados = response.data.favs;
 
-					setFavColl(user_fav_collection);
-
-					if (user_fav_collection.includes(id)) {
+					if (idsFavoritados.includes(id)) {
 						// Pertence a coleção de favoritos
 						document.getElementById("fav").children[1].innerText = "Remover dos Favoritos";
-					} else {
-						// Não pertence a coleção de favoritos
+						setFavColl({ able: true, favs: idsFavoritados });
 					}
-
-					// Marcar para criar um botão
+					// else {
+					// 	// Não pertence a coleção de favoritos
+					// }
 				} else if (response.status == 401) {
 					// O usuário não tem um token válido...vamos remover então
 					localStorage.removeItem("token");
@@ -71,45 +54,64 @@ const BikeSelecionada = () => {
 					// Solicitar os dados da bike sem os dados do vendedor no fetchProduct
 					is_logged = false;
 				}
+
+				// getBike
+				const { sellerData: vendedor, ...bike_data } = await fetchProduct(id, is_logged);
+				if (is_logged) setVend(vendedor);
+
+				setBike(bike_data);
 			} catch (error) {
 				console.error("Capturei um erro diferente:" + error.message);
 			}
 		};
-
-		const getBike = async () => {
-			const { sellerData: vendedor, ...bike_data } = await fetchProduct(id, is_logged);
-
-			if (is_logged) setVend(vendedor);
-
-			setBike(bike_data);
-		};
-
-		const load_bike_and_user = async () => {
-			await getUser();
-			await getBike();
-		};
 		load_bike_and_user();
-	}, []);
+	}, [id, token]);
 
+	// Quando a coleção de favoritos for alterada, envie uma requisição de atualização
 	useEffect(() => {
-		const toggleFavorite = async () => {
-			// Toggle favorite into user's list
-			if (favorite) {
-				// Caso a intenção é adicionar na coleção de favoritos:
-				setFavColl(...favColl, id);
-			} else {
-				// Caso a intenção é remover da coleção de favoritos:
-				setFavColl(favColl.filter((id_fav) => id_fav !== id));
-			}
-
-			// Com isso, vamos atualizar o bd baseado no favColl
-			var success = await PatchFavorite(token, id, favColl);
-			if (success) {
-				console.log("Bike", favorite ? "adicionada" : "removida" + " da lista de favoritos");
+		const sendNewFavorites = async (token, newFavs) => {
+			const { able: can_request, favs: colecao } = newFavs;
+			if (can_request) {
+				await PatchFavorite(token, colecao);
+				
 			}
 		};
-		toggleFavorite();
-	}, [favorite]);
+		sendNewFavorites(token, favColl);
+	}, [favColl, token]);
+
+	const toggleFavBnt = (e) => {
+		e.preventDefault();
+
+		// Toggle favorite into user's list
+		if (e.target != null) {
+			// Se o palhaço quer favoritar sem estar logado, redirecione para o login.
+			if (token === null) navigate("/login");
+
+			const texto = document.getElementById("fav").children[1];
+
+			if (texto.innerText == "Remover dos Favoritos") {
+				// Vou remover
+				// Caso a intenção é remover da coleção de favoritos:
+				// setFavColl((prevFavColl) => prevFavColl.filter((id_fav) => id_fav !== id));
+				setFavColl((prevFavColl) => ({
+					...prevFavColl,
+					favs: prevFavColl.favs.filter((id_fav) => id_fav !== id),
+				}));
+
+				texto.innerText = "Adicionar aos Favoritos";
+			} else if (texto.innerText == "Adicionar aos Favoritos") {
+				// Caso a intenção é adicionar na coleção de favoritos:
+				// setFavColl([...favColl, id]);
+				setFavColl((prevFavColl) => ({
+					...prevFavColl,
+					favs: [...prevFavColl.favs, id],
+				}));
+
+				// Vou adicionar
+				texto.innerText = "Remover dos Favoritos";
+			}
+		}
+	};
 
 	// console.log("Dados da Bike:", bike);
 	// console.log("Dados do vendedor:", data_vend);
@@ -158,7 +160,6 @@ const BikeSelecionada = () => {
 						onClick={toggleFavBnt}
 						className="focus:outline-none focus:ring-2 hover:bg-purple-500 focus:ring-offset-2 focus:ring-purple-700 font-medium text-base leading-4 text-white bg-purple-600 w-full py-5 lg:mt-12 mt-6 flex items-center justify-center"
 					>
-						{/* {favorite ? "Adicionar aos favoritos" : "Remover dos favoritos"} */}
 						<img src={coracao} className="w-6 h-6 ml-4" alt="Coração" />
 						<span>Adicionar dos Favoritos</span>
 					</button>
