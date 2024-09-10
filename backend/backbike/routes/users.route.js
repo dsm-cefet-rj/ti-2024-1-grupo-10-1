@@ -73,16 +73,17 @@ router.route("/:id")
 		})
 	}
 	)
-	.delete((req, res, next) => {
-		let userId = req.params.id;
+	.delete(authenticate.verifyUser, async (req, res) => {
 
-		User.findByIdAndDelete(userId).
-			then((user) => {
-				res.json(user);
-			}).
-			catch((error) => {
-				res.status(500).json({ message: error.message });
-			});
+		try {
+			let userId = req.user._id;
+			const user = await User.findByIdAndDelete(userId);
+
+			res.status(200);
+			res.json({ user })
+		} catch (error) {
+			res.status(500).json({ message: error.message });
+		}
 	})
 	.patch(authenticate.verifyUser, async (req, res) => {
 
@@ -138,10 +139,10 @@ router.route("/favorites/:id")
 router.route('/me/:id')
 	.get(authenticate.verifyUser, async (req, res) => {
 		try {
-			const user = await User.findById(req.user._id, ["nome", "email", "FavIds"]); // req.user deve ser preenchido pela autenticação
+			const user = await User.findById(req.user._id, ["-_id"]); // req.user deve ser preenchido pela autenticação
 			if (!user) return res.status(404).send('Usuário não encontrado');
 			// Filtrar apenas os dados necessários
-			res.json({ nome: user.nome, email: user.email, favs: user.FavIds });
+			res.json(user);
 		} catch (error) {
 			res.status(500).send('Erro ao buscar informações do usuário');
 		}

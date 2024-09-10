@@ -37,13 +37,13 @@ const BikeSelecionada = () => {
 				if (response.status == 200) {
 					// console.log("Usuário logado:", response.data);
 					is_logged = true;
-					var idsFavoritados = response.data.favs;
+					var idsFavoritados = response.data.FavIds;
 
 					if (idsFavoritados.includes(id)) {
 						// Pertence a coleção de favoritos
 						document.getElementById("fav").children[1].innerText = "Remover dos Favoritos";
-						setFavColl({ able: true, favs: idsFavoritados });
 					}
+					setFavColl({ able: true, favs: idsFavoritados });
 					// else {
 					// 	// Não pertence a coleção de favoritos
 					// }
@@ -72,8 +72,14 @@ const BikeSelecionada = () => {
 		const sendNewFavorites = async (token, newFavs) => {
 			const { able: can_request, favs: colecao } = newFavs;
 			if (can_request) {
-				await PatchFavorite(token, colecao);
-				
+				const response = await PatchFavorite(token, colecao);
+
+				if (response.status == 200) {
+					console.log(favColl.favs);
+				}
+
+
+
 			}
 		};
 		sendNewFavorites(token, favColl);
@@ -161,7 +167,7 @@ const BikeSelecionada = () => {
 						className="focus:outline-none focus:ring-2 hover:bg-purple-500 focus:ring-offset-2 focus:ring-purple-700 font-medium text-base leading-4 text-white bg-purple-600 w-full py-5 lg:mt-12 mt-6 flex items-center justify-center"
 					>
 						<img src={coracao} className="w-6 h-6 ml-4" alt="Coração" />
-						<span>Adicionar dos Favoritos</span>
+						<span>Adicionar aos Favoritos</span>
 					</button>
 				</div>
 				{/* <!-- Preview Images Div For larger Screen--> */}

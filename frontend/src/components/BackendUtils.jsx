@@ -105,7 +105,7 @@ export const removeBike = async (id) => {
 	}
 };
 
-// Usuário
+/* -------------------------------------------- Usuário -------------------------------------------- */
 export const fetchUsers = async (setTarget) => {
 	//Busca todos os usuários cadastrados no sistema.
 	try {
@@ -134,13 +134,31 @@ export const PostUser = async (newUser) => {
 	}
 };
 
-export const PatchUser = async (user_data) => {
+export const PatchUser = async (user_data, token) => {
 	//Atualiza os dados de um usuário existente.
 	try {
-		const response = await axios.patch(URL + user_endpoint + "/" + user_data.id, user_data);
+		const response = await axios.patch(URL + user_endpoint + "/1", user_data, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 		return response;
 	} catch (error) {
 		console.error("Erro ao atualizar os dados do usuario:", error);
+	}
+};
+
+export const RemoveUser = async (token) => {
+	//Atualiza os dados de um usuário existente.
+	try {
+		const response = await axios.delete(URL + user_endpoint + "/1", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+
+		return { status: 200, data: response.data };
+	} catch (error) {
+		console.error("Erro ao atualizar os dados do usuario:", error);
+		if (error.response.status == 401) {
+			return { status: 401, data: null };
+		}
 	}
 };
 
@@ -267,6 +285,7 @@ export const fetchProductsByUser = async (token) => {
 
 export const PatchFavorite = async (token, newFavs) => {
 	try {
+		console.log("Atualizando a lista para:", newFavs);
 		const response = await axios.patch(
 			URL + user_endpoint + "/123",
 			{ FavIds: newFavs },
@@ -275,15 +294,15 @@ export const PatchFavorite = async (token, newFavs) => {
 			}
 		);
 
-		console.log(response);
+		// console.log(response);
 		if (response.status == 200) {
-			return true;
+			return { status: 200, data: true };
 		}
 	} catch (error) {
-		// if (error.response.status == 401) {
-
-		// }
 		console.log("Ocorreu um erro ao buscar os dados:", error);
+		if (error.response.status == 401) {
+			return { status: 401, data: false };
+		}
 		return false;
 	}
 };
