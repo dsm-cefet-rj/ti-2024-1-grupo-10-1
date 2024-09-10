@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var authenticate = require('../authenticate');
 var Bike = require("../models/bike.schema");
+var User = require("../models/user.schema");
 const { ObjectId } = require('mongodb');
+const { mongoose } = require('mongoose');
 
 
 router.route("/")
@@ -65,6 +67,13 @@ router.route('/:id')
 			// Precisa ser via params, do contrário a requisição será interpretada como get geral 
 			let bikeId = req.params.id
 
+			// Faz a contagem de favoritagem
+			const result = await User.aggregate([
+				{ $unwind: '$FavIds' }, // Desagrega o array de favoritos
+				{ $match: { FavIds: new mongoose.Types.ObjectId(bikeId) } }, // Filtra pelo ID do produto
+				{ $count: 'totalFavoritado' } // Conta as ocorrências
+			]);
+
 			let bikeData = await Bike.findById(bikeId).populate("userId").lean();
 
 			if (bikeData != null) {
@@ -72,12 +81,14 @@ router.route('/:id')
 				// Filtrando apenas o que desejo exibir da bicicleta (resto_bike) através da desestruturação do objeto
 				const { _id: id_bike, bikeId, __v: _v_bike, userId: critical_sellerData, ...resto_bike } = bikeData;
 
+
 				// Filtrando apenas o que desejo exibir do vendedor da bike (resto vendedor) através da desestruturação do objeto
 				const { _id: id_vend, __v: _v_vend, CEP: cep_vend, FavIds: fav_bikes_vend, ...resto_vendedor } = critical_sellerData;
 
+				let count = result.length > 0 ? result[0].totalFavoritado : 0;
 				res.status(200);
 				// Exibo o id da bike, os dados do vendedor e os dados da bicicleta
-				res.json({ sellerData: resto_vendedor, ...resto_bike });
+				res.json({ sellerData: resto_vendedor, ...resto_bike, favCounter: count });
 
 			} else {
 				let err = {};

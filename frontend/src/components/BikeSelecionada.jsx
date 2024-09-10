@@ -17,6 +17,9 @@ const BikeSelecionada = () => {
 	// Informação do vendedor da bike
 	const [data_vend, setVend] = useState({});
 
+	// Informação de favoritagem
+	const [num_fav, setNumFav] = useState(0);
+
 	const token = localStorage.getItem("token");
 
 	const navigate = useNavigate();
@@ -35,7 +38,6 @@ const BikeSelecionada = () => {
 				// {status: 401, data: null}
 
 				if (response.status == 200) {
-					// console.log("Usuário logado:", response.data);
 					is_logged = true;
 					var idsFavoritados = response.data.FavIds;
 
@@ -56,14 +58,17 @@ const BikeSelecionada = () => {
 				}
 
 				// getBike
-				const { sellerData: vendedor, ...bike_data } = await fetchProduct(id, is_logged);
+				const { sellerData: vendedor, favCounter: num_favoritado, ...bike_data } = await fetchProduct(id, is_logged);
 				if (is_logged) setVend(vendedor);
-
+				// Update num_fav
+				setNumFav(num_favoritado);
+				// Load bike data into render
 				setBike(bike_data);
 			} catch (error) {
 				console.error("Capturei um erro diferente:" + error.message);
 			}
 		};
+
 		load_bike_and_user();
 	}, [id, token]);
 
@@ -77,9 +82,6 @@ const BikeSelecionada = () => {
 				if (response.status == 200) {
 					console.log(favColl.favs);
 				}
-
-
-
 			}
 		};
 		sendNewFavorites(token, favColl);
@@ -93,28 +95,33 @@ const BikeSelecionada = () => {
 			// Se o palhaço quer favoritar sem estar logado, redirecione para o login.
 			if (token === null) navigate("/login");
 
-			const texto = document.getElementById("fav").children[1];
+			const toggleBnt = document.getElementById("fav").children[1];
 
-			if (texto.innerText == "Remover dos Favoritos") {
-				// Vou remover
+			if (toggleBnt.innerText == "Remover dos Favoritos") {
 				// Caso a intenção é remover da coleção de favoritos:
+
 				// setFavColl((prevFavColl) => prevFavColl.filter((id_fav) => id_fav !== id));
+
+				setNumFav((prevNum) => prevNum - 1);
 				setFavColl((prevFavColl) => ({
 					...prevFavColl,
 					favs: prevFavColl.favs.filter((id_fav) => id_fav !== id),
 				}));
 
-				texto.innerText = "Adicionar aos Favoritos";
-			} else if (texto.innerText == "Adicionar aos Favoritos") {
+				toggleBnt.innerText = "Adicionar aos Favoritos";
+			} else if (toggleBnt.innerText == "Adicionar aos Favoritos") {
 				// Caso a intenção é adicionar na coleção de favoritos:
+
 				// setFavColl([...favColl, id]);
+
+				setNumFav((prevNum) => prevNum + 1);
 				setFavColl((prevFavColl) => ({
 					...prevFavColl,
 					favs: [...prevFavColl.favs, id],
 				}));
 
 				// Vou adicionar
-				texto.innerText = "Remover dos Favoritos";
+				toggleBnt.innerText = "Remover dos Favoritos";
 			}
 		}
 	};
@@ -135,7 +142,7 @@ const BikeSelecionada = () => {
 					<div className=" flex flex-row justify-between  mt-5">
 						<span className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-700 hover:underline hover:text-gray-800 duration-100 cursor-pointer">
 							<img src={coracao} className="w-6 h-6 inline-block mr-1" alt="Coração" />
-							{bike.favCounter} pessoas favoritaram
+							{num_fav} pessoas favoritaram
 						</span>
 					</div>
 					<p className=" font-normal text-base leading-6 text-gray-600 mt-7">{bike.description}</p>
