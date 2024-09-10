@@ -12,31 +12,40 @@ const MeusProdutos = () => {
 			setLoading(true);
 			setError(null);
 
-		/*	// Logar como parracho
-			const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
-
 			try {
+				// Logar como parracho
+				const { userId: id } = await fetchLogin("parracho@gmail.com", "12345");
+
 				const token = localStorage.getItem("token");
 				if (!token) {
 					setError("Você precisa estar logado para ver suas bicicletas.");
 					setLoading(false);
 					return;
 				}
-				if (id != 0) {
+
+				if (id !== 0) {
 					const my_annouces = await fetchProductsByUser(id, token);
 
 					if (my_annouces !== null) {
 						setProducts(my_annouces);
+					} else {
+						setError("Nenhum produto encontrado.");
 					}
+				} else {
+					setError("Usuário não encontrado.");
 				}
 			} catch (err) {
-				setError("Ocorreu um erro ao carregar minhas bicicletas.");
+				setError("Ocorreu um erro ao carregar suas bicicletas.");
 				console.error(err);
 			} finally {
 				setLoading(false);
 			}
-		};*/
-		try {
+		};
+
+		fetchBikes();
+	}, []);
+		
+		/*try {
 			// Simulando produtos do backend, removendo a necessidade de login
 			const my_annouces = await fetchProductsByUser(1); // O 1 é um ID fictício
 
@@ -60,7 +69,7 @@ const MeusProdutos = () => {
 		};
 
 		fetchBikes();
-	}, []);
+	}, []);*/
 
 
 	const handleDelete = async (e) => {
@@ -86,7 +95,7 @@ const MeusProdutos = () => {
 		<div className="bg-white">
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 				<h2 className="text-2xl font-bold tracking-tight text-gray-900">Minhas Bicicletas:</h2>
-
+	
 				{loading ? (
 					<p className="text-lg text-gray-700 mt-4">Carregando...</p>
 				) : error ? (
@@ -96,25 +105,29 @@ const MeusProdutos = () => {
 				) : (
 					<div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
 						{products.map((bike) => (
-							<div key={bike.bikeId} className="relative bg-black border border-black">
-								<Link to={`/bike/${bike.bikeId}`} className="relative bg-black border border-black">
+							<div key={bike.bikeId} className="relative bg-black border border-black w-full">
+								<Link to={`/bike/${bike.bikeId}`} className="relative block w-full">
 									<img src={bike.imagem} alt={bike.title} className="object-cover w-full h-72" />
 									<div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-75 text-white px-4 py-2">
-										<p className="text-lg font-medium">Preço: {`R$ ${bike.price.toFixed(2)}`}</p>
-										<p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">{bike.description}</p>
+										<p className="text-lg font-medium text-center">
+											Preço: {`R$ ${bike.price.toFixed(2)}`}
+										</p>
+										<p className="text-sm mt-1 h-10 overflow-hidden text-ellipsis">
+											{bike.description}
+										</p>
 									</div>
 								</Link>
 								<div className="p-4 flex space-x-4">
 									<Link
 										to={`/editarproduto/${bike.bikeId}`}
-										className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md"
+										className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md w-full text-center"
 									>
 										Editar
 									</Link>
 									<button
 										onClick={handleDelete}
 										name={bike.bikeId}
-										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-all duration-300 ease-in-out transfrom hover:scale-105 shadow-md"
+										className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md w-full text-center"
 									>
 										Deletar
 									</button>
