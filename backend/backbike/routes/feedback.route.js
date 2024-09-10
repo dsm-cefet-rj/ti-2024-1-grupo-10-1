@@ -28,7 +28,7 @@ router.route("/")
 			res.status(500).json({ message: errorParam.message })
 		}
 	})
-
+	/* POST ANTIGO */
 	.post(authenticate.verifyUser, async (req, res) => {
 		console.log('Authenticated User:', req.user); // Adicione este log para verificar o conteúdo de req.user
 
@@ -49,7 +49,33 @@ router.route("/")
 			res.status(500).json({ status: 'ERROR', message: err.message });
 		}
 	});
+	// /*POST NOVO */
+	// .post(authenticate.verifyUser, async (req, res) => {
+	// 	console.log('Authenticated User:', req.user); // Log para verificar o conteúdo de req.user
 
+	// 	try {
+	// 		if (!req.user || !req.user._id) {
+	// 			return res.status(401).json({ status: 'ERROR', message: 'User not authenticated' });
+	// 		}
+
+	// 		// Verifica se o usuário já postou um feedback
+	// 		const existingFeedback = await Feedback.findOne({ userId: req.user._id });
+	// 		if (existingFeedback) {
+	// 			return res.status(403).json({ status: 'ERROR', message: 'Você já postou um feedback!' });
+	// 		}
+
+	// 		// Se o usuário ainda não postou feedback, permite a criação
+	// 		const feedback = await Feedback.create({
+	// 			userId: req.user._id,
+	// 			content: req.body.content,
+	// 		});
+	// 		if (feedback !== null) {
+	// 			res.json({ objAdded: feedback, status: 'OK' });
+	// 		}
+	// 	} catch (err) {
+	// 		res.status(500).json({ status: 'ERROR', message: err.message });
+	// 	}
+	// });
 
 
 // Rota para atualizar e deletar feedbacks

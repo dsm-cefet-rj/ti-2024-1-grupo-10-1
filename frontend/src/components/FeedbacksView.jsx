@@ -54,11 +54,11 @@ const FeedbacksView = () => {
 										<div className="flex items-start justify-between w-full">
 											<div className="pl-3 w-full">
 												<p className="text-xl font-medium leading-5 text-gray-800">
-													{/* {feedback.sellerData ? feedback.sellerData.nome : "Usuário desconhecido"} */}
+													{feedback.posterName ? feedback.posterName : "Usuário desconhecido"}
 												</p>
 												{/* Exibe a data de publicação */}
 												<p className="text-sm text-gray-500">
-													Publicado em: {new Date(feedback.publication_date).toLocaleDateString()}
+													Publicado em: {new Date(feedback.publication_date).toUTCString()}
 												</p>
 											</div>
 										</div>

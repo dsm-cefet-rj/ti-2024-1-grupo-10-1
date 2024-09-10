@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import { postFeedback } from './BackendUtils'; // Importa a função postFeedback
+import { useState } from "react";
+import { postFeedback } from "./BackendUtils"; // Importa a função postFeedback
+import { useNavigate } from "react-router-dom";
 
 const MenuFeedBack = () => {
-	const [feedback, setFeedback] = useState('');
+	const [feedback, setFeedback] = useState("");
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(null);
+
+	const navigate = useNavigate();
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		const token = localStorage.getItem('token'); // Obtém o token do localStorage
-		console.log(token)
+		const token = localStorage.getItem("token"); // Obtém o token do localStorage
+		console.log(token);
 		if (!token) {
-			setError('Você precisa estar logado para postar um feedback.');
+			setError("Você precisa estar logado para postar um feedback.");
 			return;
 		}
 
 		try {
 			const result = await postFeedback(feedback, token); // Usa a função postFeedback
-			setSuccess('Feedback enviado com sucesso!');
-			setFeedback(''); // Limpa o campo de feedback
+			setSuccess("Feedback enviado com sucesso!");
+			setFeedback(""); // Limpa o campo de feedback
 			console.log(result); // Opcional: imprime a resposta no console
+			navigate("/feedback");
 		} catch (error) {
 			setError(error.message); // Define a mensagem de erro
 			console.error(error); // Opcional: imprime o erro no console
@@ -31,7 +35,10 @@ const MenuFeedBack = () => {
 		<div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12 border border-gray-300">
 			<div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md bg-white border border-gray-300 rounded-lg">
 				<h1 className="text-center text-2xl mb-5">Deixe seu feedback sobre sua experiência com o site</h1>
-				<form className="bg-white shadow w-full rounded-lg divide-y divide-gray-300 border border-gray-300" onSubmit={handleSubmit}>
+				<form
+					className="bg-white shadow w-full rounded-lg divide-y divide-gray-300 border border-gray-300"
+					onSubmit={handleSubmit}
+				>
 					<div className="px-9 py-12">
 						<label className="font-semibold text-sm text-gray-600 pb-1 block">Feedback</label>
 						<textarea
