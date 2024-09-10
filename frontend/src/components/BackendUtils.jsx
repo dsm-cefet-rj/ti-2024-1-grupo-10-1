@@ -105,7 +105,7 @@ export const removeBike = async (id) => {
 	}
 };
 
-// Usuário
+/* -------------------------------------------- Usuário -------------------------------------------- */
 export const fetchUsers = async (setTarget) => {
 	//Busca todos os usuários cadastrados no sistema.
 	try {
@@ -143,6 +143,22 @@ export const PatchUser = async (user_data, token) => {
 		return response;
 	} catch (error) {
 		console.error("Erro ao atualizar os dados do usuario:", error);
+	}
+};
+
+export const RemoveUser = async (token) => {
+	//Atualiza os dados de um usuário existente.
+	try {
+		const response = await axios.delete(URL + user_endpoint + "/1", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+
+		return { status: 200, data: response.data };
+	} catch (error) {
+		console.error("Erro ao atualizar os dados do usuario:", error);
+		if (error.response.status == 401) {
+			return { status: 401, data: null };
+		}
 	}
 };
 

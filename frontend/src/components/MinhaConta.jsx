@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchUserData } from "./BackendUtils";
+import { RemoveUser, fetchUserData } from "./BackendUtils";
 
 // import useUserStore from "./UserUtils";
 
@@ -8,16 +8,31 @@ const Minhaconta = () => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState({});
 
+	const token = localStorage.getItem("token");
+
 	const handleLogout = () => {
 		// Remover o token JWT armazenado
 		localStorage.removeItem("token");
 		navigate("/");
 	};
 
+	const handle_delete_user = async () => {
+		var to_delete = confirm("Deseja mesmo deletar permanentemente sua conta?");
+
+		if (to_delete) {
+			const response = await RemoveUser(token);
+
+			if (response.status == 200) {
+				localStorage.removeItem("token");
+				navigate("/");
+			} else {
+				navigate("/login");
+			}
+		}
+	};
+
 	useEffect(() => {
 		const loadUser = async () => {
-			const token = localStorage.getItem("token");
-
 			const response = await fetchUserData(token);
 
 			if (response.status == 200) {
@@ -53,7 +68,7 @@ const Minhaconta = () => {
 					<p className="text-sm text-gray-100">{user.email || "unknow@bikeseller.com"}</p>
 
 					<Link to="/editarcadastro" className="px-4 py-2 hover:bg-gra-100 flex">
-						<div className="mt-5">
+						<div className="mt-2">
 							<a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
 								Alterar Informações
 							</a>
@@ -102,6 +117,26 @@ const Minhaconta = () => {
 								<p className="text-sm font-medium text-gray-800 leading-none">Meus anúncios</p>
 								<p className="text-xs text-gray-500">Veja seus anúncios</p>
 							</Link>
+						</div>
+					</a>
+					<a className="px-4 py-2 hover:bg-gray-100 flex">
+						<div className="text-gray-800">
+							<svg
+								className="w-5 h-5"
+								fill="none"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="1"
+								viewBox="0 0 24 24"
+							>
+								<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+							</svg>
+						</div>
+
+						<div onClick={handle_delete_user} className="pl-3">
+							<p className="text-sm font-medium text-gray-800 leading-none">Apagar Conta</p>
+							<p className="text-xs text-gray-500">Uma viagem sem volta</p>
 						</div>
 					</a>
 				</div>

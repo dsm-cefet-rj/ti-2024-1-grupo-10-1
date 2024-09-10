@@ -73,16 +73,17 @@ router.route("/:id")
 		})
 	}
 	)
-	.delete((req, res, next) => {
-		let userId = req.params.id;
+	.delete(authenticate.verifyUser, async (req, res) => {
 
-		User.findByIdAndDelete(userId).
-			then((user) => {
-				res.json(user);
-			}).
-			catch((error) => {
-				res.status(500).json({ message: error.message });
-			});
+		try {
+			let userId = req.user._id;
+			const user = await User.findByIdAndDelete(userId);
+
+			res.status(200);
+			res.json({ user })
+		} catch (error) {
+			res.status(500).json({ message: error.message });
+		}
 	})
 	.patch(authenticate.verifyUser, async (req, res) => {
 
