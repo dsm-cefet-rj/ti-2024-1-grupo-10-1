@@ -72,7 +72,7 @@ router.route("/:id")
 			res.json(data);
 		})
 	}
-	)// Endpoint para deletar um usuário por ID
+	)
 	.delete((req, res, next) => {
 		let userId = req.params.id;
 
@@ -84,18 +84,21 @@ router.route("/:id")
 				res.status(500).json({ message: error.message });
 			});
 	})
-	.patch((req, res, next) => {
-		let userId = req.params.id;
-		let userNewData = req.body;
+	.patch(authenticate.verifyUser, async (req, res) => {
 
-		User.findByIdAndUpdate(userId, userNewData, { new: true }). // {new: true} --> Retorna o elemento atualizado
-			then((newUser) => {
-				res.json(newUser);
-			})
-			.catch((error) => {
-				res.status(500).json({ message: error.message });
-				next();
-			});
+		try {
+			let userId = req.user._id;
+			let userNewData = req.body;
+
+			const updatedUser = await User.findByIdAndUpdate(userId, userNewData, { new: true });
+
+			if (updatedUser !== null) {
+				res.status(200)
+				res.json(updatedUser);
+			}
+		} catch (error) {
+			res.status(500).json({ message: error.message });
+		}
 	});
 
 
@@ -138,7 +141,7 @@ router.route('/me/:id')
 			const user = await User.findById(req.user._id, ["nome", "email", "FavIds"]); // req.user deve ser preenchido pela autenticação
 			if (!user) return res.status(404).send('Usuário não encontrado');
 			// Filtrar apenas os dados necessários
-			res.json({ nome:user.nome, email:user.email, favs:user.FavIds });
+			res.json({ nome: user.nome, email: user.email, favs: user.FavIds });
 		} catch (error) {
 			res.status(500).send('Erro ao buscar informações do usuário');
 		}

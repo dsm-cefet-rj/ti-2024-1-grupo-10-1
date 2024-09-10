@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // useParams do react-router-dom
-import { AddRemoveFavorite, fetchProduct, fetchUserData } from "./BackendUtils";
+import { PatchFavorite, fetchProduct, fetchUserData } from "./BackendUtils";
 
 import coracao from "../assets/Coraçao.png";
 
@@ -8,15 +8,37 @@ const BikeSelecionada = () => {
 	// Id da bike selecionada
 	const { id } = useParams();
 
-	const token = localStorage.getItem("token");
-
 	// Informações da bike a serem carregadas a partir do id
 	const [bike, setBike] = useState({});
 
 	// Informação do usuario em relação ao favoritismo da bike
 	const [favorite, setFavorite] = useState(false);
 
+	// Coleção de ids favoritados do usuário
+	const [favColl, setFavColl] = useState([]);
+
+	// Informação do vendedor da bike
 	const [data_vend, setVend] = useState({});
+
+	const token = localStorage.getItem("token");
+
+	// var to_remove = false;
+
+	const toggleFavBnt = (e) => {
+		e.preventDefault();
+		if (e.target != null) {
+			const texto = document.getElementById("fav").children[1];
+			if (texto.innerText == "Remover dos Favoritos") {
+				// Vou remover
+				setFavorite(false);
+				texto.innerText = "Adicionar aos Favoritos";
+			} else if (texto.innerText == "Adicionar aos Favoritos") {
+				// Vou adicionar
+				texto.innerText = "Remover dos Favoritos";
+				setFavorite(true);
+			}
+		}
+	};
 
 	// Ao carregar a pagina, será carregado as informações da bike e do vendedor
 	useEffect(() => {
@@ -26,24 +48,28 @@ const BikeSelecionada = () => {
 			try {
 				// Coleta os dados do usuário
 				const response = await fetchUserData(token);
-				// const {status: 200, data: {nome:nome, email:email, fav: ids_favoritados }}
+				// {status: 200, data: {nome:nome, email:email, fav: ids_favoritados }}
 				// {status: 401, data: null}
-				if (response.status == 401) {
+				if (response.status == 200) {
+					is_logged = true;
+					const user_fav_collection = response.data.favs;
+
+					setFavColl(user_fav_collection);
+
+					if (user_fav_collection.includes(id)) {
+						// Pertence a coleção de favoritos
+						document.getElementById("fav").children[1].innerText = "Remover dos Favoritos";
+					} else {
+						// Não pertence a coleção de favoritos
+					}
+
+					// Marcar para criar um botão
+				} else if (response.status == 401) {
 					// O usuário não tem um token válido...vamos remover então
 					localStorage.removeItem("token");
 
 					// Solicitar os dados da bike sem os dados do vendedor no fetchProduct
 					is_logged = false;
-
-					// Marcar para criar um botão
-				} else if (response.status == 200) {
-					is_logged = true;
-					const user_fav_collection = response.data.favs;
-					if (user_fav_collection.includes(id)) {
-						setFavorite(true);
-					} else {
-						setFavorite(false);
-					}
 				}
 			} catch (error) {
 				console.error("Capturei um erro diferente:" + error.message);
@@ -58,51 +84,37 @@ const BikeSelecionada = () => {
 			setBike(bike_data);
 		};
 
-		const teste = async () => {
+		const load_bike_and_user = async () => {
 			await getUser();
 			await getBike();
 		};
-		teste();
-		// fetchUser(setVendedor, bike.userId);
+		load_bike_and_user();
 	}, []);
-	
-	console.log("Dados da Bike:", bike);
-	console.log("Dados do vendedor:", data_vend);
-	// useEffect(() => {
-	// 	const toggleFavorite = async () => {
-	// 		// Toggle favorite into user's list
-	// 		var success = await AddRemoveFavorite(token, id);
-	// 		if (success) {
-	// 			console.log("Bike " + favorite ? "adicionada" : "removida" + " da lista de favoritos");
-	// 		}
-	// 	};
-	// 	toggleFavorite();
-	// 	// fetchUser(setVendedor, bike.userId);
-	// }, [favorite]);
 
-	// Quando userFavs alterar o valor, atualizaremos a variavel que indicara se a bike é favorita --- Serve para renderizar o texto do botão de favorito
-	// useEffect(() => {
-	// 	setFavorite(userFavs.includes(id));
-	// }, [userFavs]);
+	useEffect(() => {
+		const toggleFavorite = async () => {
+			// Toggle favorite into user's list
+			if (favorite) {
+				// Caso a intenção é adicionar na coleção de favoritos:
+				setFavColl(...favColl, id);
+			} else {
+				// Caso a intenção é remover da coleção de favoritos:
+				setFavColl(favColl.filter((id_fav) => id_fav !== id));
+			}
 
-	const toggleFavBnt = (e) => {
-		e.preventDefault();
-		if (e.target.text == "Remover dos favoritos") {
-			setFavorite(false);
-			e.target.text = "Adicionar aos Favoritos";
-		} else {
-			e.target.text = "Remover dos Favoritos";
-			setFavorite(false);
-		}
-	};
+			// Com isso, vamos atualizar o bd baseado no favColl
+			var success = await PatchFavorite(token, id, favColl);
+			if (success) {
+				console.log("Bike", favorite ? "adicionada" : "removida" + " da lista de favoritos");
+			}
+		};
+		toggleFavorite();
+	}, [favorite]);
+
+	// console.log("Dados da Bike:", bike);
+	// console.log("Dados do vendedor:", data_vend);
 
 	if (!bike) return <div> Carregando...</div>;
-
-	// DEBUG --- Erro não consigo verificar a presença ou não da bike nos favoritos.
-	// console.log(assoc_user);
-	// console.log("Favoritos do Usuario:", userFavs);
-	// console.log("BikeId:", id);
-	// console.log("Está contido:", userFavs.includes(id));
 
 	return (
 		<div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
@@ -148,6 +160,7 @@ const BikeSelecionada = () => {
 					>
 						{/* {favorite ? "Adicionar aos favoritos" : "Remover dos favoritos"} */}
 						<img src={coracao} className="w-6 h-6 ml-4" alt="Coração" />
+						<span>Adicionar dos Favoritos</span>
 					</button>
 				</div>
 				{/* <!-- Preview Images Div For larger Screen--> */}
