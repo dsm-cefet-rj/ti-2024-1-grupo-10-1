@@ -6,9 +6,7 @@ import { fetchUserData } from "./BackendUtils";
 
 const Minhaconta = () => {
 	const navigate = useNavigate();
-
 	const [user, setUser] = useState({});
-
 
 	const handleLogout = () => {
 		// Remover o token JWT armazenado
@@ -20,15 +18,13 @@ const Minhaconta = () => {
 		const loadUser = async () => {
 			const token = localStorage.getItem("token");
 
-
 			const response = await fetchUserData(token);
-
 
 			if (response.status == 200) {
 				setUser(response.data);
 			} else if (response.status == 401) {
-				// Força um logout
-				handleLogout();
+				localStorage.removeItem("token");
+				navigate("/login");
 			}
 		};
 		loadUser();
@@ -52,7 +48,6 @@ const Minhaconta = () => {
 							d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"
 						></path>
 					</svg>
-
 
 					<p className="pt-2 text-lg font-semibold text-gray-50">{user.nome || "Desconhecido"}</p>
 					<p className="text-sm text-gray-100">{user.email || "unknow@bikeseller.com"}</p>

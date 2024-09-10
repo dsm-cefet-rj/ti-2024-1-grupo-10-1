@@ -134,10 +134,12 @@ export const PostUser = async (newUser) => {
 	}
 };
 
-export const PatchUser = async (user_data) => {
+export const PatchUser = async (user_data, token) => {
 	//Atualiza os dados de um usuário existente.
 	try {
-		const response = await axios.patch(URL + user_endpoint + "/" + user_data.id, user_data);
+		const response = await axios.patch(URL + user_endpoint + "/1", user_data, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 		return response;
 	} catch (error) {
 		console.error("Erro ao atualizar os dados do usuario:", error);

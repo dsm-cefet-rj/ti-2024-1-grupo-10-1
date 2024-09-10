@@ -37,7 +37,7 @@ const BikeSelecionada = () => {
 				if (response.status == 200) {
 					// console.log("Usuário logado:", response.data);
 					is_logged = true;
-					var idsFavoritados = response.data.favs;
+					var idsFavoritados = response.data.FavIds;
 
 					if (idsFavoritados.includes(id)) {
 						// Pertence a coleção de favoritos
@@ -73,7 +73,6 @@ const BikeSelecionada = () => {
 			const { able: can_request, favs: colecao } = newFavs;
 			if (can_request) {
 				await PatchFavorite(token, colecao);
-				
 			}
 		};
 		sendNewFavorites(token, favColl);
