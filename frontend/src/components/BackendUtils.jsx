@@ -267,15 +267,23 @@ export const fetchProductsByUser = async (token) => {
 
 export const PatchFavorite = async (token, newFavs) => {
 	try {
-		const has_succeded = await axios.patch(URL + user_endpoint + "/1", {
-			headers: { Authorization: `Bearer ${token}` },
-			data: { FavIds: newFavs },
-		});
-		if (has_succeded.status == 200) {
+		const response = await axios.patch(
+			URL + user_endpoint + "/123",
+			{ FavIds: newFavs },
+			{
+				headers: { Authorization: `Bearer ${token}` },
+			}
+		);
+
+		console.log(response);
+		if (response.status == 200) {
 			return true;
 		}
 	} catch (error) {
-		console.error("Ocorreu um erro ao buscar os dados:", error);
+		// if (error.response.status == 401) {
+
+		// }
+		console.log("Ocorreu um erro ao buscar os dados:", error);
 		return false;
 	}
 };
